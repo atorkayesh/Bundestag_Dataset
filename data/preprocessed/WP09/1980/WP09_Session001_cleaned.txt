@@ -8,14 +8,10 @@ Bonn, Dienstag, den 4. November 1980
 
 Inhalt:
 
-Eröffnung der Sitzung durch den Alterspräsidenten Wehner
-
- 1 A
+Eröffnung der Sitzung durch den Alters-
 
 Amtsübernahme und Ansprache des Präs
 denten Stücklen
-
- 5 D, 6 A
 
 Weitergeltung der Geschäftsordnung des
 Deutschen Bundestages in der am 1. Oktober 1980 in Kraft getretenen Fassung mit
@@ -38,35 +34,7 @@ Dr. von Weizsäcker CDU/CSU
 
 Wurbs FDP
 
-Nächste Sitzung
-
- 8 B
-
- 8 C
-
- 8 C
-
- 8 C
-
- 8 D
-
- 8 D
-
-Anlage 1
-
-1 A
-
-Bestellung vorläufiger Schriftführer (cid:9)
-
-. . .  (cid:9)  1 B
-
-Liste der entschuldigten Abgeordneten . .
-
-(cid:9)  9*A
-
-Ansprache des Alterspräsidenten
-
- 1 B
+Bestellung vorläufiger Schriftführer
 
 Wahl des Präsidenten verbunden mit Namensaufruf und Feststellung der Beschlußfähigkeit
 
@@ -81,23 +49,6 @@ i-
 Alphabetisches Namensverzeichnis der
 Mitglieder des Deutschen Bundestages, die
 an der Wahl des Bundestagspräsidenten
-teilgenommen haben  9* A
-
- 5 A
-
- 5 B, C
-
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
 
 Bonn, den 4. November 1980
 
@@ -186,8 +137,6 @@ zum Nachdenken über das beitragen, was in unserer
 parlamentarischen Demokratie von erfahrenen und
 verdienten Frauen und Männern beim Beginn einer
 
-2 (cid:9)
-
 Alterspräsident Wehner
 Wahlperiode aus ihren Erfahrungen den Parlamentariern und den Mitbürgerinnen und Mitbürgern gesagt worden ist.
 
@@ -268,8 +217,6 @@ Ich begrüße ferner alle auf unseren Tribünen,
 die als einfache Staatsbürger oder als Inhaber
 hoher Ämter sich in ihrem Geschick mit uns
 verbunden fühlen und deshalb hierhergekommen sind.
-
--
 
 Ich begrüße auch die Vertreter der Presse, füge
 daran aber die Bitte, ihre Berichterstattung und
@@ -408,8 +355,6 @@ West in absehbarer Zeit die volle Integration ermöglichen wird. Daß bis dahin 
 diesem Hohen Hause beschlossen worden sind,
 Berlin im politischen Geschehen dem System
 
-4 (cid:9)
-
 Alterspräsident Wehner
 
 der Bundesrepublik angeglichen ist, sichert die
@@ -451,8 +396,6 @@ nicht unbedingt ausgeschlossen werden kann.
 
 Am 13. Dezember 1972 hat der Alterspräsident
 Ludwig Erhard  den Abgeordneten für die 7. Wahlperiode gesagt:
-
--
 
 Die Bundesrepublik Deutschland hat sich wie
 alle großen, bewährten, wirklich freiheitlichen
@@ -561,8 +504,6 @@ außerhalb der Wahlzelle gekennzeichnet oder in den
 Wahlumschlag gelegt hat. In diesem Fall kann die
 Wahl allerdings vorschriftsmäßig wiederholt werden.
 
--
-
 Bevor Sie die Stimmkarte in die Wahlurne geben,
 bitte ich Sie, dem Schriftführer Ihren Namen zu nennen. Ich merke an: Gültig sind nur Stimmkarten mit
 einem Kreuz bei Ja oder bei Nein; wer sich der
@@ -632,8 +573,6 @@ Alterspräsident Wehner:  Herr Präsident, ich will
 die Glückwünsche des ganzen Deutschen Bundestages zum Ausdruck bringen. Was mich betrifft, so
 wünsche ich Ihnen Glück und Gelingen für das Ihnen schon vertraute Amt.
 
-6 (cid:9)
-
 Alterspräsident Wehner
 
 Ich bitte den Herrn Präsidenten, sein Amt zu übernehmen, und bedanke mich bei den übrigen Damen
@@ -675,8 +614,6 @@ des Hauses und sehe auch eine große Zahl von Mitgliedern, die zum erstenmal ihr
 Bundestag eingenommen haben. Sie alle, die alten
 und die neuen Abgeordneten, heiße ich recht herzlich willkommen. Ich wünsche Ihnen allen ein gutes
 Beginnen!
-
--
 
 Einen besonderen Willkommensgruß richte ich an
 unsere vom Berliner Abgeordnetenhaus gewählten
@@ -814,8 +751,6 @@ zur Verwirklichung dieses Vorschlags an, da es von
 Bundes- und Landtagswahlen frei ist. Unsere Familien würden uns dies danken, und für uns Abgeordnete wäre es gut, wenn wir wenigstens einmal im
 Monat dem Bibelwort gerecht würden: „Sechs Tage
 
-8 (cid:9)
-
 Präsident Stücklen
 sollst du arbeiten, aber am siebten Tage sollst du ruhen."
 
@@ -901,8 +836,6 @@ Bundestages zur Wahl des Bundeskanzlers auf morgen, 11 Uhr, ein.
 Die Sitzung ist geschlossen.
 
 (Schluß der Sitzung: 13.28 Uhr)
-
-9*
 
 Anlagen zum Stenographischen Bericht
 
@@ -1153,7 +1086,7 @@ Dr. Kohl
 Kolb
 Kolbow
 Korber
-(cid:127) Kraus
+ Kraus
 Dr. Kreile
 Kretkowski
 Dr. Kreutzmann
@@ -1216,8 +1149,6 @@ Dr. Mikat
 Dr. Miltner
 Milz
 Mischnick
-
-10* (cid:9)
 
 Dr. Mitzscherling
 Möhring

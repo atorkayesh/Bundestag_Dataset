@@ -20,14 +20,9 @@ Dr. Mommer (SPD) . . 5952 B, D, 5975 A
 
 Käsereimilchsonderstützung
 
-Schwarz, Bundesminister . . (cid:9)
+Schwarz, Bundesminister . .
 
 5955 B, C, D,
-5956 A
-
-Dr. Rutschke  (FDP)  (cid:9)
-
- 5952 D
 
 Frage des Abg. Ramms:
 
@@ -42,9 +37,6 @@ Dr. Nahm, Staatssekretär . 5953 A, B, C
 
 Schmidt (Kempten) (FDP) . . . 5953 B, C
 
--
--
-
 Frage des Abg. Seifriz:
 
 Familienzuschlag gemäß § 81 des Ge
@@ -56,7 +48,7 @@ Amazonas-Hospital in Pucallpa
 
 Scheel, Bundesminister 5953 D, 5954 A, B
 
-Metzger (SPD) (cid:9)
+Metzger (SPD)
 
 Entschädigung für Entzug der Traktatländereien
 
@@ -68,17 +60,9 @@ Frage des Abg. Logemann:
 
 Abschöpfung für Schweineschwänze
 
-Schwarz, Bundesminister  (cid:9)
-
- 5956 C
-
 Frage des Abg. Logemann:
 
 Abschöpfung für Schweinsohren
-
-Schwarz, Bundesminister  (cid:9)
-
- 5956 D
 
 Frage des Abg. Logemann:
 
@@ -89,17 +73,7 @@ Schwarz, Bundesminister . . 5957 B, C, D
 
 Logemann (CDU/CSU)
 
-Ertl (FDP)
-
- 5957 B
-
- 5957 C
-
 Fragen des Abg. Dr. Dichgans:
-
-Einfuhr von Getreide  (cid:9)
-
- 5954 B
 
 Frage des Abg. Wächter:
 
@@ -113,21 +87,11 @@ Dr. Carstens, Staatssekretär 5957 D, 5958 C
 
 Schwarz, Bundesminister 5954 C, 5955 A, B
 
-Paul (SPD)  (cid:9)
+Paul (SPD)
 
 Wächter (FDP) . . . . 5954 D, 5955 B
 
-Dr. Czaja (CDU/CSU)  (cid:9)
-
- 5958 C
-
- 5958 C
-
-(cid:9)
-(cid:9)
-(cid:9)
-
-II (cid:9)
+II
 
 Frage  des Abg. Kahn-Ackermann:
 
@@ -143,12 +107,6 @@ Kahn-Ackermann (SPD) . . . . 5959 A, B
 
 Strohmayr (SPD)
 
-Dr. Huys  (CDU/CSU)
-
- 5959 C
-
- 5959 C
-
 Frage  des Abg. Kahn-Ackermann:
 
 Vortragsreise  des Prof. Fischer in USA
@@ -162,18 +120,12 @@ Kahn-Ackermann (SPD) . . . 5960 A, B
 
 Sänger  (SPD)
 
-Vogt  (CDU/CSU)
-
- 5960 C
-
- 5960 D
-
 Fragen  des Abg. Dr. Huys:
 
 Nichtfreigabe  des  Gepäcks deutscher
 Lehrer in  Kairo
 
-Dr. Carstens,  Staatssekretär (cid:9)
+Dr. Carstens,  Staatssekretär
 
 5961 A, C, D,
 5962 A, B, C
@@ -181,8 +133,6 @@ Dr. Carstens,  Staatssekretär (cid:9)
 Dr. Huys  (CDU/CSU)
 
 . 5961 C, D, 5962 C
-
-Kahn-Ackermann (SPD)   5962 B
 
 Frage  des Abg.  Rollmann:
 
@@ -193,18 +143,9 @@ in
 
 Dr. Carstens,  Staatssekretär
 
-. . . 5962 D
-
-Rollmann (CDU/CSU)  (cid:9)
-
- 5962 D
-
 Frage  des Abg. Börner:
 
 Ratifizierungsgesetz zum Übereinkommen zur Verringerung  der Mehrstaatigkeit
-
-Höcherl,  Bundesminister  . . . . 5963 A, B
- 5963 B
 
 Börner (SPD)
 
@@ -212,22 +153,19 @@ Frage  des Abg. Jahn:
 
 Zweites Ausführungsgesetz zu Artikel  26 Abs. 2 des  Grundgesetzes
 
-Höcherl,  Bundesminister  . . . (cid:9)
+Höcherl,  Bundesminister  . . .
 
 5963 C, D,
 5964 A, B, C, D, 5965 A, B
  5963 C, D
 
 Jahn (SPD)
-Rollmann (CDU/CSU)  . . . .  (cid:9)  . 5963 D
-(cid:9)  . 5964 A
 
 Dr. Mommer (SPD) . . . . .
 
 Sammelübersicht 30  des Petitionsausschusses über Anträge zu Petitionen  und  systematische Ubersicht  über die in der Zeit
 vom 17. Oktober 1961 bis 31. März 1964
 eingegangenen Petitionen (Drucksache
-IV/2169)   5965 C
 
 Entwurf eines Gesetzes zur  Änderung
 des Luftverkehrsgesetzes  (6. Änderung)
@@ -239,9 +177,6 @@ Entwurf eines Gesetzes zu den  Änderungen vom 11. April 1962 des Internationale
 der Verschmutzung der See durch 01,
 1954,  usw. (Drucksache IV/1703); Schriftlicher Bericht des Verkehrsausschusses
 (Drucksache IV/2130) —  Zweite und dritte
-Beratung —
-
-5966 A
 
 Entwurf eines Gesetzes zur  Änderung
 des Güterkraftverkehrsgesetzes
@@ -271,34 +206,18 @@ IV/1795) ; Schriftlicher Bericht des Ausschusses für Inneres (Drucksache IV/219
 
 Entwurf eines Gesetzes über eine  Statistik
 der Arbeitskräfte in der Land- und Forstwirtschaft  (Drucksache IV/1794); Schriftlicher Bericht des Ausschusses für Inneres (Drucksache IV/2199) —  Zweite und
-dritte Beratung —
-
-5967 B
 
 Dr. Böhm (Frankfurt)  (CDU/CSU)  . 5964 B, C
 
-Dr.  Bechert  (SPD) . . . (cid:9)
+Dr.  Bechert  (SPD) . . .
 
-5964 D, 5965 A
-
-Ritzel (SPD) (cid:9)
+Ritzel (SPD)
 
 . . . . . . . . 5965 A, B
-
-Erler (SPD)  (cid:9)
-
- 5965 B
 
 Entwurf eines Gesetzes zur  Änderung des
 Gesetzes über die Abwicklung des Reichsnährstandes und seiner Zusammenschlüsse  (Abg. Bauknecht, Dr. Schmidt
 [Gellersen], Walter u. Gen.) (Drucksache
-
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
 
 III
 
@@ -316,24 +235,13 @@ Frau Pitz-Savelsberg (CDU/CSU) .
 
 Frau Eilers (SPD)
 
-(cid:9) 5967 D,
-5969 D
-
- 5968 A
-
-Frau Funcke (Hagen) (FDP) . . .
-
-(cid:9) 5971 D
+ 5967 D,
 
 Entwurf eines Gesetzes zur  Änderung des
 (FDP) ; (Drucksache
 Bundesbaugesetzes
 IV/924); Schriftlicher Bericht des Finanzausschusses (Drucksachen IV/2142, zu
 IV/2142) —  Zweite und dritte Beratung  —
-
-Dr.  Besold (CDU/CSU)
-
- 5973 A
 
 Entwurf eines  Siebenten Strafrechtsände-
 (CDU/CSU, FDP, SPD)
@@ -346,17 +254,14 @@ Antrag betr.  Verbesserung der Fahrwas-
 (Abg.
 serverhältnisse auf dem Rhein
 Josten, Buchstaller, Dr. Danz u. Gen.)
-(Drucksache IV/2020)   5975 A
 
 Antrag betr.  Besetzung der Ämter des Präsidenten des Bundesrechnungshofes und
 des Bundesbeauftragten für die Wirt-
 
 schaftlichkeit der Verwaltung
-(Drucksache IV/2048)   5975 B
 
 Antrag betr.  EWG-Regelung für Kartoffeln
 (Abg. Logemann, Sander, Wächter, Murr,
-Mauk u. Gen.) (Drucksache IV/2153) . . 5975 B
 
 Antrag betr.  Förderung der bäuerlichen
 Veredelungswirtschaft  (Abg. Logemann,
@@ -373,17 +278,15 @@ Entwurf eines  Zweiten  Gesetzes zur Ä nde-
 sachen IV/1370, IV/563) ; Schriftlicher Bericht des Gesundheitsausschusses (Drucksachen IV/2162, zu IV/2162) —  Zweite und
 dritte Beratung  —
 
-Frau Dr. Hubert (SPD) (cid:9)
+Frau Dr. Hubert (SPD)
 
 Dr. Hamm (Kaiserslautern) (FDP) . 597'6B,
-5977 D, 5980 D
 
 Sechsundfünfzigste Verordnung zur Änderung des Deutschen Zolltarifs 1963 (Zollaussetzung für Fische und Krebstiere
 
 Sechzigste Verordnung zur Änderung des
 Deutschen Zolltarifs 1963 (Zollkontingente für EGKS-Waren)
 (Drucksache
-IV/2151)   5982 A
 
 Einundsechzigste Verordnung zur Änderung des Deutschen Zolltarifs 1963 (Wein
 zum Herstellen von Weindestillat)
@@ -393,7 +296,6 @@ die  Fünfundvierzigste Verordnung zur
 Änderung des Deutschen Zolltarifs 1963
 (Kaschu-Nüsse usw.)
 (Drucksachen IV/
-1937, IV/2095)   5982 B
 
 Bericht des Außenhandelsausschusses über
 die  Zwölfte Verordnung zur Änderung
@@ -404,12 +306,10 @@ Anlage zum Außenwirtschaftsgesetz —
 Bericht des Außenhandelsausschusses über
 die  Fünfzigste Verordnung zur Änderung des Deutschen Zolltarifs 1963 (Angleichungszoll für Dextrine und Stärke
 — Neufestsetzung)  (Drucksachen IV/2032,
-IV/2182)   5982 C
 
 Bericht des Ausschusses für Inneres über
 den Antrag der Fraktion der SPD betr.
 Neuregelung der Arbeitszeit der Beamten des Bundes  (Drucksachen IV/1816,
-IV/2082)   5982 D
 
 Schriftlicher Bericht des Verkehrsausschusses über den Antrag der Abg. Dr. Schmidt
 (Gellersen), Frehsee, Seither, Saxowski
@@ -421,12 +321,8 @@ der Bundesregierung über die Lage der
 Landwirtschaft betr.  Senkung der Fracht-
 (Drucksache
 kosten für Schlachtrinder
-IV/2131, Umdruck 184)   5983 A
 
-(cid:9)
-(cid:9)
-
-IV (cid:9)
+IV
 
 Schriftlicher Bericht des Wirtschaftsausschusses über den Antrag der Abg. Dr.
 Martin, Neumann (Allensbach), Blumenfeld, Holkenbrink, Frau Dr. Maxsein u.
@@ -439,61 +335,50 @@ EURATOM, Nr. . . ./63/EWG der Räte
 vom ... zur Anpassung bestimmter Berichtigungskoeffizienten für die Dienst-
 und Versorgungsbezüge der Beamten
 
-Sänger (SPD)  (cid:9)
+Sänger (SPD)
 
 Dr. Arnold (CDU/CSU)
 
-Dr. Aschoff (FDP)
-
- 5983 B
-
- 5984 C
-
- 5985 D
-
 Schriftlicher Bericht des Wirtschaftsausschusses über ,den Vorschlag der Kommission der EWG für eine Zweite Richtlinie
-auf dem Gebiete des Filmwesens  (Drucksachen IV/1975, IV/2197)   5987 B
+auf dem Gebiete des Filmwesens  (Druck-
 
 Antrag  des  Bundesministers der Finanzen
 betr.  Veräußerung einer Teilfläche des
-ehemaligen Flugplatzes Hamburg-Bahrenfeld  (Drucksache IV/2046)   5986 A
+ehemaligen Flugplatzes Hamburg-Bah-
 
 Antrag des Bundesministers der Finanzen
 betr.  Veräußerung einer Teilfläche der
 ehemaligen Infanteriekaserne in Lübeck
 
 Antrag des Bundesministers  der  Finanzen
-betr.  Deutsche Pfandbriefanstalt;  Erhöhung des Grundkapitals usw. — (Drucksache IV/2146)   5986 A
+betr.  Deutsche Pfandbriefanstalt;  Erhöhung des Grundkapitals usw. — (Druck-
 
 Antrag des Bundesministers .der Finanzen
 betr.  Veräußerung des ehemaligen Marine-Prüfstandes in Frankenthal
-(Drucksache IV/2160)   5986 B
+(Druck-
 
 Schriftlicher Bericht des Wirtschaftsausschusses über den  Vorschlag der Kommission der EWG für eine Verordnung des
 Rats über die Anwendung von Artikel 85
 Absatz 3 EWG auf Gruppen von Vereinbarungen, Beschlüssen und aufeinander
-abgestimmten Verhaltensweisen  (Drucksachen IV/2024, IV/2177, zu IV/2177) . . 5986 C
+abgestimmten Verhaltensweisen  (Druck-
 
 Schriftlicher Bericht des Ernährungsausschusses über den  Vorschlag der Kommission der EWG für eine Richtlinie des
 Rats über die Einzelheiten der Verwirklichung des freien Dienstleistungsverkehrs in den Berufen der Landwirtschaft
 und des Gartenbaus  (Drucksachen IV/2040,
-IV/2181)   5986 D
 
 Schriftlicher Bericht .des Außenhandelsausschusses über den Vorschlag der Kommission der EWG für eine Verordnung des
 Rats über die Prämiensätze für die Einfuhr von Reis und Bruchreis  (Drucksachen
-IV/2136, IV/2188)   5986 D
 
 Schriftlicher Bericht des Ernährungsausschusses über den Vorschlag der Kommission der EWG für eine Verordnung des
 Rats über die Bestimmung der zur Erzeugung von einem Kilogramm zum Verbrauch bestimmter Geflügeleier in der
 Schale und der zur Erzeugung von einem
-Kilogramm Bruteier von Hausgeflügel erforderlichen Futtergetreidemenge  (Drucksachen IV/2148, IV/2180)   5987 B
+Kilogramm Bruteier von Hausgeflügel erforderlichen Futtergetreidemenge  (Druck-
 
 Schriftlicher Bericht des Ernährungsausschusses über den Vorschlag der Kommission der EWG für eine Verordnung des
 Rats über die Festlegung der Kriterien
 für die Interventionsregelung auf dem
 Rindfleischmarkt
 (Drucksachen IV/2156,
-IV/2200)   5987 C
 
 Schriftlicher Bericht des Außenhandelsaus-
 
@@ -512,14 +397,6 @@ EWG für eine Richtlinie des Rats zur
 Koordinierung der Schutzbestimmungen,
 die in den Mitgliedstaaten den Gesellschaften im Sinne des Artikels 58 Absatz 2 im Interesse der Gesellschafter sowie Dritter vorgeschrieben sind  (Drucksachen IV/2014, IV/2190)
 
-Dr. Reischl (SPD)  (cid:9)
-
- 5988 B
-
-Dr. Wilhelmi (CDU/CSU) . . . .
-
-(cid:9)  5988 C
-
 Mündlicher Bericht des Ausschusses für
 Inneres über die  Entwürfe für eine Verordnung Nr..../63/EURATOM, Nr..../
 63/EWG der Räte vom ... zur Änderung
@@ -528,20 +405,12 @@ der Berichtigungskoeffizienten für die
 Schriftlicher Bericht des Gesundheitsausschusses über den  Vorschlag der Kommission der EWG für eine Zweite Richtlinie
 zur Angleichung der Rechts- und Ver-
 
-(cid:9)
-(cid:9)
-
 V
 
 waltungsvorschriften für pharmazeutische
 Spezialitäten  (Drucksachen IV/2028, IV/
-2194)   5988 D
 
 Entwurf eines Gesetzes über dié Beweissicherung und Feststellung von Vermögensverlusten in der sowjetischen Besatzungszone Deutschlands und im Sowjetsektor von Berlin  (Beweissicherungsgesetz)  (Drucksache IV/1994) —  Erste Beratung  —
-
-Eichelbaum (CDU/CSU)
-
- 5989 B
 
 Entwurf eines Gesetzes zur  Änderung des
 Gesetzes gegen unlauteren Wettbewerb,
@@ -550,47 +419,18 @@ Kurlbaum, Lange [Essen] und Fraktion
 der SPD) (Drucksache IV/2001) —  Erste
 Beratung  —
 
-Dr. Aschoff (FDP)
-
- 5990 C
-
 Schriftlicher Bericht des 2. Untersuchungsausschusses gemäß Antrag der Fraktion
 der SPD  (Drucksachen IV/1544, IV/2170)
 
-Dorn (FDP)  (cid:9)
-
- 5991 A, 6019 D
+Dorn (FDP)
 
 Schmitt-Vockenhausen (SPD) . . . 5994 C,
-6023 A, 6033 D
-
-Dr. Süsterhenn (CDU/CSU) . . .
-
-(cid:9)  5999 A
 
 Busse (FDP)
 
-Dr. Schäfer (SPD)
-
- 6003 B
-
- 6006 A
-
-Dr. Kohut (FDP) . . . . . . .
-
-(cid:9)  6018 D
-
 Gedat (CDU/CSU)
 
-Höcherl, Bundesminister  (cid:9)
-
-Schultz (FDP)  (cid:9)
-
- 6022 D
-
- 6024 B
-
- 6034 C
+Höcherl, Bundesminister
 
 Entwurf eines Gesetzes zur  Änderung mietrechtlicher Vorschriften  (Drucksache IV/
 806) ; Zweiter Schriftlicher Bericht des
@@ -602,16 +442,11 @@ Entwurf eines Gesetzes zur  Änderung des
 (SPD) (Drucksache IV/1554); Schriftlicher
 Bericht des Rechtsausschusses (Drucksache IV/2201) —  Zweite Beratung  —
 
-Jacobi  (Köln) (SPD) . . . (cid:9)
-
-6035 B, 6043 C,
-6045 C
+Jacobi  (Köln) (SPD) . . .
 
 Dr. Hauser (CDU/CSU) . 6035 D, 6037 B,
-6039 D, 6042 A
 
 Busse (FDP) . . 6036 B, 6038 A, 6040 A,
-6042 D, 6044 C, 6048 B
 
 Jahn (SPD) . . . 6036 C, 6039 C, 6041 A
 
@@ -620,41 +455,10 @@ Dr. Bucher, Bundesminister 6037 C, 6047 D
 Dr. Reischl (SPD) . . . . 6038 B, 6046 B
 
 Frau Dr. Diemer-Nicolaus (FDP) . . 6039 A,
-6045 C
 
 Dr. Weber (Koblenz) (CDU/CSU) . . 6044 A,
-6047 B
-
-Dr. Czaja (CDU/CSU)  (cid:9)
-
- 6045 A
-
-Mick (CDU/CSU) . . . . . . .
-
-(cid:9)  6048 B
-
-Dr. h. c. Güde (CDU/CSU) . . .
-
-(cid:9)  6009 D
 
 Nächste Sitzung
-
-Wagner (CDU/CSU)
-
- 6015 C
-
-Anlagen
-
- 6049 C
-
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
-(cid:9)
 
 124. Sitzung
 
@@ -690,8 +494,6 @@ haltsgesetz 1963)
 
 Zweites  Gesetz zur  Änderung und Ergänzung des Gesetzes
 zur Regelung von Ansprüchen aus Lebens- und Rentenversicherungen.
-
--
 
 Der Herr Vorsitzende des  Vermittlungsausschusses  des Deutschen Bundestages und des Bundesrates hat am 16. April 1964
 mitgeteilt, daß der Vermittlungsausschuß in seiner 8. Sitzung am
@@ -807,8 +609,6 @@ an  den Ausschuß für Verkehr, Post- und Fernmeldewesen mit
 der Bitte um Vorlage des Berichts rechtzeitig vor dem Plenum
 am 21. Oktober 1964
 
-5952 (cid:9)
-
 Vizepräsident Dr. Jaeger
 
 Verordnung des Rats über Qualitätsweine bestimmter Anbaugebiete — Drucksache IV/2179  —
@@ -856,9 +656,6 @@ hätten.
 Ich bitte Sie deshalb, antragsgemäß zu beschließen
 und die Drucksachen IV/806 und IV/2195 auf die
 Tagesordnung zu setzen.
-
--
--
 
 Vizepräsident Dr. Jaeger:  Das Wort zur Tages-
 
@@ -1056,8 +853,6 @@ im Rahmen der technischen Hilfe auch Projekte zu
 fördern, die von deutschen Trägern durchgeführt
 werden.
 
-5954 (cid:9)
-
 Bundesminister Scheel
 
 Herrn Dr. Binder wurde anläßlich seines Europabesuches im Herbst 1963 erklärt, daß der Verein
@@ -1088,9 +883,6 @@ setzungen gegeben sein müssen.
 
 Scheel,  Bundesminister für wirtschaftliche Zusammenarbeit: Das werden die einzelnen Fachministerien bei der Prüfung der Anträge feststellen müssen; so werden z. B. die Feststellungen bei der Prüfung des Antrages auf Entsendung von Ärzten und
 medizinisch-technischem Personal vom Gesundheitsministerium getroffen werden müssen.
-
--
--
 
 Vizepräsident Dr. Jaeger:  Wir kommen zu
 
@@ -1299,8 +1091,6 @@ Schmidt  (Kempten) (FDP) : Herr Minister, sehen
 Sie gegebenenfalls eine Möglichkeit, doch auftretende Einkommensverluste und -rückgänge auf
 irgendeine Art und Weise im Rahmen der Richtlinien abzufangen?
 
-5956 (cid:9)
-
 Schwarz,  Bundesminister für Ernährung, Landwirtschaft und Forsten: Herr Kollege, ich glaube,
 es ist im Augenblick müßig, darüber zu sprechen,
 was man tun wird, wenn der Fall eintritt, von dem
@@ -1336,8 +1126,6 @@ Gewährung von Darlehen an Reparations-, Restitutions- und Rückerstattungsgesch
 erhalten können. Außerdem stehen im Grünen Plan
 erhebliche Mittel bereit, aus denen zinsgünstige Darlehen zum Ankauf von Ersatzland gewährt werden
 können.
-
--
 
 Vizepräsident Dr. Jaeger:  Eine Zusatzfrage.
 
@@ -1426,9 +1214,6 @@ wird die Entwicklung mit besonderer Wachsamkeit
 verfolgen und weiterhin darauf drängen, alle Wettbewerbsbedingungen zu harmonisieren, die Einfluß
 auf die Produktionskosten der Landwirtschaft
 haben.
-
--
--
 
 Vizepräsident Dr. Jaeger:  Ich rufe auf die
 
@@ -1520,8 +1305,6 @@ In Beantwortung zahlreicher Einzelanfragen und
 auf Anfragen der Presse hat das Auswärtige Amt
 darauf hingewiesen, daß zwischen der SBZ und den
 osteuropäischen Staaten Auslieferungsvereinbarun-
-
-5958 (cid:9)
 
 Staatssekretär Dr. Carstens
 gen bestehen, so daß Zonenflüchtlinge damit rechnen müssen, daß die Behörden dieser Staaten Auslieferungsersuchen der SBZ stattgeben.
@@ -1738,8 +1521,6 @@ zurücktreten.
 
 Die Mittel, die dem Auswärtigen Amt für die Förderung von Vortragsreisen wie der von Professor
 
-5960 (cid:9)
-
 Staatssekretär Dr. Carstens
 Fischer in Aussicht genommenen zur Verfügung
 stehen, sind infolge der in diesem Jahr vorgenommenen Kürzung des Kulturhaushalts so knapp geworden, daß in diesem Jahr leider nicht die Möglichkeit besteht, den in Frage kommenden Betrag bereitzustellen. Ich hoffe, daß dies im nächsten Jahr möglich sein wird.
@@ -1793,8 +1574,6 @@ Amts: Derartige Erwägungen haben keine Rolle gespielt, Herr Abgeordneter. Wohl 
 Rolle gespielt — ich möchte das noch einmal unterstreichen —, daß das Goethe-Institut die Reise
 finanzieren wollte, ohne daß die Mittel des GoetheInstituts für eine Finanzierung dieser Reise in Betracht kamen. Es kam also nur eine Finanzierung
 dieser Reise aus den allgemeinen Mitteln des Auswärtigen Amts in Frage, und die sind für das laufende Jahr beträchtlich gekürzt worden; ein entsprechender Betrag stand nicht zur Verfügung.
-
--
 
 Sänger  (SPD) : Herr Staatssekretär, ist bei diesem
 besonderen Fall und unter diesen besonderen Umständen auch in Erwägung gezogen worden, welche
@@ -1978,8 +1757,6 @@ Abgeordneter. Der Bund ist nach den geltenden
 Vereinbarungen nicht verpflichtet, diese Leistungen
 zu erbringen. Wir werden also bemüht sein, das in
 
-5962 (cid:9)
-
 Staatssekretär Dr. Carstens
 Betracht kommende Land zum Handeln zu veran
 lassen oder auf anderem Wege Abhilfe zu schaffen.
@@ -2013,8 +1790,6 @@ doch einmal nachprüfen, ob die Botschaft oder andere Stellen von der Sache Kenn
 Dr. Carstens,  Staatssekretär des Auswärtigen
 
 Amts: Ich will das gern tun, Herr Abgeordneter.
-
--
 
 Vizepräsident Dr. Jaeger:  Herr Abgeordneter
 
@@ -2224,8 +1999,6 @@ Rollmann (CDU/CSU) : Herr Minister, ist es nicht
 so, daß die Überlegungen Ihres Hauses zu dieser
 Frage gerade von den Parteifreunden des Herrn
 Jahn attackiert und angegriffen worden sind?
-
-5964 (cid:9)
 
 Höcherl,  Bundesminister des Innern: Ich muß
 
@@ -2440,8 +2213,6 @@ Enthaltungen. Einstimmig angenommen.
 Wir kommen nun zu dem Entschließungsantrag
 der Fraktionen der CDU/CSU, SPD,  FDP  auf Um-
 
-5966 (cid:9)
-
 Vizepräsident Dr. Jaeger
 druck 440. — Das Wort wird nicht gewünscht. Wer
 dem Entschließungsantrag zuzustimmen wünscht,
@@ -2591,10 +2362,6 @@ Der Berichterstatter, der Abgeordneter Wehking, hat
 den Schriftlichen Bericht vorgelegt. Ich danke ihm
 dafür.
 
--
--
--
-
 Ich rufe in zweiter  Beratung  auf die §§  1  bis 20,
 Einleitung und Überschrift. — Das Wort wird nicht
 gewünscht. Wer den aufgerufenen Bestimmungen
@@ -2675,8 +2442,6 @@ Antrag zur dritten Lesung ankündigen. Die Drucksache liegt leider im Augenblick
 kommt aber. Es handelt sich um den § 2. Im Abs.  1
 des § 2 ist in der letzten Sitzung des Jugendausschusses ein Passus gestrichen worden, der bei genauerer Betrachtung nicht hätte gestrichen werden
 dürfen. Es steht nun in der Ausschußfassung: Träger
-
-5968 (cid:9)
 
 Frau Pitz -Savelsberg
 sind die Verbände. Vorher hatte in § 2 Abs. 1 gestanden: Träger sind die Verbände und ihre Untergliederungen. Man hat geglaubt, die Worte„ und
@@ -2890,8 +2655,6 @@ im Rahmen einer Berufsausbildung gelten könne.
 Ob, wie und in welchem Umfang eine Anrechnung
 auf ein soziales Praktikum erfolgen kann, hängt von
 
-5970 (cid:9)
-
 Frau Pitz-Savelsberg
 den jeweiligen Ausbildungsbestimmungen ab und
 gehört nicht in dieses Gesetz. In keinem Fall — das
@@ -2922,8 +2685,6 @@ nämlich draußen in der Öffentlichkeit die Diskus
 sion um das  Pflichtjahr  ein. Sicherlich ist der Einwand berechtigt, daß die Freiwilligkeit nicht genügend Helferinnen herbeibringen wird, um alle
 Lücken zu füllen. Darauf müssen wir aber sagen,
 daß das freiwillige soziale Jahr keine arbeitsmarktpolitische Maßnahme ist, um in einer Mangelsituation auf dem Arbeitsmarkt Abhilfe zu schaffen.
-
--
 
 (Sehr gut! bei der CDU/CSU.)
 
@@ -3078,8 +2839,6 @@ Anziehungskraft in dem Maße wachsen, in dem
 sich junge Menschen mit vollem Herzen zu diesem
 Dienst bekennen und dazu ja sagen.
 
--
-
 Im Namen meiner Fraktion bitte ich nun das Hohe
 Haus, zunächst den Antrag anzunehmen, den ich erläutert habe und der Ihnen mittlerweile vorliegt,
 und zweitens, dem Gesetz zuzustimmen und es in
@@ -3104,8 +2863,6 @@ Hauses bestehen Befürchtungen und Hoffnungen,
 daß mit diesem Gesetz ein Pflichtjahr vorbereitet
 werden könnte; ja, auch Hoffnungen, zum Teil bei
 den jungen Menschen selbst, die das soziale Jahr
-
-5972 (cid:9)
 
 Frau Funcke  (Hagen)
 an sich gern ableisten wollen, die aber die Entscheidung dazu vor sich selbst nicht fällen wollen und
@@ -3249,8 +3006,6 @@ bisher „nur" Baulandsteuer herangezogen wurden."
 Es muß heißen: „z u r Baulandsteuer herangezogen
 wurden."
 
--
-
 Es ist wohl angezeigt, noch etwas über die Gründe
 zu sagen, die die beiden Ausschüsse zu dem Beschluß veranlaßt haben, die Vorschriften über die
 Baulandsteuer nach lediglich vierjähriger Geltungsdauer aufzuheben.
@@ -3313,8 +3068,6 @@ durch ein umständliches und zeitraubendes Verfahren könnte festgestellt werden
 mehreren, gegebenenfalls sogar in verschiedenen
 Gemeinden liegenden Grundstücken die Ermäßigung
 für 10 000 DM des Einheitswerts eintritt und welche
-
-5974 (cid:9)
 
 Dr. Besold
 Gemeinde diesen Steuerausfall tragen soll. Ganz
@@ -3546,8 +3299,6 @@ Zunächst möchte ich zu §  35 a  folgendes hinzufügen. Dieser Paragraph besti
 die aus Stoffen unbekannter Wirksamkeit und aus
 Zusammensetzungen von Stoffen unbekannter Wirksamkeit bestehen, drei Jahre unter die  Rezeptpflicht
 
-5976 (cid:9)
-
 Frau Dr. Hubert
 fallen. Hiervon sind nicht nur dann Ausnahmen
 möglich, wenn die Wirkung neuer Zusammensetzungen voraussehbar ist; vielmehr sind von vornherein von dieser automatischen Rezeptpflicht für
@@ -3750,8 +3501,6 @@ Apotheker noch um die Interessen der Arzneimittelhersteller. Es geht allein um d
 Berechtigung dieser Frage können Sie nicht bestreiten  —, ob aus  gesundheitspolitischen Gesichtspunkten, ob  im Interesse  des Schutzes der menschlichen
 oder auch der tierischen Gesundheit, die ja unmittelbar eine Einwirkung auf die menschliche Gesund-
 
-5978 (cid:9)
-
 Dr. Hamm  (Kaiserslautern)
 heit hat, bestimmte Vorschriften notwendig sind
 oder nicht. Wir sind aber der Auffassung, daß sie
@@ -3780,8 +3529,6 @@ das Land schickt, um Bestellungen auf apotheken
 pflichtige Tierarzneimittel aufzunehmen und diese
 Mittel über ihre Versandapotheke direkt an den
 Tierhalter abzugeben.
-
--
 
 Vizepräsident Schoettle:  Das Wort hat der
 Abgeordnete Dr. Dittrich. Herr Kollege Dittrich, ich
@@ -3895,8 +3642,6 @@ bitte ich um ein Handzeichen. — Danke. Die Gegenprobe! — Enthaltungen? — W
 noch Enthaltungen;  der  Gesetzentwurf ist in zweiter
 Beratung einstimmig angenommen.
 
--
-
 Wir kommen zur
 
 dritten Beratung.
@@ -3960,8 +3705,6 @@ dieses Jahres ausläuft, nochmals verlängert werden
 muß. Das ist sicher kein Zeichen für eine zielbewußt
 geführte Gesundheitspolitik.
 
-5980 (cid:9)
-
 Dr. Schmidt  (Offenbach)
 
 Wir Sozialdemokraten glauben, daß mit der vorliegenden Novelle zum Arzneimittelgesetz eine gute,
@@ -3993,7 +3736,7 @@ ein Gesetz über den Verkehr mit Arzneimitteln, das
 im Jahre 1961 von diesem Hohen Hause beschlossen wurde, jetzt schon zweier Novellierungen be
 darf? Das ist einfach zu erklären, nämlich mit der
 Tatsache, daß die Forschung immer weiter voranschreitet, daß die Industrie immer neue Arzneispe-
--
+
 zialitäten entwickelt und daß der Gesetzgeber
 Schwierigkeiten hat, diesen neuen Erkenntnissen
 mit der Gesetzgebung zu folgen.
@@ -4182,8 +3925,6 @@ auf Drucksache IV/2162. Sind Sie damit einverstanden, daß wir über die Buchsta
 abstimmen? — Das ist der Fall. Dann bitte ich die
 Damen und Herren, die diesen Entschließungen zustimmen, um ein Handzeichen. — Danke. Die Gegenprobe! — Enthaltungen? — Diese Entschließungen sind einstimmig angenommen worden.
 
-5982 (cid:9)
-
 Vizepräsident Schoettle
 
 Ich rufe Punkt 23 a auf:
@@ -4237,8 +3978,6 @@ Beratung der von der Bundesregierung vorgelegten  Einundsechzigsten Verordnung z
 Änderung des Deutschen Zolltarifs 1963 (Wein
 zum Herstellen von Weindestillat)
 (Drucksache IV/2152).
-
--
 
 Auch diese Vorlage wird nicht begründet. Das
 
@@ -4415,8 +4154,6 @@ auch richtig sein müssen.
 Der Ausschuß fragt, ob das Ganze ohne Gesetz
 möglich sei. Ich glaube, daß das durchaus möglich
 ist. Die Presse hat ein Interesse daran, daß die Tatsachen klargestellt werden. Die Verleger werden
-
-5984 (cid:9)
 
 Sänger
 die Karten ebenso auf den Tisch legen müssen, wie
@@ -4611,8 +4348,6 @@ und Herren! Ich habe sicherheitshalber keinen Zettel mitgebracht, so daß ich ni
 komme, etwas vorzulesen oder vorlesen zu müssen.
 Ich kann mich auch ganz kurz fassen.
 
--
-
 Die Fraktion der FDP begrüßt diesen Antrag und
 unterstützt den Vorschlag des Wirtschaftsausschusses. Da ich selbst die Ehre habe, diesem Ausschuß
 vorzusitzen, wäre es mir möglich, noch einige der
@@ -4638,8 +4373,6 @@ Ich glaube, daß wir mit dieser Untersuchung einen
 guten Schritt weiterkommen werden. Ob daraus
 später organisatorische oder politische Konsequenzen zu ziehen sind, darauf wird eine Antwort erst
 gegeben werden können, wenn die wirtschaftlichen
-
-5986 (cid:9)
 
 Dr. Aschoff
 Voraussetzungen geklärt sind. Bis dahin sollten wir
@@ -4796,9 +4529,6 @@ ohne Nutzen gewesen wäre. Aber da das nicht gewünscht wird, schlage ich vor, d
 Kenntnis nimmt. — Dem wird nicht widersprochen;
 das Haus nimmt zustimmend Kenntnis.
 
--
--
-
 Punkt 32 e:
 
 Beratung des Schriftlichen Berichts des Wirtschaftsausschusses (16. Ausschuß) über den
@@ -4872,8 +4602,6 @@ mit Staatshandel  (landwirtschaftliche Erzeugnisse der Verordnungen Nr. 19, 20, 
 eine Verordnung des Rats über die Festset
 zung der Abschöpfungsbeträge für Erzeug-
 
-5988 (cid:9)
-
 Vizepräsident Schoettle
 
 nisse der Geflügelwirtschaft, deren Zollsätze
@@ -4907,9 +4635,6 @@ Das Wort zur Abgabe einer Erklärung hat der
 
 Abgeordnete Dr. Reischl.
 
--
--
-
 Dr. Reischl  (SPD) : Herr Präsident! Meine Damen
 und Herren! Zu der vorliegenden Richtlinie habe ich
 namens der SPD-Fraktion folgende Erklärung abzu
@@ -4941,7 +4666,7 @@ Aktienrecht — Drucksache IV/203 — einen Anhaltspunkt für die Abgrenzung der
 würde es sehr begrüßen, wenn die endgültige Richtlinie für die großen GmbHs die Publizität allgemein
 für den ganzen europäischen Bereich vorschriebe,
 wobei gleichzeitig natürlich eine Angleichung des
-(cid:127)Aussagewertes der Bilanzen, der Gewinn- und Verlustrechnungen und der Geschäftsberichte erfolgen
+Aussagewertes der Bilanzen, der Gewinn- und Verlustrechnungen und der Geschäftsberichte erfolgen
 sollte. Mit diesem Vorbehalt stimmen wir dem Antrag des Rechtsausschusses zu.
 
 Vizepräsident Schoettle:  Das Wort hat der
@@ -5028,8 +4753,6 @@ Wird das Wort gewünscht?
 Ich eröffne die Aussprache. Wird das Wort gewünscht? — Das ist nicht der Fall. Die Aussprache
 ist geschlossen.
 
--
-
 Es ist vorgeschlagen, die Vorlage an den Ausschuß für den Lastenausgleich — federführend —
 sowie an den Rechtsausschuß und an den Ausschuß
 für gesamtdeutsche und Berliner Fragen — mitberatend — zu überweisen. — Bitte, Herr Kollege
@@ -5110,8 +4833,6 @@ Warentest, der durchgeführt wird, als Mittel der
 vergleichenden Werbung angewandt werden kann.
 Wir glauben, eine solche Änderung ist einfach not-
 
-5990 (cid:9)
-
 Vizepräsident Schoettle
 wendig, wenn wir — das ist wohl der Wille des
 ganzen Hauses.— Warenprüfungen durch ein anerkanntes Warentestinstitut vornehmen lassen wollen.
@@ -5136,8 +4857,6 @@ So steht es also wörtlich im Bericht, den die Bundes
 regierung gegeben hat. Damit wird deutlich, daß
 B)  doch noch sehr unterschiedliche Meinungen u. a.
 auch bezüglich der Veröffentlichungen von Warenprüfungen durch Warentestinstitute bestehen.
-
--
 
 Wenn wir nun verhindern wollen, daß es, wenn
 wir das Warentestinstitut errichten und Warenprüfungen mit den von mir eben angeführten Merkmalen durchgeführt werden, zu neuen Klagen
@@ -5242,8 +4961,8 @@ Dem Untersuchungsausschuß ist vom Bundestag
 die  Aufgabe  gestellt worden, zu untersuchen:
 
 bisher durch das Bundesamt für Verfassungsschutz Verfahren zur Post-, Telefon- oder
-Fernschreibüberwachung (cid:9)
-über (cid:9)
+Fernschreibüberwachung
+über
 alliierte
 Dienststellen eingeleitet worden?
 
@@ -5303,8 +5022,6 @@ des Bundesamtes für Verfassungsschutz haben den
 vom Ausschuß geladenen Zeugen, soweit dies erforderlich war, die entsprechenden Aussagegenehmigungen erteilt. Diese Aussagegenehmigungen waren
 lediglich im Hinblick auf Art. 38 des Zusatzabkommens zum NATO-Truppenstatut hinsichtlich der Geheimhaltung bestimmter alliierter Sicherheitsinformationen beschränkt.
 
--
-
 Dem Untersuchungsausschuß haben vor allem folgende  schriftliche Unterlagen  für seine Beratungen
 vorgelegen: 1. Bericht des Bundesministers des Innern vom November 1963 zu den einzelnen Beweisthemen, 2. Zusammenstellung über Geheimhaltungsvorschriften, Anweisungen und Richtlinien und
 Hausverfügungen des Bundesamtes für Verfassungsschutz im Zusammenhang mit den Beweisthemen,
@@ -5317,8 +5034,6 @@ auf den Freitagnachmittag und in sitzungsfreie Wochen verlegen müssen, da u. a.
 des Stenographischen Dienstes in diesem Haus nicht
 stark genug war, um während der Ausschußwochen
 oder in den Plenarwochen Sitzungen des Untersuchungsausschusses zu protokollieren.
-
-5992 (cid:9)
 
 Dorn
 
@@ -5545,8 +5260,6 @@ Meine Damen und Herren, ich komme dann zu
 
 den  Schlußfolgerungen.
 
-5994 (cid:9)
-
 Dorn
 
 während der Untersuchung schon eine Reihe von
@@ -5576,9 +5289,6 @@ Untersuchung ergeben hat, daß die Erfüllung der
 Aufgaben des Verfassungsschutzes und der übrigen
 Nachrichtendienste auch der ständigen  Kontrolle des
 Deutschen Bundestages  bedarf.
-
--
--
 
 Ich darf Ihnen, meine sehr verehrten Damen und
 Herren, nunmehr den  Antrag des Untersuchungsausschusses  vortragen, der in der letzten Sitzung
@@ -5679,9 +5389,6 @@ und des Dankes für die Arbeit des Amtes auf zahlreichen Gebieten zu sagen, die 
 keinen Mängeln und Beanstandungen geführt
 haben.
 
--
--
-
 Wenn gelegentlich einmal gefragt worden ist,
 wer denn eigentlich den Verfassungsschutz schütze,
 so geht diese Frage ins Leere; denn ich habe nirgends in der deutschen Öffentlichkeit ernst zu nehmende Stimmen gehört, die sich grundsätzlich gegen
@@ -5758,8 +5465,6 @@ einen Tag länger im Amt gewesen wäre?
 
 (Heiterkeit und Beifall 'bei der SPD.)
 
-5996 (cid:9)
-
 Schmitt -Vockenhausen  (SPD) : Meine Damen
 und Herren, die politischen Schlußfolgerungen aus
 der Debatte sind von uns gemeinsam zu ziehen.
@@ -5791,9 +5496,7 @@ und Herren, wie widersprüchlich der Herr Minister
 in der Öffentlichkeit argumentiert hat. Es ist ver
 ständlich, daß die Öffentlichkeit durch derartige Antworten und, wie er es nennt, „Untersuchungen" des
 Innenministeriums mißtrauisch wurde. Das Miß-
--
--
--
+
 trauen war sogar in den eigenen Reihen vorhanden.
 In  der  Zeitung „Die Welt" vom 25.  September
  zitiert der angesehene Bonner Korrespondent Peter
@@ -5911,8 +5614,6 @@ in der Sache ausgezeichneten Silberstein-Bericht gelesen habe, stimme ich zu, da
 auch durch diese Untersuchung hätten geklärt werden können. Nur der Schwerpunkt  der  parlamentarischen Untersuchung war nicht identisch mit der
 Untersuchung, die Herr Silberstein durchgeführt hat.
 
--
-
 (Abg. Dr. Schäfer: Sehr richtig!)
 
 Der Silberstein-Bericht ist auch aus einem recht
@@ -5987,8 +5688,6 @@ Arbeit des Verfassungsschutzamtes.
 
 (Unruhe bei den Regierungsparteien. — Zu
 ruf von der Mitte: Beweise!?)
-
-5998 (cid:9)
 
 Schmitt-Vockenhausen
 — Meine Damen und Herren, wären Sie in den Ausschuß gekommen, hätten Sie sich alle selber ein
@@ -6186,12 +5885,6 @@ SPD)
 die dann von „Panorama" gesendet wurde, hier im
 Bundestag  sei in der Telefonzentrale eine  Abhöranlage  eingebaut.
 
--
--
--
--
--
-
 (Pfui!-Rufe und Beifall bei der CDU/CSU.)
 
 Das ist mehr als eine bürokratische Angelegenheit.
@@ -6212,8 +5905,6 @@ dem Ergebnis kommen, daß in der Öffentlichkeit
 mit Recht eine gewaltige Empörung über derartige
 Dinge entstanden ist. Ich freue mich über die lobenden und anerkennenden Worte, die heute der Kollege Schmitt-Vockenhausen für die Mitglieder des
 Verfassungsschutzes gefunden hat. Aber damals
-
-6000 (cid:9)
 
 Dr. Süsterhenn
 herrschte doch in der Öffentlichkeit der Eindruck,
@@ -6243,12 +5934,6 @@ auf Schutz der Persönlichkeitssphäre, Herr Wehner.
 
 Und, meine Damen und Herren, wenn meine Fraktion damals der Einsetzung dieses Untersuchungsausschusses zugestimmt hat, dann hat sie das nicht
 zuletzt auch getan, um einmal diese in der Öffentlichkeit verbreiteten angeblichen Mängel und Mißstände klarstellen zu lassen.
-
--
--
--
--
--
 
 Nun zum Ergebnis der Ausschußuntersuchung.
 Der  Ausschußbericht  ist, wie Sie wissen, einstimmig angenommen worden. Ich gehörte selber diesem Ausschuß an und habe diesen Bericht mit
@@ -6348,9 +6033,6 @@ die Formen der Zusammenarbeit des Verfassungsschutzes mit den alliierten Diensts
 war. Bedauerlicherweise ist sie nicht im Bilde gewesen, nicht ins Bild gekommen. Hier ist zweifellos
 eine stärkere Befassung seitens des Bundesinnenministeriums mit der Arbeit des Bundesverfassungsschutzes eine für ein geordnetes Staatswesen dringende und nicht außer acht zu lassende Notwendigkeit.
 
--
--
-
 Aber das entscheidende Faktum, das der Untersuchungsausschuß festgestellt hat, ist ja folgendes.
 Er ist in seiner Arbeit zu dem Ergebnis gekommen,
 daß trotz gewisser bürokratischer und organisatorischer Mängel ein  Mißbrauch  bei den Anregungen
@@ -6427,8 +6109,6 @@ Untersuchungsausschusses auch niemals von irgendjemandem aufgestellt worden.
 
 (Hört! Hört! bei der CDU/CSU.)
 
-6002 (cid:9)
-
 Dr. Süsterhenn
 
 Der Untersuchungsausschuß hat an einer Stelle
@@ -6502,8 +6182,6 @@ auf dieses Bündnissystem zum mindesten auswirken
 können, so daß die Entscheidung in der Frage der
 Grenzziehung weitgehend eine Angelegenheit des
 Ermessens, wenn nicht sogar der subjektiven Wertung ist.
-
--
 
 Bei einer Würdigung des  Ermittlungsergebnisses
 des Untersuchungsausschusses drängt sich einem
@@ -6623,9 +6301,6 @@ Sachverhalts, die einstimmige Feststellung gewisser
 Konsequenzen, die sich aus diesem Sachverhalt ergaben, sind doch Anzeichen dafür, daß sie aus einem
 gemeinsamen Geiste heraus erarbeitet worden sind.
 
--
--
-
 Diese Tatsache scheint mir in zweierlei Hinsicht
 von Bedeutung. Erstens zeigt die Reaktion der
 Öffentlichkeit, daß das bis dahin nicht immer sehr
@@ -6650,8 +6325,6 @@ aussprechen.
 Leider bin ich nicht in der Lage, von allen, die
 darüber hinaus an der Arbeit des Ausschusses beteiligt waren, gleich Gutes hier zu sagen. Ich könnte
 manches Beispiel anführen. Ich will mich  auf ein
-
-6004 (cid:9)
 
 Busse
 meines Erachtens recht eklatantes Beispiel beschränken, das auch für die weitere Beurteilung des Falles
@@ -6862,8 +6535,6 @@ vorliegen, sondern wir wollen auch erfahren, welche
 weiteren Konsequenzen von der Regierung daraus
 gezogen sind.
 
-6006 (cid:9)
-
 Busse
 
 Wir haben keinen Auftrag gehabt — und ich
@@ -6927,7 +6598,7 @@ einen willkommenen Anlaß, den Brief des Präsidenten dieses Hohen Hauses in das
 
 -s
 
-Der Präsident (cid:9)
+Der Präsident
 des Deutschen Bundestages
 
 Bonn, den 10. Oktober 1963
@@ -6964,9 +6635,7 @@ Irrtums waren.
 (Abg. Dr. Süsterhenn: Darf ich jetzt eine
 Zwischenfrage stellen?)
 
--
 -s
--
 
 Ich darf Ihr Erinnerungsvermögen auffrischen,
 Herr Kollege Süsterhenn, indem ich aus dem Protokoll vom 9. November 1962
@@ -7044,11 +6713,6 @@ Arbeitsgemeinschaft mit Drucksache 306 am 28. Juni
 der Vorgang. Ich wundere mich, daß Sie hier Dinge
 vorgetragen haben, die mit dieser unmittelbaren
 Arbeit nichts zu tun haben.
-
--
--
--
--
 
 (Abg. Dr. Süsterhenn: Darf ich eine Frage
 stellen?)
@@ -7129,8 +6793,6 @@ also zu untersuchen, ob der Verfassungsschutz seine
 Aufgaben, insbesondere in der  Zusammenarbeit mit
 den Alliierten,  rechtsstaatlich durchführe oder ob
 
-6008 (cid:9)
-
 Dr. Schäfer
 er hier die Bestimmungen verletze. Es war zu
 prüfen, ob das Bundesministerium des Innern seine
@@ -7162,9 +6824,6 @@ für die Leitung des Bundesamtes für Verfassungsschutz besondere Pflichten. Das
 befaßt. Ich darf insbesondere auf die in Band 3,
 Seite 368, und in Band 14, Seite 1, abgedruckten
 Urteile hinweisen. Danach ist folgendes festzuhalten.
-
--
--
 
 Art. 5 Abs. 2 des Deutschlandvertrages hätte vom
 Bundesamt für Verfassungsschutz seiner weiteren
@@ -7261,10 +6920,6 @@ sich, daß man es im  Innenministerium  nicht für notwendig hielt, eine  Kontro
 Wege der Dienstaufsicht überhaupt gemacht worden
 sei:
 
--
--
--
-
 Wir haben zunächst dafür gesorgt, daß das Amt
 effektiv arbeitet. Das schien uns das allerwichtigste zu sein, einen erfolgreichen Nachrichtendienst zu haben und sicherzustellen, daß die
 Ergebnisse des Amts so schnell wie möglich an
@@ -7339,8 +6994,6 @@ tige ich ihm. Nur eines muß ich sagen, nicht um ihn
 jetzt anzugreifen, sondern weil das eine gewisse
 Interessantheit auch für dieses Parlament als Parlament hat. Mich hat unentwegt schockiert, daß der
 Herr Vorsitzende zwar peinlich korrekt den Vorsitz
-
-6010 (cid:9)
 
 Dr. h. c. Güde
 geführt hat, aber daß er dann zu den Schlagzeilen in
@@ -7430,8 +7083,6 @@ Dr. h. c. Güde  (CDU/CSU) :  Ich habe mir für
 mein Teil vorgenommen, Tatsachen festzustellen, so
 wie ich sehe und nur so, gleichgültig, ob das dem
 Herrn Innenminister oder Ihnen paßt, und ich konzediere jedem anderen Ausschußmitglied dasselbe.
-
--
 
 Aber da Sie mich schon ansprechen, eine zweite
 allgemeine Bemerkung. Was mich noch bitterer stört:
@@ -7551,10 +7202,6 @@ naiverweise — auf den wirklichen Anlaß hingewiesen, nämlich auf den oder die
 
  Ich erinnere mich, daß mir damals von Ihrer Seite
 
--
--
--
-
 gesagt wurde, den Untersuchungsausschuß hätten
 wir nicht gebraucht, wenn der  Innenminister  schnell
 genug dementiert und widerlegt hätte. Ich könnte
@@ -7587,8 +7234,6 @@ schenfrage?)
 
 Wehner  (SPD) : Würden Sie es nicht als Akt der
 Versöhnlichkeit auffassen, daß ich nur mit  „ollen
-
-6012 (cid:9)
 
 Wehner
 Kamellen" auf den Herrn Innenminister in diesem
@@ -7688,9 +7333,6 @@ daß sie so ernst genommen werden wie eine ernste
 und veranwortungsbewußte Presse.
 
 -s
--
--
--
 
 Bitte!
 
@@ -7824,8 +7466,6 @@ nichts weiter. Da Sie ja vermutlich die Wahl vom
 letzten Sonntag sorgfältig analysieren, werden Sie
 sich das auch überlegen.
 
--
-
 Jedenfalls, das Ergebnis dieses Untersuchungsausschusses sollte man ganz sachlich und loyal zusammenzufassen versuchen: Es bleibt kein ernstlicher Vorwurf gegen den Innenminister.
 
 (Zuruf von der SPD: Sehr schön!)
@@ -7847,8 +7487,6 @@ weil das psychologisch — —
 
 (Abg. Schoettle: Diese Methode sind wir
 seit einer halben Stunde gewöhnt!)
-
-6014 (cid:9)
 
 Dr. h. c. Güde
 —  Welche Methode?
@@ -7896,11 +7534,6 @@ bis jetzt!)
 kann sich das Ministerium — nicht bloß dieser Minister, sondern das Ministerium — seit Jahren auf den
 Bericht des John-Ausschusses und den Beschluß dieses Parlaments berufen, die nur eine Kontrolle und
 nicht leitende Aufsicht empfohlen haben.
-
--
--
--
--
 
 (Abg. Dr. Schäfer: Aber Kontrolle!)
 
@@ -8067,9 +7700,6 @@ in 300 Betrieben Betriebsgruppen oder Stützpunkte,
 von denen fast 100 zu Unternehmen gehörten, die
 geheimhaltungsbedürftige Aufträge für die Landesverteidigung ausführen.
 
--
--
-
 Am 6. März 1964 warnte der niedersächsische
 Innenminister  die  Öffentlichkeit vor einer verstärkten Tätigkeit von Ostagenten,  die er auf über 10 000
 schätzte. Sie können nun sagen: „Das gehört nicht
@@ -8095,8 +7725,6 @@ Soldaten mit Panzern und Atomwaffen sich — wie
 es hieß — vor kommunistischen Flugblattverteilern
 fürchten sollten. Ich glaube und ich weiß, daß die
 SPD in diesem Punkt in der Zwischenzeit ihre Meinung gründlich geändert hat. Ich möchte aber die
-
-6016 (cid:9)
 
 Wagner
 Frage hier  wiederholen, ob es notwendig war, dieses
@@ -8134,10 +7762,6 @@ Aber ich bin  bis  heute nicht darauf gekommen, wie
 Sie eigentlich folgende zwei Fragen beantworten
 wollen: auf Grund  welcher  Informationen Sie seinerzeit zu dieser Aussage gegenüber „Panorama"
 kamen,
-
--
--
--
 
 (Sehr gut! bei der CDU/CSU)
 
@@ -8248,8 +7872,6 @@ ob es einer Demokratie frommt, wenn man versucht,
 den guten Ruf eines Ministers, wenn schon nicht
 bösartig, so doch zumindest leichtfertig, zu ruinieren.
 
--
-
 (Abg. Dr. Barzel: Sehr wahr!)
 
 Ich denke dabei insbesondere beispielsweise an
@@ -8325,8 +7947,6 @@ Verfassungsschutzamt seien gelegentlich auch ohne
 die übliche Vernichtungsverhandlung vernichtet
 worden.
 
-6018 (cid:9)
-
 Wagner
 
 Da behauptet beispielsweise die Gewerkschaftszeitung „Metall", im Bundesamt für Verfassungsschutz seien nach Einleitung der parlamentarischen
@@ -8356,9 +7976,6 @@ Der einfache Mann verfolgt das Ergebnis solcher
 Untersuchungen nicht in allen Einzelheiten. Bei ihm
 bleibt das Bild haften, das in einer grotesken Verzerrung über den Verfassungsschutz entworfen
 wurde,
-
--
--
 
 und ich meine, auch mit durch Ihre Schuld, meine
 Kollegen von der Opposition.
@@ -8486,8 +8103,6 @@ Meine Damen und Herren, wie bedeutend diese
 Debatte ist, geht schon daraus hervor, daß sich
 weder der Herr Bundeskanzler noch der Herr Vizekanzler hier sehen lassen.
 
--
-
 (Zuruf von der CDU/CSU: Weil sie nach
 Berlin müssen!)
 
@@ -8577,8 +8192,6 @@ Abgeordnete Dorn.
 
 Dorn  (FDP) : Herr Präsident! Meine sehr verehrten Damen und Herren! Der Herr Kollege  Kohut
 
-6020 (cid:9)
-
 Dorn
 hat von dem Abgeordnetenrecht eines jeden Mitglieds dieses Hauses Gebrauch gemacht
 
@@ -8606,8 +8219,6 @@ es sich hier um Fragen des Verfahrens, der bürokratischen Ordnungsliebe handelt
 Süsterhenn, so haben wir die Dinge nicht aufgefaßt,
 als wir dem Ausschußbericht unsere Zustimmung
 gaben.
-
--
 
 Herr Kollege Wagner hat in seinen Schlußausführungen gesagt: Es bedurfte dieses  Untersuchungsausschusses  nicht, und er hat weiter gesagt, es sei
 viel Porzellan zerschlagen worden. Herr Kollege
@@ -8736,8 +8347,6 @@ würde Sie herzlich bitten, auch einmal das zu lesen,
 was Herr Silberstein über die Konspiration innerhalb des Amtes, der Abteilungen und der Personen
 untereinander, geschrieben hat.
 
--
-
 (Hört! Hört! bei der SPD.)
 
 Meine Damen und Herren, lassen Sie mich nun
@@ -8812,8 +8421,6 @@ die Einleitung der Überwachung sehr weit ausgelegt wurden. — Das steht alles 
 Lassen Sie mich dann noch zu einigen anderen
 Dingen etwas sagen. Er hat in der 57. Sitzung des
 
-6022 (cid:9)
-
 Dorn
 Innenausschusses eine Reihe von Behauptungen
 aufgestellt, insgesamt vier an der Zahl, die eindeu
@@ -8854,10 +8461,6 @@ Alliierten entgegengenommen. Auch das trifft nicht
 zu. Er hat darüber hinaus erklärt: Ausgewertetes
 Material ist unter Aufnahme einer Vernichtungsverhandlung vernichtet worden. Die Beweisaufnahme
 hat das Gegenteil festgestellt.
-
--
--
--
 
 (Hört! Hört! bei der SPD.)
 
@@ -9068,8 +8671,6 @@ Der Herr Kollege Wagner sagt hier: Das war
 ein Schauspiel. Meine Damen und Herren, die Arbeiten des Untersuchungsausschusses waren kein
 Schauspiel. Aber ein Schauspiel waren die ministe-
 
-6024 (cid:9)
-
 Schmitt-Vockenhausen
 riellen Erklärungen vom 5. September bis zum Ende
 dieser Geschichte.
@@ -9103,8 +8704,6 @@ los!)
 Ich erteile das Wort dem Herrn Bundesminister
 
 des Innern.
-
--
 
 Höcherl,  Bundesminister des Innern: Herr Präsident! Meine sehr verehrten Damen und Herren!
 Ich darf eine Bemerkung vorweg machen: ich möchte
@@ -9209,7 +8808,7 @@ die Behauptungen, die das ganze Verfahren ausgelöst haben.
 Nun darf ich Sie doch auf folgendes aufmerksam
 machen. Die erste Vorsorge über die organisatorischen Bestimmungen hinaus, die man in der Richtung
 der Rechtsstaatlichkeit treffen konnte, lag im  personellen Bereich.  An die Spitze des Amtes wurde damals, wie Sie wissen, Herr John gesetzt, der durch
--
+
 den Ausschuß gegangen ist, der zur Beurteilung
 über die Einstellung und den Aufbau des Auswärtigen Amtes eingesetzt war; er hat auch sehr viele
 Gutpunkte von allen möglichen Seiten bekommen.
@@ -9292,8 +8891,6 @@ Material für ungerechtfertigte Angriffe hätte.
 Nun  war die  große Frage, in welcher Form die
 ersten  Organisationsverfügungen  zu erlassen waren.
 
-6026 (cid:9)
-
 Bundesminister Höcherl
 Die damalige Leitung des Amtes  hat  sich an einem
 Beispiel orientiert, das uns in vielen Bereichen und
@@ -9328,8 +8925,6 @@ sind noch mit den Einzelheiten aus dieser Zeit aus
 eigenem Erleben und aus der großen Debatte vom
 Juli und vom September 1954 genauestens vertraut.
 Andere wissen aus dem John-Untersuchungsausschuß ebenfalls sehr genau Bescheid.
-
--
 
 Ich darf hier in aller Form klarstellen: wer auf die
 Entstehungsgeschichte zurückblickt und wer sich das
@@ -9514,8 +9109,6 @@ Bundesamt eine sehr straffe Aufsicht ausgeübt,
 fast als ob es sich um eine Abteilung des Bundesinnenministeriums handeln würde. Im Ausschuß ist diskutiert worden, ob die Aufsichtsbehörde die eigene Aufgabe und die Aufgabe
 des Amtes hierbei richtig gesehen habe und ob
 
-6028 (cid:9)
-
 Bundesminister Höcherl
 
 vielleicht die eingetretene Entwicklung vermieden worden wäre, wenn John ein größeres Maß
@@ -9557,7 +9150,6 @@ sonst gegenüber einer oberen Bundesbehörde der
 Fall gewesen sei.
 
 -g
--
 
 Da war der frühere Abschnitt: 1957 die Willenskundgebung des Parlaments. Und, meine Damen und
 Herren, jetzt möchte ich denjenigen sehen, der angesichts einer solchen Entwicklung den ersten Stein
@@ -9672,8 +9264,6 @@ diesen unseren heutigen Verbündeten das Recht
 bestreiten will, die Sicherungsmaßnahmen zu treffen, die sie für notwendig halten. Darauf geht doch
 alles hinaus.
 
--
-
 Herr Dorn, was Sie mit der  Konsultation als einem
 Lieblingskind von Ihnen immer ansprechen, geht
 weit in den außenpolitischen Bereich hinein.
@@ -9762,8 +9352,6 @@ uns doch recht vorbildlich erscheint, der kanadische
 Innenminister, ein Liberaler, und wie sein Vorgänger, ein Konservativer, auf eine solche, im selben
 zeitlichen Zusammenhang gestellte Anfrage geantwortet hat. Die Anfrage im kanadischen Parlament
 lautete:
-
-6030 (cid:9)
 
 Bundesminister Höcherl
 
@@ -9963,8 +9551,6 @@ diese Erklärung ist, hier mitteilen.
 Höcherl,  Bundesminister des Innern: Ja, wir haben schon im Innenausschuß darüber gesprochen. Ich
 werde Ihnen das persönlich mitteilen.
 
--
-
 Dr. Schäfer  (SPD) : Jetzt hier, wenn Sie zitieren,
 Herr Minister! Von wem stammt es, wer hat es
 unterschrieben, welcher Kopf ist oben?
@@ -9994,8 +9580,6 @@ hätte auslösen können. Sie haben zwei klassische
 Zeugen, auf die Sie nicht stolz sein können; aber
 das weiß man nie bei Zeugen.  Was  Pätsch  und
 Bethke ausgesagt haben, war interessant. Die beiden, die den Beweis bringen sollten, daß die Dinge
-
-6032 (cid:9)
 
 Bundesminister Höcherl
 nicht rechtlich und gesetzlich vollzogen werden,
@@ -10028,9 +9612,6 @@ stellen!)
 — Ja, ja! Aber wenn Sie  so  weitermachen wie in
 Baden-Württemberg, müssen Sie sich mit einem aus
 unseren Reihen noch lange zufriedengeben.
-
--
--
 
 (Beifall bei der CDU/CSU. — Zurufe von
 der SPD.)
@@ -10201,13 +9782,6 @@ diese ganzen Vorgänge, die sehr viel Unangenehmes und sehr Peinliches und Ehren
 alles mögliche enthalten, einen Strich ziehen könnten, damit wir uns in dieser bedeutsamen Frage der
 nationalen Sicherheit in Zukunft auf einer gemeinsamen Front bewegen können.
 
--
--
--
--
--
--
-
 Meine Damen und Herren, ich darf schließen mit
 einem Wort von Kennedy, der sich auch zu diesem
 Bereich geäußert hat: Die Erfolge dieser Männer,
@@ -10234,8 +9808,6 @@ Vockenhausen: Die Debatte ist wieder er
 Schmitt-Vockenhausen  (SPD) : Herr Präsident!
 Meine Damen und Herren! Der Herr Bundesinnenminister hat jetzt eine Stunde gebraucht, um an dem
 eigentlichen Kern der Probleme vorbeizureden.
-
-6034 (cid:9)
 
 Schmitt-Vockenhausen
 Er hat nämlich die ganze Stunde dazu gebraucht, um
@@ -10388,8 +9960,6 @@ Ich rufe auf Nr. 2 und dazu den Antrag der Frak-
 
 tion der SPD auf Umdruck 445, Buchstabe a.
 
--
-
 Das Wort hat der Herr Abgeordneter Jacobi.
 
 — Ich bitte um Ruhe, damit wir die Verhandlungen
@@ -10460,8 +10030,6 @@ Hinzu kommt, daß in § 538 eine Schadensersatzpflicht des Vermieters auch ohne 
 dem Gedanken heraus, daß die Haftung auf der
 stillschweigenden Garantie des Vermieters beruht,
 
-6036 (cid:9)
-
 Dr.  Hauser
 die Mietsache im vertragsgemäßen Zustand zu über
 geben und zu erhalten.
@@ -10494,8 +10062,7 @@ sich eine Vorschrift, wie sie die Opposition aufzunehmen beantragt, nicht zuguns
 (Abg. Jacobi [Köln] : Wer lacht da?)
 
 Schließlich erstreben wir nun auch einen ver-
--
--
+
 nünftigen  Interessenausgleich  zwischen Mieter und
 Vermieter, der nach unserer Überzeugung gerade
 hier ohne Ausschlußklausel weit eher erreicht ist
@@ -10681,8 +10248,6 @@ hier vorliegt, sondern eine Formulierung, die ich
 als Verbesserung bezeichne. Damit distanziere ich
 mich nicht von der Vorlage.
 
-6038 (cid:9)
-
 Vizepräsident Dr. Jaeger:  Das Wort hat der
 
 Abgeordnete Busse.
@@ -10716,8 +10281,6 @@ das Handzeichen. — Ich bitte um die Gegenprobe.
 Ich rufe auf Nr. 5 und dazu den Änderungsantrag
 der Fraktion der SPD auf Umdruck 445 unter Buchstabe c. Das Wort hat Herr Abgeordneter Dr.
 Reischl.
-
--
 
 Dr. Reischl  (SPD) : Herr Präsident! Meine Damen
 und Herren! Ich darf zunächst eine Berichtigung zu
@@ -10901,8 +10464,6 @@ immerhin 18,1 %. Sie stellen es immer so dar, als
 ob  die  Hausbesitzer Krösusse wären. Dabei muß
 man andererseits auch den gerechten sozialen Ausgleich zwischen Hausbesitzer und Mieter in Rücksicht stellen.
 
-6040 (cid:9)
-
 Vizepräsident Dr. Jaeger:  Herr Abgeordneter
 Hauser,  ,gestatten Sie eine Zwischenfrage des Abgeordneten Jahn?
 
@@ -10976,8 +10537,6 @@ wünscht, den bitte ich um das Handzeichen. — Ich
 bitte um die Gegenprobe. — Das letzte war die
 Mehrheit; abgelehnt.
 
--
-
 Ich komme zu Nr. 5 in der Ausschußfassung. Wer
 zuzustimmen wünscht, den bitte ich um das Handzeichen. — Ich bitte um die Gegenprobe. — Mit derselben Mehrheit angenommen.
 
@@ -11050,7 +10609,7 @@ neben vielen anderen Bedenken, die ich hier im
 einzelnen nicht mehr vortragen will, einer der
 Gründe dafür, daß wir sagen: auf dieser Grundlage
 des § 556 a ist es einfach unmöglich, auf die Dauer
--
+
 einen befriedigenden, einen ausreichenden Schutz
 des Mieters zu gewährleisten.
 
@@ -11131,8 +10690,6 @@ Nun, wenn Sie diesen halben Schritt machen, dann
 tun Sie doch den ganzen und geben Sie zu, daß
 diese ganze Konstruktion an sich eine falsche, feh-
 
-6042 (cid:9)
-
 Jahn
 lerhafte, schädliche und für den Mieter nachteilige
 Konstruktion ist.
@@ -11170,9 +10727,6 @@ herrscht
 
 und das Godesberger Programm noch keinerlei
 Wunder bei Ihnen bewirkt oder eine Revision rückständiger wohnungsbaupolitischer Konzeption gebracht hat.
-
--
--
 
 — Bitte, ich zitiere bloß. Denn in der Tat: auf diesem Gebiet hinken Sie noch auf den Krücken eines
 staatlichen Dirigismus, und die Vorstellung, daß
@@ -11286,8 +10840,6 @@ Ziffer 2. Wer zuzustimmen wünscht, den bitte ich um
 das Handzeichen. — Ich bitte um die Gegenprobe. —
 Abgelehnt.
 
--
-
 Ich rufe auf den Eventualantrag unter Ziffer 3.
 Wer zuzustimmen wünscht, den bitte ich um das
 Handzeichen. — Ich bitte um die Gegenprobe. —
@@ -11363,8 +10915,6 @@ daher zu rechtfertigen ist, in denen die Überlassung der Werkswohnungen besonde
 mit dem Dienstverhältnis gekoppelt ist. Für
 diese Fälle der sogenannten funktionsgebundenen Werkswohnungen schlägt der Ausschuß
 vor, daß das Mietverhältnis unter  Einhaltung
-
-6044 (cid:9)
 
 Jacobi (Köln)
 
@@ -11446,7 +10996,6 @@ haben. Es ist das Ergebnis sehr langer und gründlicher Beratungen im Rechtsauss
 was hier heute an Einzelproblemen angeklungen
 ist, eingehend durchgesprochen worden ist.
 
--
 -d
 
 Ich glaube, daß die Regelung den berechtigten
@@ -11516,10 +11065,6 @@ beispielsweise über zehn Jahre bestehen, im Vorschlag des Rechtsausschusses nic
 sondern eine verkürzte Kündigungsfrist, die dort
 als „gesetzliche" bezeichnet wurde — und darin
 bestand wohl das Mißverständnis —, gewählt worden ist, nämlich eine dreimonatige Kündigungsfrist.
-
--
--
--
 
 Wir glauben — und das haben wir auch mit un-
 
@@ -11591,8 +11136,6 @@ bei den Familienangehörigen ein wichtiger Grund
 vorliegen müsse, damit die Kündigung erfolgen
 könne. Deswegen werden wir Freien Demokraten
 
-6046 (cid:9)
-
 Frau  Dr.  Diemer-Nicolaus
 für .die nach unserer Auffassung klarere Formulierung des Rechtsausschusses, der auch noch die Sozialklausel eingefügt hat, stimmen; wir halten die
 Fassung des Rechtsausschusses für eine Verbesserung.
@@ -11629,9 +11172,6 @@ Wort wird nicht gewünscht. Wer zuzustimmen
 wünscht, den bitte ich um ein Handzeichen. — Ich
 bitte um die Gegenprobe. — Enthaltungen? — Bei
 zahlreichen Enthaltungen und einigen Gegenstimmen angenommen.
-
--
--
 
 Ich komme zu dem Änderungsantrag der Fraktion
 der SPD auf Umdruck 444. Sollen die Buchstaben a,
@@ -11738,8 +11278,6 @@ Vizepräsident Dr. Jaeger:  Das Wort hat der
 
 Abgeordnete Dr. Weber (Koblenz).
 
--
-
 Dr. Weber  (Koblenz) (CDU/CSU) : Herr Präsident!
 Meine sehr geehrten Damen und Herren! Namens
 der CDU/CSU-Fraktion bitte ich Sie, die Änderungsanträge abzulehnen. Wir sehen keinen durchschlagenden Grund, von einer Regelung, die die Zivilprozeßordnung seit dem Jahre 1897 hat, abzuweichen. Wir sind der Meinung, daß gerade die nunmehr durch das soziale Mietrecht eingeführten langen  Kündigungsfristen  mit dem Widerspruchsrecht
@@ -11815,8 +11353,6 @@ dazu!)
 
 Ich brauche also dem, was Herr Kollege Reischl
 zu § 257 gesagt hat, nicht mehr viel hinzuzufügen.
-
-6048 (cid:9)
 
 Bundesminister Dr. Bucher
 Nur noch ein Gesichtspunkt: Wenn der Mieter, ver
@@ -11912,13 +11448,6 @@ Wer dem zuzustimmen wünscht, den bitte ich um
 das Handzeichen. — Ich bitte um die Gegenprobe. —
 Das erste war die Mehrheit; angenommen.
 
--
--
--
--
--
--
-
 Wir kommen zum Änderungsantrag der Fraktion
 der SPD Umdruck 444 Buchstabe b), in Nr. 2 in
 § 308 a) Abs. 1 die Fassung der Regierungsvorlage
@@ -11985,7 +11514,7 @@ Die Sitzung ist geschlossen.
 
 Anlage 1
 
-Abgeordnete(r) (cid:9)
+Abgeordnete(r)
 
 beurlaubt bis einschließlich
 
@@ -11993,7 +11522,7 @@ Anlagen zum Stenographischen Bericht
 
 Liste der beurlaubten Abgeordneten
 
-Abgeordneter) (cid:9)
+Abgeordneter)
 
 beurlaubt bis einschließlich
 
@@ -12074,9 +11603,7 @@ Wullenhaupt
 Für die Teilnahme an Sitzungen des Europäischen
 Parlaments
 
-6052 (cid:9)
-
-Anlage 2 (cid:9)
+Anlage 2
 
 Welthandel mit Getreide
 
@@ -12104,15 +11631,15 @@ Ausfuhr
 
 Einfuhr
 
-Bundesrepublik  (cid:9)
+Bundesrepublik
 
 Belgien/Luxemburg
 
-Frankreich  (cid:9)
+Frankreich
 
 Italien
 
-Niederlande  (cid:9)
+Niederlande
 
 EWG-Länder
 
@@ -12149,15 +11676,11 @@ bzw. Einfuhr
 
 — 1 737
 
-— (cid:9)
-
 + 1 712
 
 — 1 074
 
-— (cid:9)
-
-zusammen  (cid:9)
+zusammen
 
 5 502
 
@@ -12171,7 +11694,7 @@ zusammen  (cid:9)
 
 — 2 383
 
-Dänemark  (cid:9)
+Dänemark
 
 Finnland
 
@@ -12179,25 +11702,25 @@ Griechenland
 
 Großbritannien
 
-Irland  (cid:9)
+Irland
 
-Island  (cid:9)
+Island
 
-Norwegen  (cid:9)
+Norwegen
 
-Osterreich  (cid:9)
+Osterreich
 
 Portugal
 
-Schweden  (cid:9)
+Schweden
 
 Schweiz
 
-Spanien  (cid:9)
+Spanien
 
 Türkei
 
-Jugoslawien i (cid:9)
+Jugoslawien i
 
 SBZ  1)
 
@@ -12215,64 +11738,21 @@ Ungarn 1)
 
 UdSSR 1)
 
-Kanada  (cid:9)
+Kanada
 
-USA  (cid:9)
+USA
 
-Kuba  (cid:9)
+Kuba
 
 Mexiko
-
-—
-
-—
-
-—
-
-—
-
-—
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
 
 9 325
 
 — 9 035
 
--
--
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
 1 534
 
 — 1 526
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
 
 .659
 
@@ -12280,71 +11760,15 @@ Mexiko
 
 — 1 291
 
-+ (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
++
 
 4 549
 
 — 4 496
 
-—
++
 
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-+ (cid:9)
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-+ (cid:9)
-
-— (cid:9)
-
-— (cid:9)
++
 
 2 239
 
@@ -12358,8 +11782,6 @@ Mexiko
 
 31 925
 
-—
-
 + 9 651
 
 +31 462
@@ -12368,59 +11790,13 @@ Mexiko
 
 18 291
 
-—
-
 + 9 420
 
 +18 121
 
-— (cid:9)
-
-— (cid:9)
-
-—
-
-—
-
 .
 
-— (cid:9)
-
 1 )  nur  Handel  mit Ländern  der  westlichen  Welt
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
 
 no ch : Welthandel mit Getreide
 
@@ -12449,15 +11825,11 @@ bzw.  Einfuhr
 berschuß
 (—)
 
-—
-
 2 192
 
 +5 186
 
 — 2 190
-
-—
 
 2 145
 
@@ -12469,13 +11841,13 @@ Argentinien
 
 Brasilien
 
-Chile  (cid:9)
+Chile
 
 Kolumbien
 
-Paraguay  (cid:9)
+Paraguay
 
-Peru  (cid:9)
+Peru
 
 Uruguay
 
@@ -12483,33 +11855,33 @@ Venezuela
 
 Irak
 
-Israel  (cid:9)
+Israel
 
-Jordanien  (cid:9)
+Jordanien
 
-Libanon  (cid:9)
+Libanon
 
 Syrien
 
-Ceylon  (cid:9)
+Ceylon
 
-China Taiwan  (cid:9)
+China Taiwan
 
-Hongkong  (cid:9)
+Hongkong
 
-Indien  (cid:9)
+Indien
 
 Indonesien
 
-Japan  (cid:9)
+Japan
 
-Korea, Rep.  (cid:9)
+Korea, Rep.
 
 Malaya-Singapur
 
 Pakistan
 
-Philippinen  (cid:9)
+Philippinen
 
 Thailand
 
@@ -12518,44 +11890,28 @@ VR China 1)
 Algerien
 
 Kenia,  Uganda,
-Tanganjika  (cid:9)
+Tanganjika
 
-Marokko  (cid:9)
+Marokko
 
-Rhodos u.  Nj assaland (cid:9)
-Rep.  Südafrika  (cid:9)
+Rhodos u.  Nj assaland
+Rep.  Südafrika
 
-Rep. Sudan  (cid:9)
+Rep. Sudan
 
-Tunesien  (cid:9)
+Tunesien
 
-Ver. Arab. Republik  (cid:9)
+Ver. Arab. Republik
 
-Australien  (cid:9)
+Australien
 
-Neuseeland  (cid:9)
+Neuseeland
 
 5 186
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
 
 1 624
 
 6 297
-
-—
 
 3 613
 
@@ -12563,110 +11919,32 @@ Neuseeland  (cid:9)
 
 1 255
 
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-+ (cid:9)
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-424 (cid:9)
++
 
 .
 
 — 3 613
 
-— (cid:9)
-
 — 5 158
-
-— (cid:9)
-
-— (cid:9)
 
 — 1 255
 
-— (cid:9)
-
-+ (cid:9)
++
 
 4 577
 
 — 4 552
 
-— (cid:9)
-
-— (cid:9)
-
- — (cid:9)
-
-+ (cid:9)
++
 + 1 476
 
-+ (cid:9)
-— (cid:9)
++
 
 1 695
 
 — 1 '683
 
 2 043
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
-
-—
 
 -ü
 -ü
@@ -12675,68 +11953,19 @@ Neuseeland  (cid:9)
 
 2 757
 
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-± (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
+±
 
 — 3 524
 
-— (cid:9)
-
 — 2 684
-
-— (cid:9)
-
-— (cid:9)
 
 1 241
 
 — 1 241
 
-— (cid:9)
-
-— (cid:9)
-
 3 839
 
 — 3 839
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
-
-— (cid:9)
 
 1 473
 
@@ -12744,23 +11973,13 @@ Neuseeland  (cid:9)
 
 + 5 349
 
-— (cid:9)
-
-+ (cid:9)
-
-—
++
 
 + 6 297
 
-— (cid:9)
-
 5 349
 
-—
-
-—
-
-Welt  insgesamt 2)  (cid:9)
+Welt  insgesamt 2)
 
 67 912
 
@@ -12773,34 +11992,6 @@ Welt  insgesamt 2)  (cid:9)
 39 893
 
 Quelle: FAO, World Grain Trade Statistics
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-(cid:9)
-
-6054 (cid:9)
 
 Schwellenpreise, cif-Preise und Abschöpfungen gegenüber Drittländern
 
@@ -12870,15 +12061,11 @@ Bundesrepublik  Deutschland
 
 47,80  22,91  24,98  43,60  23,75  19,89  41,80  20,22  21,54  41,80  24,73
 
-17,07
-
 49,94  25,85  24,10  45,74  29,55
 
 16,15  43,45  26,49
 
 16,96  43,45  25,01
-
-18,42
 
 Februar
 
@@ -12887,8 +12074,6 @@ Februar
 19,60  43,45  25,19
 
 17,79  43,45  23,83
-
-19,36
 
 1963  August
 
@@ -12916,11 +12101,7 @@ Februar
 
 9,20  32,00  23,36
 
-6,40
-
-7,36
 Ab
-8,56
 
 Belgien
 
@@ -12932,13 +12113,9 @@ Frankreich
 
 16,34  31,73  23,76
 
-8,00
-
 32,21  20,54
 
 11,70  38,35  24,73
-
-13,64
 
 1964  Januar
 
@@ -12946,13 +12123,9 @@ Frankreich
 
 14,90  33,35  29,52
 
-3,81
-
 33,75  26,29
 
 7,44  36,22  24,78
-
-11,41
 
 Februar
 
@@ -12964,8 +12137,6 @@ Februar
 
 8,74  36,60  23,76
 
-12,82
-
 1963  August
 
 45,12  22,83  22,36  39,48  24,55
@@ -12973,8 +12144,6 @@ Februar
 14,94  26,36  21,32
 
 5,06  24,40  25,53
-
--
 
 Italien
 
@@ -12986,35 +12155,21 @@ Italien
 
 -  25,72  25,95
 
-0,08
+-schöp-
+-schöp-
 
--schöp-
--schöp-
--
 -l
 Schwel-l
--
--
--
--
--
--
+
 -p
--
--
+
 -l
--
--
+
 -p
-9,91
 
 26,36  26,28
 
 25,72  24,94
-
-0,31
-
-0,77
 
 Luxemburg
 
@@ -13051,8 +12206,6 @@ I39,39  22,43
 
 Februar
 
-41,71
-
 24,85  16,86  28,34  27,93
 
 0,49  31,60
@@ -13068,18 +12221,6 @@ sich aus dieser Rechnung ergibt, ist dann der für die Ermittlung der Auschöpfu
 
 Quelle : Generaldirektion Landwirtschaft: Abteilung Bilanzen, Studien, Information - Agrarmärkte, Preise -
 
-6,40
-
-7,36
-
-8,56
-
-5,07
-
-4,96
-
-6,00
-
 1964  Januar
 
 Februar
@@ -13090,7 +12231,7 @@ Februar
 
 Februar
 
-Anlage 3 (cid:9)
+Anlage 3
 
 Umdruck 440
 
@@ -13117,20 +12258,20 @@ Bonn, den 28. April 1964
 
 Schmidt (Braunschweig)
 
-Dr. Müller-Hermann (cid:9)
+Dr. Müller-Hermann
 Dr. Barzel und Fraktion Seibert
 Seifriz
-Dr. Bleiß (cid:9)
+Dr. Bleiß
 Erler und Fraktion
-Börner (cid:9)
+Börner
 Rademacher
-Iven (Düren) (cid:9)
+Iven (Düren)
 Müller (Nordenhamm) Freiherr von Kühlmann
-Regling (cid:9)
+Regling
 
 Stumm und Fraktion
 
-Anlage 4 (cid:9)
+Anlage 4
 
 Umdruck 451
 
@@ -13138,9 +12279,7 @@ Umdruck 451
 FDP zur zweiten Beratung des von den Fraktionen
 der CDU/CSU, FDP eingebrachten Entwurfs eines
 Gesetzes zur Förderung eines  freiwilligen sozialen
--
--
--
+
 Jahres  (Drucksachen IV/986, IV/2138).
 
 Der Bundestag wolle beschließen:
@@ -13155,7 +12294,7 @@ Bonn, den 29. April 1964
 Dr. Barzel und Fraktion
 Mischnik und Fraktion
 
-Anlage 5 (cid:9)
+Anlage 5
 
 Umdruck 442
 
@@ -13180,7 +12319,7 @@ Bonn, den 28. April 1964
 Dr. Dittrich
 Dr. Jungmann
 
-Anlage 6 (cid:9)
+Anlage 6
 
 Umdruck 441
 
@@ -13222,7 +12361,7 @@ Frau Dr. Hubert
 Dr. Schmidt (Offenbach)
 Erler und Fraktion
 
-Anlage 7 (cid:9)
+Anlage 7
 
 Umdruck 439
 
@@ -13235,11 +12374,9 @@ EWG auf Gruppen von Vereinbarungen, Beschlüssen
 und aufeinander abgestimmten Verhaltensweisen
 (Drucksachen IV/2024, IV/2177).
 
-6056 (cid:9)
-
 1  Der Bundestag wolle beschließen:
 
-Anlage 9 (cid:9)
+Anlage 9
 
 Umdruck 444
 
@@ -13261,14 +12398,14 @@ des Rats erlassen werden können."
 
 Bonn, den 28. April 1964
 
-Dr. Böhm (Frankfurt) (cid:9)
-Arndgen (cid:9)
-Dr.  Arnold (cid:9)
-Blumenfeld (cid:9)
-Harnischfeger (cid:9)
-Katzer (cid:9)
-Klein (Saarbrücken) (cid:9)
-Kuntscher (cid:9)
+Dr. Böhm (Frankfurt)
+Arndgen
+Dr.  Arnold
+Blumenfeld
+Harnischfeger
+Katzer
+Klein (Saarbrücken)
+Kuntscher
 Dr. Luda
 
 Rauhaus
@@ -13280,14 +12417,12 @@ Dr. Süsterhenn
 Dr. Willeke
 Wittmer-Eigenbrodt
 
-Anlage 8 (cid:9)
+Anlage 8
 
 Umdruck 453
 
 Änderungsantrag  der Fraktion der SPD zum
 Antrag des 2. Untersuchungsausschusses  gemäß Antrag der Fraktion der SPD (Drucksache IV/2170)
-
--
 
 Der Bundestag wolle beschließen:
 
@@ -13320,7 +12455,7 @@ Bonn, den 29. April 1964
 
 Erler und Fraktion
 
-Anlage 10 (cid:9)
+Anlage 10
 
 Umdruck 445
 
@@ -13373,7 +12508,7 @@ Erler und Fraktion
 
 Erler und Fraktion
 
-Anlage 11 (cid:9)
+Anlage 11
 
 Umdruck 446
 
@@ -13405,8 +12540,6 @@ lassung der gebotenen Sorgfalt den Mietraum oder das Gebäude erheblich gefährd
 
 für sich, die zu seinem Hausstand gehörigen Personen oder Familienangehörigen
 benötigt oder
-
--
 
 verhältnisses an einer gerechtfertigten
 wirtschaftlichen Verwertung des Grundstücks gehindert und dadurch erhebliche
@@ -13481,8 +12614,6 @@ setzbuchs — wird Nr. 14 wie folgt gefaßt:
 
 sonderer Umstände des Einzelfalls gestrichen.
 
-6058 (cid:9)
-
 (unverändert nach Drucksache IV/2195 S. 5)'.
 
 Bonn,  den 29. April 1964
@@ -13495,7 +12626,7 @@ Erler und Fraktion
 
 § 2
 
-Anlage 12 (cid:9)
+Anlage 12
 
 Umdruck 447
 
@@ -13519,9 +12650,6 @@ seiner unmittelbaren Nähe zur Stätte der Dienstleistung erfordert, so gelten, 
 des Dienstverhältnisses der Wohnraum aus dem
 gleichen Grunde für einen anderen zur Dienstleistung
 Verpflichteten benötigt wird, die folgenden besonderen Vorschriften:
-
--
--
 
 ist eine Kündigung des Vermieters spätestens
 am dritten Werktag einer Kalendermonats für
@@ -13569,7 +12697,7 @@ Die Bundesgebührenordnung für Rechtsanwälte
 vom 26. Juli 1957 (Bundesgesetzbl. I S. 861 S. 905)
 wird wie folgt geändert:
 
-Anlage 13 (cid:9)
+Anlage 13
 
 Umdruck 448
 
@@ -13599,7 +12727,7 @@ Bonn, den 29. April 1964
 
 Erler und Fraktion
 
-Anlage 14 (cid:9)
+Anlage 14
 
 Umdruck 452
 
@@ -13714,8 +12842,6 @@ einigen wenigen kapitalstärkeren, bodenunabhängigen Veredelungsbetrieben genut
 unseren Vorschlägen wird eine möglichst breite
 Streuung der Veredelungsbetriebe durch eine Viel-
 
-6060 (cid:9)
-
 zahl rationell produzierender bäuerlicher Schweine-
 und Geflügelhalter erreicht.
 
@@ -13745,8 +12871,6 @@ weil wir bislang in der Bundesrepublik nur gut
 Spielraum ab; deswegen brauchen Einschränkungen
 in der Produktionshöhe für den einzelnen Betrieb
 nach unserer Ansicht nicht vorgenommen zu werden.
-
--
 
 Anlage 16
 
@@ -13872,8 +12996,6 @@ und wie es sich übrigens auch aus Ihrer Anfrage —
 sehr geehrte Frau Kollegin — ergibt, kann damit
 nicht vollständig und richtig sein.
 
--
-
 Es sind nämlich bei der Einrichtung eines Fernsprechanschlusses nicht nur die reinen Installationsarbeiten, sondern sogar überwiegend auch in den
 verschiedensten Betriebsstellen der Deutschen Bundespost und z. T. an den Schalteinrichtungen des
 Ortsleitungsnetzes Arbeiten erforderlich. Ferner ist
@@ -13930,8 +13052,6 @@ geworden.
 Der Fernschreibverkehr ist im gesamten Bundesgebiet, also auch im Raume Passau voll automatisiert. Im übrigen ist die Telex-Vermittlungsstelle
 Passau für die Anschaltung weiterer Fernschreibteilnehmer auch noch aufnahmefähig.
 
-6062 (cid:9)
-
 Anlage 20
 
 Schriftliche Antwort
@@ -13960,8 +13080,6 @@ Regel nicht verschuldete Situation sowohl zu
 unliebsamen Verzögerungen im Straßenbau als
 auch zu kostspieligen Improvisationen und Störungen und Verschiebungen im Ablauf der planmäßigen Investitionsmaßnahmen der Deutschen
 Bundespost führt.
-
--
 
 kommt es vor, daß neue Straßen- und Gehweg
 decken durch die Deutsche Bundespost zum Einbau der Kabel später wieder aufgerissen werden. Die finanziellen Möglichkeiten der Deutschen Bundespost reichen hier nicht aus, um in
@@ -14122,8 +13240,6 @@ der öffentlichen Wasserversorgung und im öffent
 
 1960, nach Abschluß der Auswertung der Erhebungsergebnisse für 1957, wurden die Verhandlungen über die zweite Verordnung wieder aufgenommen. Dabei mußte längere Zeit rüber den Inhalt der
 Erhebungsbögen und über das Erhebungsjahr verhandelt werden.
-
--
 
 In. der Öffentlichkeit sind wiederholt Besorgnisse
 über die größere Giftigkeit der neuen Detergentien

@@ -16,25 +16,43 @@ Cleaning steps (applied in order)
     Old format : "Deutscher Bundestag — N. Sitzung. Bonn, <Weekday>, den <date>"
     New format : "Deutscher Bundestag – WW. Wahlperiode – NN. Sitzung. Berlin, ..."
     Both the full-line variant and OCR-broken multi-line variants are handled.
-3.  Remove standalone page numbers (a line that is only digits, optionally
-    preceded/followed by whitespace, and optionally followed by a Roman numeral
-    prefix such as "II" or "III" used in the table-of-contents pages).
-4.  Remove the table of contents block.
-    The ToC is identified as the block between the session heading and the
-    first substantive speech line. It consists of speaker-name / agenda-item
-    lines paired with dot-leaders and page numbers (e.g. "Dr. Müller . . . 42").
-    A conservative anchor-based approach is used so that real speech is never
-    accidentally removed.
-5.  Remove footnote lines.
-    Footnotes are lines that start with a footnote marker (*, †, a), b), 1),
-    digits followed by ) or .) and contain short explanatory text, OR lines
-    that are clearly annex/footer material ("* aufgrund gesetzlichen
-    Mutterschutzes", ISSN lines, printer colophon lines, etc.).
-6.  Remove column/margin position markers left by OCR: isolated "(A)", "(B)",
-    "(C)", "(D)" tokens that appear on their own line or inline.
-7.  Rejoin words broken by end-of-line hyphenation (applies to all sessions;
+3.  Remove CID character-ID artefacts left by pdftotext when it cannot map
+    a glyph to Unicode, e.g. "(cid:9)", "(cid:13)".
+4.  Remove the table of contents block.  (Runs BEFORE page-number stripping
+    so that ToC entries still carry their page-reference suffixes, which the
+    detection regex relies on.)
+    Strategy: scan the preamble (everything before the first substantive
+    proceedings line) for lines that look like ToC entries — dot-leader,
+    wide-space, or short-dot separator followed by a page/column reference.
+    Also removes spaced-letter headings ("I n h a l t :").
+    The proceedings anchor is found by a two-pass approach:
+      Pass A — unambiguous opener: "Beginn: HH.MM Uhr" or
+               "Die Sitzung wird … eröffnet".
+      Pass B — fallback: first presidential speaker-colon line preceded by
+               a blank line.
+    If no anchor is found the step is skipped conservatively.
+5.  Remove standalone page numbers.
+    Matches lines that are only digits, optionally with a Roman-numeral
+    prefix (ToC pages), an optional trailing asterisk (e.g. "18768*"),
+    and optionally with a trailing column letter A–D (e.g. "26097 A").
+6.  Remove footnote lines and printer/colophon lines.
+    Footnotes are lines starting with *, †, numbered (1) / lettered (a))
+    markers.  Colophon lines match known printer, ISSN, and Vertrieb
+    patterns — including the single-line concatenated form produced by some
+    born-digital PDFs.
+7.  Remove column/margin position markers left by OCR: isolated "(A)", "(B)",
+    "(C)", "(D)" tokens that appear on their own line or inline, including
+    the concatenated form "(A)(B)(C)(D)" sometimes found at session end.
+8.  Remove bare separator lines: lines consisting solely of one or two
+    hyphen/dash characters, which are OCR column-rule artefacts.
+9.  Remove back-matter reference blocks ("Amtliche Mitteilungen") that
+    appear after the last "Anlage N" heading and consist exclusively of
+    EU/Ratsdokument reference lines and Drucksachen numbers.  These blocks
+    carry no speech content.  Removal is conservative: only lines that match
+    the reference-code pattern within a detected back-matter zone are dropped.
+10. Rejoin words broken by end-of-line hyphenation (applies to all sessions;
     born-digital PDFs also produce soft-hyphen breaks in the extracted text).
-8.  Normalise whitespace: collapse multiple blank lines to a single blank line
+11. Normalise whitespace: collapse multiple blank lines to a single blank line
     and strip trailing spaces from every line.
 
 Design notes
@@ -74,8 +92,6 @@ RE_PAGE_BREAK = re.compile(
 # --- Step 2: page headers ---
 # New format (born-digital, WP11+):
 #   "Deutscher Bundestag – 20. Wahlperiode – 10. Sitzung. Berlin, Mittwoch, den 12. Januar 2022"
-#   Sometimes followed on the same line by a speaker name in brackets:
-#   "Deutscher Bundestag – 20. Wahlperiode – 10. Sitzung. Berlin, ... 473"
 RE_HEADER_NEW = re.compile(
     r"^Deutscher\s+Bundestag\s*[–—-]\s*\d{1,2}\.\s*Wahlperiode.*$",
     re.IGNORECASE | re.MULTILINE,
@@ -83,54 +99,94 @@ RE_HEADER_NEW = re.compile(
 
 # Old format (OCR'd, WP1-10):
 #   "Deutscher Bundestag — 1. Sitzung. Bonn, Mittwoch, den 7. September 1949"
-#   The OCR sometimes splits this across two lines; we catch both.
 RE_HEADER_OLD = re.compile(
     r"^Deutscher\s+Bundestag\s*[–—-]\s*\d{1,3}\.\s*Sitzung\..*$",
     re.IGNORECASE | re.MULTILINE,
 )
 
-# Parenthesised speaker continuation tags that appear inline in headers of
-# old sessions, e.g. "(Alterspräsident Löbe)" on its own line directly after
-# a header — these are column-attribution artefacts, not speech.
+# Parenthesised speaker-attribution tags left on their own line directly
+# under old-format headers — column-layout OCR artefacts, not speech.
 RE_HEADER_SPEAKER_TAG = re.compile(
     r"^\(\s*[A-ZÄÖÜ][a-zA-ZÄÖÜäöüß\s\.]+\)\s*$",
     re.MULTILINE,
 )
 
-# --- Step 3: standalone page numbers ---
-# A line that contains only digits (the page number), optionally with a
-# Roman-numeral prefix used in ToC pages (I, II, III, IV …).
+# --- Step 3: CID character-ID artefacts ---
+# pdftotext emits "(cid:N)" when it cannot map a PDF glyph to Unicode.
+# The most common is (cid:9) for the tab character, but any numeric ID
+# can appear.  Strip the entire token and the surrounding whitespace context
+# is then handled by the whitespace normalisation step.
+RE_CID = re.compile(r"\(cid:\d+\)")
+
+# --- Step 4: standalone page numbers (extended) ---
+# Matches lines that contain only:
+#   - an optional Roman-numeral prefix   e.g. "II 42"  (ToC pages)
+#   - digits (the page number)
+#   - an optional trailing asterisk      e.g. "18768*" (asterisked annex pages)
+#   - an optional trailing column letter A–D  e.g. "26097 A", "5952 D"
+#   - optional trailing comma + more page-column refs  e.g. "5952 A, D"
+# All surrounded by optional whitespace.
 RE_PAGE_NUMBER = re.compile(
-    r"^\s*(?:[IVXivx]{1,5}\s+)?\d{1,4}\s*$",
+    r"^\s*(?:[IVXivx]{1,5}\s+)?\d{1,5}\*?(?:\s*[A-D])?(?:\s*,\s*\d{1,5}\*?(?:\s*[A-D])?)*\s*$",
     re.MULTILINE,
 )
 
-# --- Step 4: table of contents ---
-# ToC lines are characterised by a dot-leader (two or more ". ") followed by
-# a page number at the end.  We collect contiguous blocks of such lines and
-# remove the whole block.
-RE_TOC_LINE = re.compile(
-    r"^.+(?:\.\s{0,2}){3,}\d{1,4}\s*[A-D]?\s*$",
-    re.MULTILINE,
-)
+# --- Step 5: table of contents ---
 
-# Anchor that marks the definitive end of the ToC and the start of the
-# proceedings: the session opening line or first substantive speaker.
-# We only remove ToC lines that appear BEFORE this anchor.
-RE_TOC_ANCHOR = re.compile(
+# A ToC entry line.  Must end with a page/column reference (with optional
+# asterisk), preceded by one of three separator patterns:
+#
+#   Pattern A — dot-leader:  ". . . . . . 42 B"
+#   Pattern B — wide space:  "Abwicklung der Tagesordnung   18683 C"
+#   Pattern C — direct:      "Heimann, Senator des Landes Berlin . . 18683 D"
+#                            (one or more dots then the number, no wide space)
+#
+# The non-greedy leading ".+?" ensures we require at least one character of
+# real content before the separator, preventing accidental matches on lines
+# that are pure dot-leaders or page numbers already stripped by step 4.
+# The trailing [A-D]? and \*? handle column letters and asterisked page refs.
+RE_TOC_ENTRY = re.compile(
+    r"^.+?"                           # non-empty leading content
     r"(?:"
-    r"Die\s+Sitzung\s+wird\s+(?:um|eröffnet)"   # old: "Die Sitzung wird um … eröffnet"
-    r"|Beginn:\s*\d{1,2}[:.]\d{2}\s*Uhr"         # new: "Beginn: 13.00 Uhr"
-    r"|(?:Alterspräsident|Präsident(?:in)?)\s+\w+\s*:"  # first presidential speaker line
-    r")",
-    re.IGNORECASE,
+    r"(?:\.\s*){3,}"                  # Pattern A: dot-leader (3+ dots)
+    r"|\s{3,}"                        # Pattern B: 3+ spaces (tabbed alignment)
+    r"|(?:\s*\.\s*){1,2}\s+"          # Pattern C: 1-2 dots then space
+    r")"
+    r"\d{1,5}\*?\s*[A-D]?\s*$",      # page number + optional * + optional col letter
+    re.MULTILINE,
 )
 
-# --- Step 5: footnotes ---
-# Line-level footnote markers at the start of a line.
+# Spaced-letter headings used as ToC section titles in some WPs:
+#   "I n h a l t :"   "I N H A L T"
+RE_TOC_HEADING = re.compile(
+    r"^\s*(?:[A-ZÄÖÜa-zäöü]\s){2,}[A-ZÄÖÜa-zäöü]\s*:?\s*$",
+    re.MULTILINE,
+)
+
+# Unambiguous proceedings openers — cannot appear inside a ToC.
+# Matched against the full text; the match position becomes the anchor.
+RE_ANCHOR_STRONG = re.compile(
+    r"(?:"
+    r"^\s*Beginn\s*:\s*\d{1,2}[:.]\d{2}\s*Uhr\s*$"        # "Beginn: 13.00 Uhr"
+    r"|Die\s+Sitzung\s+wird\s+(?:um\s+\d|eröffnet)"        # "Die Sitzung wird um 16 Uhr …"
+    r")",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+# Fallback anchor: a speaker-attribution line of the form "Name Name:" or
+# "Präsidentin Bärbel Bas:" that is preceded by a blank line.
+# Requires a blank line before to exclude ToC parenthetical fragments.
+RE_ANCHOR_SPEAKER = re.compile(
+    r"(?<=\n\n)"                              # preceded by blank line
+    r"(?:Alterspräsident|Vizepräsident(?:in)?|Präsident(?:in)?)"
+    r"\s+[A-ZÄÖÜ][^\n:]{1,60}:\s*$",
+    re.MULTILINE,
+)
+
+# --- Step 6: footnotes and colophon ---
 RE_FOOTNOTE_MARKER = re.compile(
     r"^\s*(?:"
-    r"\*\s+"           # asterisk footnote: "* aufgrund …"
+    r"\*\s+"           # asterisk footnote
     r"|†\s+"           # dagger
     r"|\d{1,2}[.)]\s+" # numbered: "1) …" or "1. …"
     r"|[a-z][.)]\s+"   # lettered: "a) …"
@@ -138,37 +194,62 @@ RE_FOOTNOTE_MARKER = re.compile(
     re.MULTILINE,
 )
 
-# Specific known footer/colophon patterns (exact line matches).
+# Colophon/printer lines — both multi-line and single-line concatenated form.
 RE_COLOPHON = re.compile(
     r"^\s*(?:"
-    r"Gesamtherstellung:.*"
-    r"|Vertrieb:.*Bundesanzeiger.*"
-    r"|ISSN\s+\d[\d\-]+"
+    r"Gesamtherstellung\s*:.*"
+    r"|Satz\s*:\s*Satzweiss.*"
+    r"|Druck\s*:\s*Printsystem.*"
+    r"|Vertrieb\s*:.*(?:Bundesanzeiger|betrifft-gesetze).*"
+    r"|ISSN\s+[\d\-]+"
     r"|BUB\s+Gebr\."
     r"|Druck\s+und\s+Vertrieb.*"
+    # Single-line concatenation of the above (born-digital WP19+):
+    r"|Satz\s*:.*ISSN\s+[\d\-]+"
     r")\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
 
-# --- Step 6: column/margin position markers ---
-# Isolated "(A)", "(B)", "(C)", "(D)" — on their own line or surrounded only
-# by whitespace.  These are OCR artefacts from the two-column layout.
+# --- Step 7: column/margin position markers ---
+# Isolated "(A)", "(B)", "(C)", "(D)" on their own line or inline.
+# Also catches the concatenated form "(A)(C)(B)(D)" found at session ends.
 RE_MARGIN_MARKER = re.compile(
-    r"(?:^|\s)\([ABCD]\)(?:\s|$)",
+    r"(?:^|\s)\([ABCD]\)(?:\s|$)"
+    r"|(?:\([ABCD]\)){2,}",        # concatenated form
     re.MULTILINE,
 )
 
-# --- Step 7: hyphenation ---
-# A word ending in a hyphen at end of line, followed by a newline and the
-# continuation of the word (lowercase or uppercase continuation).
-# We rejoin and drop the hyphen.
-# Handles both plain "-\n" and soft-hyphen "\xad\n".
-RE_HYPHEN_BREAK = re.compile(
-    r"(\w)[-\xad]\n(\w)",
+# --- Step 8: bare separator lines ---
+# Lines consisting solely of one or two hyphen/dash/em-dash characters.
+# These are OCR artefacts from the two-column vertical rule.
+RE_BARE_SEPARATOR = re.compile(
+    r"^\s*[-–—]{1,2}\s*$",
+    re.MULTILINE,
 )
 
-# --- Step 8: whitespace normalisation ---
-# Three or more consecutive blank lines → one blank line.
+# --- Step 9: back-matter reference blocks ---
+# Lines in the "Amtliche Mitteilungen" / EU-document appendix that consist
+# only of reference codes.  Matched line-by-line inside a detected zone.
+RE_BACKM_REF = re.compile(
+    r"^\s*(?:"
+    r"(?:Drucksache\s+[\d/,\s]+)"           # "Drucksache 16/12954 Nr. A.2"
+    r"|(?:Ratsdokument\s+[\d/]+)"            # "Ratsdokument 8182/09"
+    r"|(?:EuB-EP\s+[\d;/\s\w\-]+)"          # "EuB-EP 1891; P6_TA-PROV(2009)0077"
+    r"|(?:P\d+_TA[^\n]{0,60})"              # "P6_TA-PROV(2009)0077"
+    r")\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+# Heading that introduces an "Amtliche Mitteilungen" back-matter block.
+RE_BACKM_START = re.compile(
+    r"^Amtliche\s+Mitteilungen\s*$",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+# --- Step 10: hyphenation ---
+RE_HYPHEN_BREAK = re.compile(r"(\w)[-\xad]\n(\w)")
+
+# --- Step 11: whitespace normalisation ---
 RE_EXCESS_BLANK = re.compile(r"\n{3,}")
 
 
@@ -185,14 +266,17 @@ def remove_headers(text: str) -> str:
     """Step 2 — remove repeated page headers (old and new format)."""
     text = RE_HEADER_NEW.sub("", text)
     text = RE_HEADER_OLD.sub("", text)
-    # Remove parenthesised speaker attribution tags left on their own line
-    # directly under old-format headers.
     text = RE_HEADER_SPEAKER_TAG.sub("", text)
     return text
 
 
+def remove_cid_artefacts(text: str) -> str:
+    """Step 3 — strip (cid:N) glyph-mapping failure tokens from pdftotext."""
+    return RE_CID.sub("", text)
+
+
 def remove_page_numbers(text: str) -> str:
-    """Step 3 — remove lines that contain only a page number."""
+    """Step 5 — remove lines that contain only a page/column reference."""
     return RE_PAGE_NUMBER.sub("", text)
 
 
@@ -200,17 +284,29 @@ def remove_toc(text: str) -> str:
     """
     Step 4 — remove the table of contents block.
 
-    Strategy:
-      - Find the position of the ToC anchor (first substantive proceedings
-        line).  Everything before the anchor is the 'preamble' zone.
-      - Within the preamble, remove all lines that look like ToC entries
-        (dot-leader + page number).
-      - Leave the anchor line and everything after it untouched.
+    Two-pass anchor search:
+      1. Strong anchor  — unambiguous proceedings opener ("Beginn: HH.MM Uhr"
+         or "Die Sitzung wird … eröffnet").  These cannot appear inside a ToC.
+      2. Speaker anchor — first presidential speaker-colon line preceded by a
+         blank line.  Less reliable than the strong anchor but catches sessions
+         where the strong opener is absent or differently formatted.
 
-    If no anchor is found the function returns the text unchanged rather
-    than risk removing real speech.
+    Within the preamble (everything before the anchor):
+      - Lines matching RE_TOC_ENTRY  (dot-leader or wide-space + page ref) are
+        removed.
+      - Lines matching RE_TOC_HEADING (spaced-letter headings like "I n h a l t")
+        are removed.
+
+    Everything from the anchor line onward is left completely untouched.
+    If no anchor is found the function returns the text unchanged.
     """
-    anchor = RE_TOC_ANCHOR.search(text)
+    # Pass 1: strong anchor
+    anchor = RE_ANCHOR_STRONG.search(text)
+
+    # Pass 2: fallback speaker anchor
+    if anchor is None:
+        anchor = RE_ANCHOR_SPEAKER.search(text)
+
     if anchor is None:
         return text  # no anchor found — play it safe
 
@@ -218,24 +314,23 @@ def remove_toc(text: str) -> str:
     preamble = text[:anchor_pos]
     body = text[anchor_pos:]
 
-    cleaned_preamble = RE_TOC_LINE.sub("", preamble)
+    cleaned_preamble = RE_TOC_ENTRY.sub("", preamble)
+    cleaned_preamble = RE_TOC_HEADING.sub("", cleaned_preamble)
     return cleaned_preamble + body
 
 
 def remove_footnotes(text: str) -> str:
     """
-    Step 5 — remove footnote lines and colophon/printer lines.
+    Step 6 — remove footnote lines and colophon/printer lines.
 
-    Footnote lines are removed in full (to end of line).  We use a line-by-line
-    approach so that we never accidentally eat into following paragraphs.
+    Uses a line-by-line scan so that we never accidentally consume the
+    following paragraph when a footnote marker appears mid-text.
     """
     lines = text.split("\n")
     cleaned = []
     for line in lines:
-        # Skip known colophon patterns (matched against the full line)
         if RE_COLOPHON.match(line):
             continue
-        # Skip lines that start with a footnote marker
         if RE_FOOTNOTE_MARKER.match(line):
             continue
         cleaned.append(line)
@@ -243,31 +338,66 @@ def remove_footnotes(text: str) -> str:
 
 
 def remove_margin_markers(text: str) -> str:
-    """Step 6 — remove OCR column/margin markers (A) (B) (C) (D)."""
-    # Replace with a single space to avoid accidentally joining surrounding words.
+    """
+    Step 7 — remove OCR column/margin markers (A) (B) (C) (D).
+
+    Handles both isolated single markers and the concatenated form
+    "(A)(C)(B)(D)" that appears at the end of some born-digital sessions.
+    Replaces with a single space to avoid accidentally joining words.
+    """
     return RE_MARGIN_MARKER.sub(" ", text)
+
+
+def remove_bare_separators(text: str) -> str:
+    """
+    Step 8 — remove lines that consist solely of one or two hyphens/dashes.
+
+    These are OCR artefacts of the vertical column rule in the two-column
+    Plenarprotokoll layout.  A single '-' or '–' on its own line is never
+    meaningful speech content.
+    """
+    return RE_BARE_SEPARATOR.sub("", text)
+
+
+def remove_backm_references(text: str) -> str:
+    """
+    Step 9 — remove EU/Ratsdokument reference lines from back-matter blocks.
+
+    Back-matter blocks begin with an "Amtliche Mitteilungen" heading and
+    contain committee notifications and EU document reference codes.  These
+    carry no speech content.
+
+    Strategy: find each "Amtliche Mitteilungen" heading.  From that point
+    to the end of the text, remove lines that match the reference-code
+    pattern.  Non-matching lines (e.g. descriptive sentences) are kept,
+    keeping the step conservative.
+    """
+    start = RE_BACKM_START.search(text)
+    if start is None:
+        return text
+
+    preamble = text[:start.start()]
+    backm    = text[start.start():]
+    cleaned_backm = RE_BACKM_REF.sub("", backm)
+    return preamble + cleaned_backm
 
 
 def rejoin_hyphens(text: str) -> str:
     """
-    Step 7 — rejoin words broken by end-of-line hyphenation.
+    Step 10 — rejoin words broken by end-of-line hyphenation.
 
     'Bun-\\ndesrepublik'  →  'Bundesrepublik'
 
-    This is applied globally (old and new sessions alike).  The regex only
-    fires when both sides of the hyphen are word characters, so legitimate
-    dashes in compound words that happen to fall at end of line are safe
-    as long as the next line starts with a lowercase letter (which is the
-    typical continuation pattern).  Uppercase continuations are also handled
-    for cases like proper nouns split across lines.
+    Handles both plain hyphens and soft-hyphens (U+00AD).  Fires only when
+    both sides of the break are word characters, so legitimate em-dash usage
+    is unaffected.
     """
     return RE_HYPHEN_BREAK.sub(r"\1\2", text)
 
 
 def normalise_whitespace(text: str) -> str:
     """
-    Step 8 — strip trailing spaces from every line and collapse runs of
-    more than one blank line into a single blank line.
+    Step 11 — strip trailing spaces and collapse excess blank lines.
     """
     lines = [line.rstrip() for line in text.split("\n")]
     text = "\n".join(lines)
@@ -280,14 +410,17 @@ def normalise_whitespace(text: str) -> str:
 # ---------------------------------------------------------------------------
 
 PIPELINE = [
-    ("remove_page_breaks",   remove_page_breaks),
-    ("remove_headers",       remove_headers),
-    ("remove_page_numbers",  remove_page_numbers),
-    ("remove_toc",           remove_toc),
-    ("remove_footnotes",     remove_footnotes),
-    ("remove_margin_markers",remove_margin_markers),
-    ("rejoin_hyphens",       rejoin_hyphens),
-    ("normalise_whitespace", normalise_whitespace),
+    ("remove_page_breaks",       remove_page_breaks),
+    ("remove_headers",           remove_headers),
+    ("remove_cid_artefacts",     remove_cid_artefacts),
+    ("remove_toc",               remove_toc),        # must run BEFORE remove_page_numbers
+    ("remove_page_numbers",      remove_page_numbers),  # strips refs ToC step relied on
+    ("remove_footnotes",         remove_footnotes),
+    ("remove_margin_markers",    remove_margin_markers),
+    ("remove_bare_separators",   remove_bare_separators),
+    ("remove_backm_references",  remove_backm_references),
+    ("rejoin_hyphens",           rejoin_hyphens),
+    ("normalise_whitespace",     normalise_whitespace),
 ]
 
 
@@ -340,8 +473,6 @@ def run(force: bool = False) -> None:
     if not force and log_path.exists():
         done = set(log_path.read_text(encoding="utf-8").splitlines())
 
-    # Find all extracted .txt files, excluding already-cleaned ones and the
-    # metadata subfolder.
     metadata_dir = in_root / "metadata"
     txt_files = sorted(
         p for p in in_root.rglob("*.txt")
@@ -356,7 +487,6 @@ def run(force: bool = False) -> None:
     for txt_path in txt_files:
         out_path = cleaned_path_for(txt_path)
 
-        # Skip check
         if not force and (str(out_path) in done or out_path.exists()):
             print(f"[SKIP] {txt_path.name}")
             skip_count += 1
