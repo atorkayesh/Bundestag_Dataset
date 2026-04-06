@@ -1,0 +1,16 @@
+{
+  "wp_filename": "12",
+  "session_filename": "240",
+  "wp_text": "12",
+  "session_text": "240",
+  "wp": "12",
+  "session": "240",
+  "date": "22-07-1994",
+  "date_iso": "1994-07-22",
+  "city": "Bonn",
+  "year": "1994",
+  "source_pdf": "12240.pdf",
+  "md5": "7c3b02eaebc0beb8ce6dde94f95f90e9",
+  "engine": "pdfminer",
+  "meta_warnings": []
+}

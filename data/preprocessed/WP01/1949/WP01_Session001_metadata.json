@@ -1,0 +1,16 @@
+{
+  "wp_filename": "01",
+  "session_filename": "001",
+  "wp_text": null,
+  "session_text": "001",
+  "wp": "01",
+  "session": "001",
+  "date": "07-09-1949",
+  "date_iso": "1949-09-07",
+  "city": "Bonn",
+  "year": "1949",
+  "source_pdf": "01001.pdf",
+  "md5": "1d4a9da8a11483e5b2d734409efed37a",
+  "engine": "pdfminer",
+  "meta_warnings": []
+}
