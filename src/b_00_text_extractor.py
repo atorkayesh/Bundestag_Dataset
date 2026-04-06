@@ -34,6 +34,7 @@ Filename convention (Bundestag standard)
 
 CSV catalogue columns
 ----------------------
+  session_id           : unique identifier e.g. "WP01_Session001" (first column)
   wp_filename          : WP extracted from filename (e.g. "01")
   session_filename     : Session extracted from filename (e.g. "061")
   wp_text              : WP extracted from document text (or empty)
@@ -83,6 +84,7 @@ TXT_PAGE_SEP = "\n\n--- Page Break ---\n\n"
 
 # CSV column order — matches the docstring above.
 CSV_COLUMNS = [
+    "session_id",
     "wp_filename",
     "session_filename",
     "wp_text",
@@ -313,12 +315,18 @@ def build_record(pdf_path: Path, in_root: Path) -> dict:
     wp = meta["wp_text"] or wp_fn
     session = meta["session_text"] or session_fn
 
+    # Unique identifier — constructed from the final resolved wp and session
+    # values so it always matches the output file name stem exactly.
+    # Falls back gracefully if either value is still None.
+    session_id = f"WP{wp or 'unknown'}_Session{session or 'unknown'}"
+
     try:
         source_pdf = str(pdf_path.relative_to(in_root))
     except ValueError:
         source_pdf = pdf_path.name
 
     return {
+        "session_id":       session_id,
         "wp_filename":    wp_fn,
         "session_filename": session_fn,
         "wp_text":        meta["wp_text"],
@@ -406,6 +414,7 @@ def record_to_csv_row(record: dict) -> dict:
     """
     warnings = record.get("meta_warnings", [])
     return {
+        "session_id":           record.get("session_id")          or "",
         "wp_filename":          record.get("wp_filename")      or "",
         "session_filename":     record.get("session_filename") or "",
         "wp_text":              record.get("wp_text")          or "",
