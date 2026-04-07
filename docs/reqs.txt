@@ -1,0 +1,23 @@
+Speaker identification and text assignment.
+
+
+Style:
+Präsidentin + Full name + :
+Präsident + Full name + :
+Vizepräsidentin + Full name + :
+Vizepräsident + Full name + :
+Full name + (Party name) + :    /Here we may have Dr title sometimes at the beginning. Party name should be in parenthesis.
+Full Name + , + Ministerpräsidentin + (State name) + :
+Full name + , + Ministerpräsident + (state name) + :
+Full name + , +  Bundesminister + ....... + :
+Full name + , +  Bundesministerin + ....... + :
+
+Be sure that it is always paranthesis. No bracket or other signs, just ( )
+
+I randomly found a bug. Achim Post (Minden) (SPD): As you see it follows our style but between name and party name there is another phrase in paranthesis. Our style includes these as well.
+
+Can you also check some old documents to see if this style is consistent for all
+
+Party names you can find on Google for all last 7 decades. fraktionlos is also a party. It mean that the member is not part of a party.
+
+Also pay attention to colon sign at the end. Many people are mentioned in the text but they are not the speaker. So when a speech starts, it starts with the colon at the end of the style of the name
