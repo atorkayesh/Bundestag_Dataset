@@ -1,0 +1,75 @@
+Speaker identification and text assignment.
+
+
+Style (all patterns confirmed across WP01-WP20):
+-------------------------------------------------
+
+1.  Alterspräsident(in) + Full name + :
+2.  Präsident(in) + Full name + :
+3.  Vizepräsident(in) + Full name + :
+
+4.  [Dr.] [Prof. Dr.] Full name + (Party name) + :
+    Optional title prefix before the name: "Dr." or "Prof. Dr."
+    Party name must be in parentheses.
+    Examples:
+        Dr. Adenauer (CDU):
+        Katja Mast (SPD):
+        Dr. Bernd Baumann (AfD):
+        Stefan Seidler (fraktionslos):
+
+5.  [Dr.] [Prof. Dr.] Full name + (Location) + (Party name) + :
+    A geographic qualifier (constituency or city) may appear between the name
+    and the party, also in parentheses. Both qualifiers use parentheses.
+    Examples:
+        Achim Post (Minden) (SPD):
+        Frau Dr. Bleyler (Freiburg) (CDU/CSU):
+        Dr. Rudolf Karl Krause (Bonese) (fraktionslos):
+
+6.  Full name + , + Ministerpräsident(in) + (State name) + :
+    Full name + , + Bundesminister(in) + [ministry description] + :
+    Full name + , + Bundeskanzler(in) + :
+    Full name + , + Parl. Staatssekretär(in) + [beim/im Ministry] + :
+    Full name + , + Staatsminister(in) + [Ministry/role] + :
+    Examples:
+        Dr. Klaus Kinkel, Bundesminister des Auswärtigen:
+        Brandt, Bundeskanzler:
+        Olaf Scholz, Bundeskanzler:
+        Dr. Sprung, Parl. Staatssekretär beim Bundesminister für Wirtschaft:
+        Ursula Seiler-Albring, Staatsministerin AA:
+        Ministerpräsident Oskar Lafontaine (Saarland):
+
+Name prefix notes:
+  - "Dr." and "Prof. Dr." are optional academic titles before the name (all eras).
+  - "Frau" or "Herr" may appear as an honorific before the title/name (older sessions).
+
+Party name notes:
+  - Party names vary across eras (same party, different abbreviation):
+      FDP spelled as "F.D.P." in WP10-12, "FDP" in WP19+
+      "PDS/Linke Liste" in WP12, "DIE LINKE" in WP19+
+      "BÜNDNIS 90/DIE GRÜNEN" in WP11+, previously just "GRÜNE" or "DIE GRÜNEN"
+  - "fraktionslos" means the member belongs to no party group.
+  - See political-parties-past-75-years.csv for the full reference list.
+
+Parentheses vs. brackets:
+  - Speaker attributions on their own line always use parentheses ( ) for
+    party and location qualifiers.
+  - Inline interjections within the text use square brackets [ ] for the
+    same qualifiers, e.g. (Dr. Weber [CDU/CSU]: Sehr richtig!).
+  - This distinction is the reliable way to tell a speaker attribution apart
+    from a named interjection in the raw files.
+
+Colon rule:
+  - The colon at the end is the definitive marker that the following text
+    is that person's speech.
+  - Many people are named in the text (interjections, references) without
+    a terminal colon — those are NOT speaker attributions.
+  - A standalone line matching one of the patterns above and ending with ":"
+    marks the start of a new speech segment.
+
+
+SIMILAR WORK ON THE BUNDESTAG DOCUMENTS:
+https://open-discourse.github.io/open-discourse-documentation/1.1.0/database-schema.html
+
+Article:
+Who cares about coal? Analyzing 70 years of German parliamentary debates on coal with dynamic topic modeling
+DOI: 10.1016/j.erss.2020.101869
