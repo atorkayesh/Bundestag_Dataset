@@ -21,3 +21,11 @@ Can you also check some old documents to see if this style is consistent for all
 Party names you can find on Google for all last 7 decades. fraktionlos is also a party. It mean that the member is not part of a party.
 
 Also pay attention to colon sign at the end. Many people are mentioned in the text but they are not the speaker. So when a speech starts, it starts with the colon at the end of the style of the name
+
+
+SIMILAR WORK ON THE BUNDESTAG DOCUMENTS:
+https://open-discourse.github.io/open-discourse-documentation/1.1.0/database-schema.html
+
+Article:
+Who cares about coal? Analyzing 70 years of German parliamentary debates on coal with dynamic topic modeling
+DOI: 10.1016/j.erss.2020.101869
