@@ -1,26 +1,102 @@
 Speaker identification and text assignment.
 
 
-Style:
-Präsidentin + Full name + :
-Präsident + Full name + :
-Vizepräsidentin + Full name + :
-Vizepräsident + Full name + :
-Full name + (Party name) + :    /Here we may have Dr title sometimes at the beginning. Party name should be in parenthesis.
-Full Name + , + Ministerpräsidentin + (State name) + :
-Full name + , + Ministerpräsident + (state name) + :
-Full name + , +  Bundesminister + ....... + :
-Full name + , +  Bundesministerin + ....... + :
+Style (all patterns confirmed across WP01-WP20):
+-------------------------------------------------
 
-Be sure that it is always paranthesis. No bracket or other signs, just ( )
+1.  Alterspräsident(in) + Full name + :
+2.  Präsident(in) + Full name + :
+3.  Vizepräsident(in) + Full name + :
 
-I randomly found a bug. Achim Post (Minden) (SPD): As you see it follows our style but between name and party name there is another phrase in paranthesis. Our style includes these as well.
+4.  [Dr.] [Prof. Dr.] Full name + (Party name) + :
+    Optional title prefix before the name: "Dr." or "Prof. Dr."
+    Party name must be in parentheses.
+    Examples:
+        Dr. Adenauer (CDU):
+        Katja Mast (SPD):
+        Dr. Bernd Baumann (AfD):
+        Stefan Seidler (fraktionslos):
 
-Can you also check some old documents to see if this style is consistent for all
+5.  [Dr.] [Prof. Dr.] Full name + (Location) + (Party name) + :
+    A geographic qualifier (constituency or city) may appear between the name
+    and the party, also in parentheses. Both qualifiers use parentheses.
+    Examples:
+        Achim Post (Minden) (SPD):
+        Frau Dr. Bleyler (Freiburg) (CDU/CSU):
+        Dr. Rudolf Karl Krause (Bonese) (fraktionslos):
 
-Party names you can find on Google for all last 7 decades. fraktionlos is also a party. It mean that the member is not part of a party.
+6.  Full name + , + Ministerpräsident(in) + (State name) + :
+    Full name + , + Bundesminister(in) + [ministry description] + :
+    Full name + , + Bundeskanzler(in) + :
+    Full name + , + Parl. Staatssekretär(in) + [beim/im Ministry] + :
+    Full name + , + Staatsminister(in) + [Ministry/role] + :
+    Examples:
+        Dr. Klaus Kinkel, Bundesminister des Auswärtigen:
+        Brandt, Bundeskanzler:
+        Olaf Scholz, Bundeskanzler:
+        Dr. Sprung, Parl. Staatssekretär beim Bundesminister für Wirtschaft:
+        Ursula Seiler-Albring, Staatsministerin AA:
+        Ministerpräsident Oskar Lafontaine (Saarland):
 
-Also pay attention to colon sign at the end. Many people are mentioned in the text but they are not the speaker. So when a speech starts, it starts with the colon at the end of the style of the name
+Name prefix notes:
+  - "Dr." and "Prof. Dr." are optional academic titles before the name (all eras).
+  - "Frau" or "Herr" may appear as an honorific before the title/name (older sessions).
+
+Party name notes:
+  - Party names vary across eras (same party, different abbreviation):
+      FDP spelled as "F.D.P." in WP10-12, "FDP" in WP19+
+      "PDS/Linke Liste" in WP12, "DIE LINKE" in WP19+
+      "BÜNDNIS 90/DIE GRÜNEN" in WP11+, previously just "GRÜNE" or "DIE GRÜNEN"
+  - "fraktionslos" means the member belongs to no party group.
+  - See political-parties-past-75-years.csv for the full reference list.
+
+Parentheses vs. brackets:
+  - Speaker attributions on their own line always use parentheses ( ) for
+    party and location qualifiers.
+  - Inline interjections within the text use square brackets [ ] for the
+    same qualifiers, e.g. (Dr. Weber [CDU/CSU]: Sehr richtig!).
+  - This distinction is the reliable way to tell a speaker attribution apart
+    from a named interjection in the raw files.
+
+Colon rule:
+  - The colon at the end of a standalone line is the definitive marker that
+    the following text is that person's speech.
+  - Many people are named in the text (interjections, references) without
+    a terminal colon — those are NOT speaker attributions.
+  - A standalone line matching one of the patterns above and ending with ":"
+    marks the start of a new speech segment.
+  - Inline attribution: "Name (Location) (Party): text on same line" — the colon
+    is NOT at end of line. This is a Zwischenfrage (follow-up question) and is
+    treated as a new speech segment starting at the colon.
+    Example: Karsten D. Voigt (Frankfurt) (SPD): Herr Minister, ich bitte ...
+
+
+Qualifier parsing rules:
+  - Parenthetical qualifiers after a name are classified in order:
+      1. Drucksache / Frage references → ignored entirely (not party or location).
+         Example: (Drucksache 7/588 Fragen B 35 und 36)
+      2. German Bundesland name → always location, never party.
+         The 16 Bundesländer: Baden-Württemberg, Bayern, Berlin, Brandenburg,
+         Bremen, Hamburg, Hessen, Mecklenburg-Vorpommern, Niedersachsen,
+         Nordrhein-Westfalen, Rheinland-Pfalz, Saarland, Sachsen, Sachsen-Anhalt,
+         Schleswig-Holstein, Thüringen.
+         Example: Oskar Lafontaine (Saarland) → location=Saarland, party=null
+         Example: Diepgen (Berlin) → location=Berlin, party=null
+      3. Known party abbreviation (see political-parties-past-75-years.csv) → party.
+      4. First remaining ambiguous qualifier → location (city / constituency).
+      5. Second remaining ambiguous qualifier → party.
+  - If no party qualifier is found, party = null. Do NOT default to "fraktionslos";
+    the party simply was not listed in the transcript for that speaker.
+
+State-level role prefixes:
+  - "Ministerpräsident(in)" and "Regierender Bürgermeister(in)" may appear as a
+    prefix BEFORE the speaker's name (without a comma), analogous to Pattern A.
+    The role is extracted and the parenthetical becomes location.
+    Examples:
+        Ministerpräsident Oskar Lafontaine (Saarland):
+          → name=Oskar Lafontaine, role=Ministerpräsident, location=Saarland
+        Regierender Bürgermeister Diepgen (Berlin):
+          → name=Diepgen, role=Regierender Bürgermeister, location=Berlin
 
 
 SIMILAR WORK ON THE BUNDESTAG DOCUMENTS:
