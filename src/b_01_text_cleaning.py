@@ -93,14 +93,16 @@ RE_PAGE_BREAK = re.compile(
 # New format (born-digital, WP11+):
 #   "Deutscher Bundestag – 20. Wahlperiode – 10. Sitzung. Berlin, Mittwoch, den 12. Januar 2022"
 RE_HEADER_NEW = re.compile(
-    r"^Deutscher\s+Bundestag\s*[–—-]\s*\d{1,2}\.\s*Wahlperiode.*$",
+    r"^\s*(?:\d{1,5}\*?\s+)?(?:\([ABCD]\))*\s*"
+    r"Deutscher\s+Bundestag\s*[–—-]\s*\d{1,2}\s*\.?\s*Wahlperiode.*$",
     re.IGNORECASE | re.MULTILINE,
 )
 
 # Old format (OCR'd, WP1-10):
 #   "Deutscher Bundestag — 1. Sitzung. Bonn, Mittwoch, den 7. September 1949"
 RE_HEADER_OLD = re.compile(
-    r"^Deutscher\s+Bundestag\s*[–—-]\s*\d{1,3}\.\s*Sitzung\..*$",
+    r"^\s*(?:\d{1,5}\*?\s+)?(?:\([ABCD]\))*\s*"
+    r"Deutscher\s+Bundestag\s*[–—-]\s*\d{1,3}\s*\.?\s*Sitzung\..*$",
     re.IGNORECASE | re.MULTILINE,
 )
 
@@ -247,7 +249,23 @@ RE_BACKM_START = re.compile(
 )
 
 # --- Step 10: hyphenation ---
-RE_HYPHEN_BREAK = re.compile(r"(\w)[-\xad]\n(\w)")
+# Matches a word character, a plain or soft hyphen, optional horizontal
+# whitespace (born-digital PDFs sometimes have a trailing space after the
+# hyphen before the newline), one or more newlines, and the first character
+# of the continuation word.
+# [ \t]* handles trailing spaces before \n (normalise_whitespace would strip
+# those spaces AFTER this step, creating a new hyphen-newline pattern).
+# \n+ (not \n{1,2}) because some scanned pages produce 3-4 newlines between
+# line parts when the break falls near a page boundary.
+# Two-case replacement logic:
+#   lowercase continuation -> line-break artefact -> remove hyphen and join
+#     e.g.  "Bun-\ndesrepublik"      ->  "Bundesrepublik"
+#           "Her-\n\nren"            ->  "Herren"
+#           "Deutsch-\n\n\n\nland"  ->  "Deutschland"
+#   uppercase continuation -> genuine compound hyphen -> keep hyphen, drop newline(s)
+#     e.g.  "Baden-\n\nWürttemberg"  ->  "Baden-Württemberg"
+#           "CDU-\n\nCSU"           ->  "CDU-CSU"
+RE_HYPHEN_BREAK = re.compile(r"(\w)[-\xad][ \t]*\n+(\w)", re.UNICODE)
 
 # --- Step 11: whitespace normalisation ---
 RE_EXCESS_BLANK = re.compile(r"\n{3,}")
@@ -386,13 +404,29 @@ def rejoin_hyphens(text: str) -> str:
     """
     Step 10 — rejoin words broken by end-of-line hyphenation.
 
-    'Bun-\\ndesrepublik'  →  'Bundesrepublik'
+    Two-case logic based on the first character of the continuation word:
+      lowercase  -> line-break artefact -> remove hyphen and join
+        'Bun-\\ndesrepublik'      ->  'Bundesrepublik'
+        'Her-\\n\\nren'              ->  'Herren'
+        'Deutsch-\\n\\n\\n\\nland'  ->  'Deutschland'
+      uppercase  -> genuine compound hyphen -> keep hyphen, drop newline(s)
+        'Baden-\\n\\nWürttemberg' ->  'Baden-Württemberg'
+        'CDU-\\n\\nCSU'          ->  'CDU-CSU'
 
+    Uses \\n+ (not \\n{1,2}) because some scanned pages produce 3-4 newlines
+    at page boundaries; this step must run before normalise_whitespace so it
+    catches all counts before they collapse to \\n\\n.
     Handles both plain hyphens and soft-hyphens (U+00AD).  Fires only when
     both sides of the break are word characters, so legitimate em-dash usage
     is unaffected.
     """
-    return RE_HYPHEN_BREAK.sub(r"\1\2", text)
+    def _fix(m: re.Match) -> str:
+        before, after = m.group(1), m.group(2)
+        if after.isupper():
+            return before + "-" + after   # keep hyphen for genuine compounds; drop newlines
+        return before + after             # remove hyphen for line-break artefacts
+
+    return RE_HYPHEN_BREAK.sub(_fix, text)
 
 
 def normalise_whitespace(text: str) -> str:
@@ -411,16 +445,16 @@ def normalise_whitespace(text: str) -> str:
 
 PIPELINE = [
     ("remove_page_breaks",       remove_page_breaks),
+    ("remove_cid_artefacts",     remove_cid_artefacts),   # before headers: some headers have (cid:9) between page-no and "Deutscher"
     ("remove_headers",           remove_headers),
-    ("remove_cid_artefacts",     remove_cid_artefacts),
     ("remove_toc",               remove_toc),        # must run BEFORE remove_page_numbers
     ("remove_page_numbers",      remove_page_numbers),  # strips refs ToC step relied on
     ("remove_footnotes",         remove_footnotes),
     ("remove_margin_markers",    remove_margin_markers),
     ("remove_bare_separators",   remove_bare_separators),
     ("remove_backm_references",  remove_backm_references),
+    ("normalise_whitespace",     normalise_whitespace),   # strip trailing spaces BEFORE hyphen-join so blank lines with spaces don't hide patterns
     ("rejoin_hyphens",           rejoin_hyphens),
-    ("normalise_whitespace",     normalise_whitespace),
 ]
 
 
@@ -497,14 +531,14 @@ def run(force: bool = False) -> None:
         try:
             raw = txt_path.read_text(encoding="utf-8")
         except Exception as e:
-            print(f"READ ERROR\n  → {e}")
+            print(f"READ ERROR\n  -> {e}")
             error_count += 1
             continue
 
         try:
             cleaned_text = clean(raw)
         except Exception as e:
-            print(f"CLEAN ERROR\n  → {e}")
+            print(f"CLEAN ERROR\n  -> {e}")
             error_count += 1
             continue
 
@@ -512,10 +546,10 @@ def run(force: bool = False) -> None:
             out_path.write_text(cleaned_text, encoding="utf-8")
             with open(log_path, "a", encoding="utf-8") as lg:
                 lg.write(str(out_path) + "\n")
-            print(f"OK → {out_path.relative_to(in_root)}")
+            print(f"OK -> {out_path.relative_to(in_root)}")
             ok_count += 1
         except Exception as e:
-            print(f"WRITE ERROR\n  → {e}")
+            print(f"WRITE ERROR\n  -> {e}")
             error_count += 1
 
     print(f"\nDone.  OK={ok_count}  Skipped={skip_count}  Errors={error_count}")

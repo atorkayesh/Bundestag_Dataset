@@ -61,9 +61,11 @@ PREPROCESSED_FOLDER = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bunde
 # ============================================================
 
 import csv
+import itertools
 import json
 import re
 import sys
+from collections import Counter, defaultdict
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -91,6 +93,8 @@ def _load_known_parties() -> frozenset:
         "PDS/Linke Liste", # WP12 variant
         "fraktionslos",    # lowercase used in some eras
         "Fraktionslos",
+        "DKP",             # Deutsche Kommunistische Partei (WP06–WP10)
+        "NPD",             # Nationaldemokratische Partei Deutschlands (WP05–WP06)
     })
     return frozenset(abbrevs)
 
@@ -147,8 +151,10 @@ _PARLIAMENTARY_ROLES = (
 # ^\s* instead of ^ to tolerate leading whitespace in older sessions (fix for WP01/WP09).
 RE_SPEAKER_LINE = re.compile(
     rf"^\s*(?:"
-    # Pattern A: chair / presiding officer
-    rf"(?P<chair>(?:Alterspräsident(?:in)?|Vizepräsident(?:in)?|Präsident(?:in)?)"
+    # Pattern A: chair / presiding officer.
+    # Optional "Frau"/"Herr" may appear BEFORE the role keyword in older sessions,
+    # e.g. "Frau Präsidentin Roth:" as well as the standard "Präsidentin Roth:".
+    rf"(?P<chair>(?:Frau\s+|Herr\s+)?(?:Alterspräsident(?:in)?|Vizepräsident(?:in)?|Präsident(?:in)?)"
     rf"\s+{_FULL_NAME})"
     rf"|"
     # Pattern B: member with at least one parenthesised qualifier
@@ -174,8 +180,9 @@ RE_SPEAKER_LINE = re.compile(
 # ^\s* tolerates leading whitespace.
 RE_INLINE_SPEAKER = re.compile(
     rf"^\s*(?:"
-    # Pattern A inline: chair / presiding officer
-    rf"(?P<chair_inline>(?:Alterspräsident(?:in)?|Vizepräsident(?:in)?|Präsident(?:in)?)"
+    # Pattern A inline: chair / presiding officer.
+    # Optional "Frau"/"Herr" may precede the role keyword.
+    rf"(?P<chair_inline>(?:Frau\s+|Herr\s+)?(?:Alterspräsident(?:in)?|Vizepräsident(?:in)?|Präsident(?:in)?)"
     rf"\s+{_FULL_NAME})"
     rf"|"
     # Pattern B inline: member name + one or more parenthesised qualifiers
@@ -192,8 +199,9 @@ RE_INLINE_SPEAKER = re.compile(
 )
 
 # Used inside parse_speaker to break a chair line into role + name.
+# Optional "Frau"/"Herr" prefix before the role keyword is consumed but not stored.
 RE_CHAIR_PREFIX = re.compile(
-    r"^(Alterspräsident(?:in)?|Vizepräsident(?:in)?|Präsident(?:in)?)\s+(.+)$",
+    r"^(?:Frau\s+|Herr\s+)?(Alterspräsident(?:in)?|Vizepräsident(?:in)?|Präsident(?:in)?)\s+(.+)$",
     re.IGNORECASE,
 )
 
@@ -219,6 +227,13 @@ RE_PAREN_QUALIFIER = re.compile(r"\(([^)]+)\)")
 
 # Drucksache / parliamentary reference — always ignore as qualifier.
 RE_DRUCKSACHE = re.compile(r"^(?:Drucksache|Frage[n]?\s)", re.IGNORECASE)
+
+# Dash-continuation: "— Capital..." marking the presiding officer resuming.
+# Two trigger contexts (both exclusive to WP01-era full-inline sessions):
+#   1. Blank-line paragraph break:  \n\n— Capital
+#   2. Immediately after a closing interjection:  )\n— Capital
+# Mid-sentence dashes never open a paragraph; interjections always close with ")".
+RE_DASH_CHAIR = re.compile(r"(?:\n\n|\)\n)(\s*—\s+[A-ZÄÖÜ])", re.MULTILINE)
 
 # Session ID from filename: "WP20_Session010_cleaned.txt" → "WP20_Session010".
 RE_SESSION_ID = re.compile(r"(WP\d+_Session\d+)")
@@ -274,13 +289,13 @@ def parse_speaker(raw: str) -> dict:
     Returns a dict with keys: name, role, party, location.
     All values may be None if not determinable.
     """
-    text = raw.strip().rstrip(":")
+    text = _ws(raw.rstrip(":"))
 
     # Pattern A: chair role prefix
     m = RE_CHAIR_PREFIX.match(text)
     if m:
         return {
-            "name": m.group(2).strip(),
+            "name": _ws(m.group(2)),
             "role": m.group(1),
             "party": None,
             "location": None,
@@ -290,9 +305,9 @@ def parse_speaker(raw: str) -> dict:
     # e.g. "Dr. Kather (GB/BHE), Anfragender"
     m = RE_MEMBER_ROLE_SPLIT.match(text)
     if m:
-        name_part = m.group(1).strip()
+        name_part = _ws(m.group(1))
         qualifiers = RE_PAREN_QUALIFIER.findall(m.group(2))
-        role_part = m.group(3).strip()
+        role_part = _ws(m.group(3))
         party, location = _classify_qualifiers(qualifiers)
         return {
             "name": name_part,
@@ -304,8 +319,8 @@ def parse_speaker(raw: str) -> dict:
     # Pattern C: name + comma + official role
     m = RE_OFFICIAL_SPLIT.match(text)
     if m:
-        name_part = m.group(1).strip()
-        role_part = (m.group(2) + m.group(3)).strip()
+        name_part = _ws(m.group(1))
+        role_part = _ws(m.group(2) + m.group(3))
         # A "(State)" qualifier may follow the role keyword.
         location = None
         state_m = RE_PAREN_QUALIFIER.search(m.group(3))
@@ -322,7 +337,7 @@ def parse_speaker(raw: str) -> dict:
     # Split at the first "(" to separate base name from qualifiers.
     paren_pos = text.find("(")
     if paren_pos != -1:
-        base_name = text[:paren_pos].strip()
+        base_name = _ws(text[:paren_pos])
         qualifiers = RE_PAREN_QUALIFIER.findall(text[paren_pos:])
         party, location = _classify_qualifiers(qualifiers)
 
@@ -331,7 +346,7 @@ def parse_speaker(raw: str) -> dict:
         role_m = RE_STATE_ROLE_PREFIX.match(base_name)
         if role_m:
             return {
-                "name": role_m.group(2).strip(),
+                "name": _ws(role_m.group(2)),
                 "role": role_m.group(1),
                 "party": party,
                 "location": location,
@@ -346,11 +361,197 @@ def parse_speaker(raw: str) -> dict:
 
     # Fallback: treat the whole string as the name.
     return {
-        "name": text,
+        "name": _ws(text),
         "role": None,
         "party": None,
         "location": None,
     }
+
+
+# OCR umlaut substitution pairs — common OCR error: umlaut read as plain vowel.
+_UMLAUT_PLAIN = str.maketrans("äöüÄÖÜ", "aouAOU")
+
+
+def _umlaut_key(name: str) -> str:
+    """Return a fold key for umlaut-insensitive comparison."""
+    return name.lower().translate(_UMLAUT_PLAIN)
+
+
+# ---------------------------------------------------------------------------
+# Intra-session name normalization
+# ---------------------------------------------------------------------------
+
+def _levenshtein(a: str, b: str) -> int:
+    """Classic Levenshtein edit distance (insert / delete / substitute)."""
+    if len(a) < len(b):
+        a, b = b, a
+    if not b:
+        return len(a)
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a):
+        curr = [i + 1]
+        for j, cb in enumerate(b):
+            curr.append(min(prev[j + 1] + 1, curr[j] + 1, prev[j] + (ca != cb)))
+        prev = curr
+    return prev[-1]
+
+
+def _normalize_speaker_names(speeches: list) -> list:
+    """
+    Within a session, merge speaker name variants that differ by ≤ 1 edit
+    (Levenshtein) once umlauts are folded, when they share the same role.
+
+    This handles OCR misreads where the umlaut character itself is corrupted —
+    e.g. "Löbe" → "Labe" (ö misread as a). A pure umlaut-strip grouping key
+    would place "labe" and "lobe" in different buckets; Levenshtein ≤ 1 on
+    the folded keys catches these cases.
+
+    Within a role group, name variants are clustered via union-find. The
+    majority surface form (highest count, tiebreak = longest) wins and every
+    minority variant in the cluster has its ``name`` and ``speaker_raw``
+    rewritten in place.
+    """
+    # 1. Group speech indices by role key (role only — not role+name).
+    #    Skip role=None (regular MPs): those entries represent many different people
+    #    and pairwise Levenshtein-1 on surnames would silently merge distinct speakers.
+    role_groups: dict = defaultdict(list)
+    for idx, sp in enumerate(speeches):
+        role = sp.get("role") or ""
+        if not role:
+            continue  # never normalise role=None members
+        role_key = _umlaut_key(role)
+        role_groups[role_key].append(idx)
+
+    # 2. Within each role group, cluster name variants by Levenshtein ≤ 1
+    for indices in role_groups.values():
+        if len(indices) < 2:
+            continue
+        name_counts: Counter = Counter(
+            speeches[i]["name"] for i in indices if speeches[i].get("name")
+        )
+        if len(name_counts) < 2:
+            continue
+
+        variants = list(name_counts.keys())
+        parent = {v: v for v in variants}
+
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+
+        for a, b in itertools.combinations(variants, 2):
+            if _levenshtein(_umlaut_key(a), _umlaut_key(b)) <= 1:
+                parent[find(a)] = find(b)
+
+        clusters: dict = defaultdict(list)
+        for v in variants:
+            clusters[find(v)].append(v)
+
+        canonical: dict = {}
+        for members in clusters.values():
+            if len(members) < 2:
+                continue
+            winner = max(members, key=lambda m: (name_counts[m], len(m)))
+            for m in members:
+                if m != winner:
+                    canonical[m] = winner
+
+        if not canonical:
+            continue
+
+        for i in indices:
+            old_name = speeches[i].get("name")
+            if old_name in canonical:
+                new_name = canonical[old_name]
+                speeches[i]["name"] = new_name
+                if speeches[i].get("speaker_raw"):
+                    speeches[i]["speaker_raw"] = speeches[i]["speaker_raw"].replace(
+                        old_name, new_name
+                    )
+
+    return speeches
+
+
+# ---------------------------------------------------------------------------
+# Dash-continuation splitting (full-inline mode only)
+# ---------------------------------------------------------------------------
+
+def _split_dash_chair(speeches: list) -> list:
+    """
+    In full-inline sessions (WP01 era), the presiding officer often resumes without
+    a new attribution header. Instead the transcript shows a paragraph starting with
+    '— Capital...' (em-dash + uppercase). Split each speech body at these points and
+    assign the new entry to the most recently seen chair speaker.
+    """
+    _CHAIR_ROLES = frozenset({
+        "Alterspräsident", "Alterspräsidentin",
+        "Präsident", "Präsidentin",
+        "Vizepräsident", "Vizepräsidentin",
+    })
+
+    last_chair: dict | None = None
+    expanded = []
+
+    for speech in speeches:
+        role = speech.get("role") or ""
+        if any(role.startswith(r) for r in _CHAIR_ROLES):
+            last_chair = {"name": speech["name"], "role": speech["role"]}
+
+        body = speech["text"]
+        body_abs = speech["_body_abs_start"]
+
+        if last_chair is None:
+            expanded.append(speech)
+            continue
+
+        dash_matches = list(RE_DASH_CHAIR.finditer(body))
+        if not dash_matches:
+            expanded.append(speech)
+            continue
+
+        speech["text"] = body[:dash_matches[0].start()].strip()
+        expanded.append(speech)
+
+        for j, dm in enumerate(dash_matches):
+            dash_start = dm.start(1)
+            text_start = dm.end()
+            text_end = (
+                dash_matches[j + 1].start()
+                if j + 1 < len(dash_matches)
+                else len(body)
+            )
+            dash_line = dm.group(1).lstrip()
+            dash_text = dash_line + body[text_start:text_end]
+
+            expanded.append({
+                "speaker_raw": last_chair["role"] + " " + last_chair["name"],
+                "name": last_chair["name"],
+                "role": last_chair["role"],
+                "party": None,
+                "location": None,
+                "text": dash_text.strip(),
+                "char_offset": body_abs + dash_start,
+                "_body_abs_start": body_abs + dm.end(),
+            })
+
+    return expanded
+
+
+# ---------------------------------------------------------------------------
+# Whitespace normaliser
+# ---------------------------------------------------------------------------
+
+def _ws(s: str) -> str:
+    """Collapse runs of spaces/tabs to a single space and strip edges.
+
+    OCR frequently inserts extra spaces inside attributions, e.g.
+    'Dr.  Adenauer  (CDU)' or 'Wolfgang  Thierse'. Normalising here
+    means both ``speaker_raw`` and all derived fields (name, role …)
+    are clean before any downstream analysis touches them.
+    """
+    return re.sub(r"[ \t]+", " ", s).strip()
 
 
 # ---------------------------------------------------------------------------
@@ -359,13 +560,13 @@ def parse_speaker(raw: str) -> dict:
 
 def _inline_speaker_raw(m: re.Match) -> str:
     """Extract the speaker attribution string from an RE_INLINE_SPEAKER match."""
-    return (
+    return _ws(
         m.group("chair_inline")
         or m.group("member_inline")
         or m.group("official_inline")
         or m.group("member_role_inline")
         or ""
-    ).strip()
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -397,7 +598,7 @@ def split_speeches(text: str) -> list:
 
     speeches = []
     for i, match in enumerate(primary_matches):
-        speaker_raw = match.group(0).strip().rstrip(":").strip()
+        speaker_raw = _ws(match.group(0).rstrip(":").strip())
 
         # Speech body: from end of the attribution line to start of the next one.
         body_start = match.end()
@@ -465,6 +666,9 @@ def split_speeches(text: str) -> list:
                 "_body_abs_start": im.end(),
             })
 
+        # --- Dash-continuation pass (full-inline mode only) ---
+        speeches = _split_dash_chair(speeches)
+
     expanded = []
     for speech in speeches:
         body = speech["text"]
@@ -499,6 +703,9 @@ def split_speeches(text: str) -> list:
                 "char_offset": body_abs + im.start(),
                 "_body_abs_start": body_abs + im.end(),
             })
+
+    # --- Name normalization: fix OCR umlaut substitutions (e.g. "Labe" → "Löbe") ---
+    expanded = _normalize_speaker_names(expanded)
 
     # Number sequences and remove temporary key.
     for seq, sp in enumerate(expanded, start=1):
@@ -593,14 +800,14 @@ def run(force: bool = False) -> None:
         try:
             text = cleaned_path.read_text(encoding="utf-8")
         except Exception as e:
-            print(f"READ ERROR\n  → {e}")
+            print(f"READ ERROR\n  -> {e}")
             error_count += 1
             continue
 
         try:
             speeches = split_speeches(text)
         except Exception as e:
-            print(f"PARSE ERROR\n  → {e}")
+            print(f"PARSE ERROR\n  -> {e}")
             error_count += 1
             continue
 
@@ -618,10 +825,10 @@ def run(force: bool = False) -> None:
             )
             with open(log_path, "a", encoding="utf-8") as lg:
                 lg.write(str(out_path) + "\n")
-            print(f"OK  → {len(speeches)} speeches → {out_path.relative_to(in_root)}")
+            print(f"OK  -> {len(speeches)} speeches -> {out_path.relative_to(in_root)}")
             ok_count += 1
         except Exception as e:
-            print(f"WRITE ERROR\n  → {e}")
+            print(f"WRITE ERROR\n  -> {e}")
             error_count += 1
 
     print(f"\nDone.  OK={ok_count}  Skipped={skip_count}  Errors={error_count}")

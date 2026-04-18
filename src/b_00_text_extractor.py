@@ -59,6 +59,7 @@ INPUT_PDF_FOLDER = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundesta
 OUTPUT_FOLDER    = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundestag-project\data\preprocessed"
 # ============================================================
 
+import argparse
 import csv
 import json
 import hashlib
@@ -163,6 +164,15 @@ def extract_text_pdftotext(pdf_path: Path) -> str:
     Bundestag PDFs better than pure-Python alternatives.
     Returns the raw text string (pages separated by \f).
     Raises RuntimeError on failure.
+
+    Note: -raw (PDF content-stream order) is used intentionally.
+    For Bundestag WP01–WP09 scanned two-column PDFs, the OCR places text in
+    the content stream left-column-first, so -raw gives the correct speaker
+    sequence.  Without -raw, pdftotext's own layout analysis interleaves lines
+    across both columns, producing worse within-speech text mixing.
+    A minor side-effect of -raw: 1–3 sentences from an adjacent column may
+    appear inside a speaker's body text.  Impact on bag-of-words topic models
+    (the primary analysis) is low.
     """
     result = subprocess.run(
         ["pdftotext", "-raw", "-enc", "UTF-8", str(pdf_path), "-"],
@@ -473,7 +483,20 @@ def rebuild_catalogue(out_root: Path) -> None:
 # Main runner
 # ---------------------------------------------------------------------------
 
-def run():
+def run(force: bool = False, wp_filter: set[str] | None = None):
+    """
+    Main extraction loop.
+
+    Parameters
+    ----------
+    force : bool
+        If True, re-process PDFs even if output files already exist or the
+        session is in processed.log.  Useful after changing the extraction
+        engine (e.g. removing the -raw flag).
+    wp_filter : set[str] | None
+        If provided, only process PDFs whose WP number (zero-padded to 2
+        digits) is in this set.  E.g. {"01", "02"} to re-extract WP01+WP02.
+    """
     in_root  = Path(INPUT_PDF_FOLDER)
     out_root = Path(OUTPUT_FOLDER)
     out_root.mkdir(parents=True, exist_ok=True)
@@ -483,11 +506,18 @@ def run():
     # appears in the log OR all three output files already exist on disk.
     log_path = out_root / "processed.log"
     done: set[str] = set()
-    if log_path.exists():
+    if log_path.exists() and not force:
         done = set(log_path.read_text(encoding="utf-8").splitlines())
 
     pdfs = sorted(in_root.rglob("*.pdf"))
-    print(f"Found {len(pdfs)} PDF(s) under {in_root}")
+
+    # Apply WP filter if given
+    if wp_filter:
+        pdfs = [p for p in pdfs if p.stem[:2] in wp_filter]
+
+    print(f"Found {len(pdfs)} PDF(s) under {in_root}"
+          + (f"  [WP filter: {sorted(wp_filter)}]" if wp_filter else "")
+          + ("  [--force]" if force else ""))
 
     ok_count = skip_count = error_count = 0
 
@@ -501,13 +531,14 @@ def run():
         out_full_preview, out_meta_preview, out_txt_preview = output_paths_for(preview, out_root)
 
         # Skip if main JSON is already logged OR all three files exist
+        # (unless --force is active, in which case always re-process)
         already_logged = str(out_full_preview) in done
         all_exist = (
             out_full_preview.exists()
             and out_meta_preview.exists()
             and out_txt_preview.exists()
         )
-        if already_logged or all_exist:
+        if not force and (already_logged or all_exist):
             print(f"[SKIP] {pdf.name}")
             skip_count += 1
             continue
@@ -517,7 +548,7 @@ def run():
         try:
             record = build_record(pdf, in_root)
         except Exception as e:
-            print(f"ERROR\n  → {e}")
+            print(f"ERROR\n  -> {e}")
             error_count += 1
             continue
 
@@ -536,11 +567,11 @@ def run():
             with open(log_path, "a", encoding="utf-8") as lg:
                 lg.write(str(out_full) + "\n")
 
-            print(f"OK → {out_full.relative_to(out_root)}")
+            print(f"OK -> {out_full.relative_to(out_root)}")
             ok_count += 1
 
         except Exception as e:
-            print(f"WRITE ERROR\n  → {e}")
+            print(f"WRITE ERROR\n  -> {e}")
             error_count += 1
 
     print(f"\nDone.  OK={ok_count}  Skipped={skip_count}  Errors={error_count}")
@@ -551,8 +582,31 @@ def run():
 
 
 if __name__ == "__main__":
-    print("Bundestag PDF → JSON extractor")
+    parser = argparse.ArgumentParser(
+        description="Bundestag PDF -> JSON extractor"
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Re-process PDFs even if output files already exist.",
+    )
+    parser.add_argument(
+        "--wp",
+        metavar="NN[,NN,...]",
+        help=(
+            "Comma-separated list of Wahlperiode numbers to process "
+            "(zero-padded or plain, e.g. '01,02,03' or '1,2,3'). "
+            "All others are skipped."
+        ),
+    )
+    args = parser.parse_args()
+
+    wp_filter: set[str] | None = None
+    if args.wp:
+        wp_filter = {w.strip().zfill(2) for w in args.wp.split(",")}
+
+    print("Bundestag PDF -> JSON extractor")
     print(f"Input:  {INPUT_PDF_FOLDER}")
     print(f"Output: {OUTPUT_FOLDER}")
     print()
-    run()
+    run(force=args.force, wp_filter=wp_filter)

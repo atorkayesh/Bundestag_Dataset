@@ -1,5 +1,5 @@
 session_id,wp_filename,session_filename,wp_text,session_text,wp,session,date,date_iso,city,year,source_pdf,md5,engine,meta_warnings_count,meta_warnings_detail
-WP01_Session001,01,001,,001,01,001,07-09-1949,1949-09-07,Bonn,1949,01001.pdf,1d4a9da8a11483e5b2d734409efed37a,pdfminer,0,[]
+WP01_Session001,01,001,,001,01,001,07-09-1949,1949-09-07,Bonn,1949,01001.pdf,1d4a9da8a11483e5b2d734409efed37a,pdftotext,0,[]
 WP02_Session080,02,080,,080,02,080,05-05-1955,1955-05-05,Bonn,1955,02080.pdf,7bfd289f7f6e30a3849e43543e8a946c,pdfminer,0,[]
 WP03_Session105,03,105,03,105,03,105,09-03-1960,1960-03-09,Bonn,1960,03105.pdf,c5b53e9ef84a4b814c4252008fa091f7,pdfminer,0,[]
 WP04_Session124,04,124,04,124,04,124,29-04-1964,1964-04-29,Bonn,1964,04124.pdf,e5686e4bdfb3b3d599ef5ebbdf3148a5,pdfminer,0,[]

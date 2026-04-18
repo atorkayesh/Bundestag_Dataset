@@ -12,6 +12,6 @@
   "year": "1949",
   "source_pdf": "01001.pdf",
   "md5": "1d4a9da8a11483e5b2d734409efed37a",
-  "engine": "pdfminer",
+  "engine": "pdftotext",
   "meta_warnings": []
 }
