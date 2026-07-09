@@ -1,126 +1,135 @@
-"""
-b_01_text_cleaning.py
-=====================
-Cleans extracted Bundestag Plenarprotokoll .txt files produced by
-b_00_text_extractor.py and writes cleaned .txt files mirroring the same
-folder structure.
+"""Clean extracted Bundestag Plenarprotokoll .txt files.
 
-Input  folder : preprocessed/WP{wp}/{year}/WP{wp}_Session{session}.txt
-Output folder : preprocessed/WP{wp}/{year}/WP{wp}_Session{session}_cleaned.txt
-
-Cleaning steps (applied in order)
------------------------------------
-1.  Remove page-break markers inserted by the extractor
-    ("--- Page Break ---" lines).
-2.  Remove repeated page headers.
-    Old format : "Deutscher Bundestag — N. Sitzung. Bonn, <Weekday>, den <date>"
-    New format : "Deutscher Bundestag – WW. Wahlperiode – NN. Sitzung. Berlin, ..."
-    Both the full-line variant and OCR-broken multi-line variants are handled.
-3.  Remove CID character-ID artefacts left by pdftotext when it cannot map
-    a glyph to Unicode, e.g. "(cid:9)", "(cid:13)".
-4.  Remove the table of contents block.  (Runs BEFORE page-number stripping
-    so that ToC entries still carry their page-reference suffixes, which the
-    detection regex relies on.)
-    Strategy: scan the preamble (everything before the first substantive
-    proceedings line) for lines that look like ToC entries — dot-leader,
-    wide-space, or short-dot separator followed by a page/column reference.
-    Also removes spaced-letter headings ("I n h a l t :").
-    The proceedings anchor is found by a two-pass approach:
-      Pass A — unambiguous opener: "Beginn: HH.MM Uhr" or
-               "Die Sitzung wird … eröffnet".
-      Pass B — fallback: first presidential speaker-colon line preceded by
-               a blank line.
-    If no anchor is found the step is skipped conservatively.
-5.  Remove standalone page numbers.
-    Matches lines that are only digits, optionally with a Roman-numeral
-    prefix (ToC pages), an optional trailing asterisk (e.g. "18768*"),
-    and optionally with a trailing column letter A–D (e.g. "26097 A").
-6.  Remove footnote lines and printer/colophon lines.
-    Footnotes are lines starting with *, †, numbered (1) / lettered (a))
-    markers.  Colophon lines match known printer, ISSN, and Vertrieb
-    patterns — including the single-line concatenated form produced by some
-    born-digital PDFs.
-7.  Remove column/margin position markers left by OCR: isolated "(A)", "(B)",
-    "(C)", "(D)" tokens that appear on their own line or inline, including
-    the concatenated form "(A)(B)(C)(D)" sometimes found at session end.
-8.  Remove bare separator lines: lines consisting solely of one or two
-    hyphen/dash characters, which are OCR column-rule artefacts.
-9.  Remove back-matter reference blocks ("Amtliche Mitteilungen") that
-    appear after the last "Anlage N" heading and consist exclusively of
-    EU/Ratsdokument reference lines and Drucksachen numbers.  These blocks
-    carry no speech content.  Removal is conservative: only lines that match
-    the reference-code pattern within a detected back-matter zone are dropped.
-10. Rejoin words broken by end-of-line hyphenation (applies to all sessions;
-    born-digital PDFs also produce soft-hyphen breaks in the extracted text).
-11. Normalise whitespace: collapse multiple blank lines to a single blank line
-    and strip trailing spaces from every line.
-
-Design notes
-------------
-- Each step is a pure function that takes a string and returns a string,
-  making it easy to test, reorder, or disable individual steps.
-- Regexes are compiled once at module level.
-- The cleaner is intentionally conservative: when in doubt it keeps text
-  rather than discarding it.  Speaker attribution lines, interjections,
-  floor reactions, and procedural announcements are ALL preserved.
-- Resume-safe: files whose _cleaned.txt already exists are skipped unless
-  the --force flag is passed (see run()).
-- A separate cleaning.log records each successfully cleaned file (one path
-  per line) for auditing.
+Steps (in order): column-order fix → page breaks → CID artefacts → headers →
+ToC removal → page numbers → footnotes → margin markers → bare separators →
+back-matter refs → whitespace → hyphenation → column interleave → 2nd header pass.
+Outputs *_cleaned.txt alongside originals. Resume-safe; existing files skipped unless --force.
 """
 
-# ============================================================
-# USER SETTINGS
-# ============================================================
-PREPROCESSED_FOLDER = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundestag-project\data\preprocessed"
-# ============================================================
+# defaults — override via --preprocessed-dir
+_DEFAULT_PREPROCESSED = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundestag-project\data\preprocessed"
 
+import argparse
 import re
 import sys
 from pathlib import Path
 
-# ---------------------------------------------------------------------------
-# Compiled regexes
-# ---------------------------------------------------------------------------
+from utils import append_log
 
-# --- Step 1: page-break marker ---
+# Must match TXT_PAGE_SEP in b_00 exactly.
+_TXT_PAGE_SEP = "\n\n--- Page Break ---\n\n"
+
+
+
+# Matches a line that contains ONLY a single column marker "(A)", "(B)", "(C)",
+# or "(D)" (with optional leading/trailing horizontal whitespace).  This is
+# intentionally strict: interjection lines like "(Beifall bei der SPD)" have
+# more than one character inside the parens and are never matched.
+_RE_COL_MARKER_LINE = re.compile(r"^[ \t]*\(([ABCD])\)[ \t]*$", re.MULTILINE)
+
+# Canonical A→B→C→D ordering for sorting column blocks.
+_COL_ORDER: dict[str, int] = {"A": 0, "B": 1, "C": 2, "D": 3}
+
 RE_PAGE_BREAK = re.compile(
     r"^-{3,}\s*Page Break\s*-{3,}\s*$",
     re.IGNORECASE | re.MULTILINE,
 )
 
-# --- Step 2: page headers ---
 # New format (born-digital, WP11+):
 #   "Deutscher Bundestag – 20. Wahlperiode – 10. Sitzung. Berlin, Mittwoch, den 12. Januar 2022"
+# [ \t] instead of \s throughout: headers are single-line; \s would match \n and
+# cause cross-line backtracking on files that are mostly whitespace (e.g. CID-artefact files).
+# [.,]? instead of \.? for the WP number separator: WP11–WP12 OCR sometimes reads
+# the period as a comma ("11, Wahlperiode" instead of "11. Wahlperiode").
 RE_HEADER_NEW = re.compile(
-    r"^\s*(?:\d{1,5}\*?\s+)?(?:\([ABCD]\))*\s*"
-    r"Deutscher\s+Bundestag\s*[–—-]\s*\d{1,2}\s*\.?\s*Wahlperiode.*$",
+    r"^[ \t]*(?:\d{1,5}\*?[ \t]+)?(?:\([ABCD]\))*[ \t]*"
+    r"Deutscher[ \t]+Bundestag[ \t]*[–—-][ \t]*\d{1,2}[ \t]*[.,]?[ \t]*Wahlperiode.*$",
     re.IGNORECASE | re.MULTILINE,
 )
 
 # Old format (OCR'd, WP1-10):
 #   "Deutscher Bundestag — 1. Sitzung. Bonn, Mittwoch, den 7. September 1949"
+# WP01–WP09 mid-session headers carry a two-part prefix: page number then WP number,
+# e.g. "688 2. Deutscher Bundestag — 20. Sitzung." — the extra (?:\d{1,2}[.,]?[ \t]+)?
+# group absorbs the WP number so the anchor still matches at line start.
 RE_HEADER_OLD = re.compile(
-    r"^\s*(?:\d{1,5}\*?\s+)?(?:\([ABCD]\))*\s*"
-    r"Deutscher\s+Bundestag\s*[–—-]\s*\d{1,3}\s*\.?\s*Sitzung\..*$",
+    r"^[ \t]*(?:\d{1,5}\*?[ \t]+)?(?:\d{1,2}[.,]?[ \t]+)?(?:\([ABCD]\))*[ \t]*"
+    r"Deutscher[ \t]+Bundestag[ \t]*[–—-][ \t]*\d{1,3}[ \t]*[.,]?[ \t]*Sitzung\..*$",
     re.IGNORECASE | re.MULTILINE,
+)
+
+# Inline header: same header text fused mid-line due to two-column OCR merging.
+# pdftotext sometimes places a right-column page header on the same output line as
+# left-column speech text, e.g.:
+#   "öffent690 2. Deutscher Bundestag — 20. Sitzung. Bonn, ..."
+# rejoin_hyphens also produces mid-line headers when a word ends with a hyphen just
+# before a header that survived the anchored pass:
+#   "Entwick-\nDeutscher Bundestag — 11. Wahlperiode..." → "Entwick-Deutscher Bundestag..."
+# The leading WP-number `\b\d{1,2}[.,]` token is made optional so that headers fused
+# WITHOUT a leading digit (the born-digital WP11/12 case) are also caught.
+# [.,] handles OCR period/comma confusion on the WP number separator.
+RE_HEADER_INLINE = re.compile(
+    r"(?:\b\d{1,2}[ \t]*[.,][ \t]*)?Deutscher[ \t]+Bundestag[ \t]*[–—-][^\n]*"
+    r"(?:Wahlperiode|Sitzung\.)[^\n]*",
+    re.IGNORECASE,
 )
 
 # Parenthesised speaker-attribution tags left on their own line directly
 # under old-format headers — column-layout OCR artefacts, not speech.
 RE_HEADER_SPEAKER_TAG = re.compile(
-    r"^\(\s*[A-ZÄÖÜ][a-zA-ZÄÖÜäöüß\s\.]+\)\s*$",
+    r"^\(\s*[A-ZÄÖÜ][a-zA-ZÄÖÜäöüß \t\.]+\)\s*$",   # \s→[ \t]: no newlines inside [] to prevent cross-line backtracking
     re.MULTILINE,
 )
 
-# --- Step 3: CID character-ID artefacts ---
 # pdftotext emits "(cid:N)" when it cannot map a PDF glyph to Unicode.
 # The most common is (cid:9) for the tab character, but any numeric ID
 # can appear.  Strip the entire token and the surrounding whitespace context
 # is then handled by the whitespace normalisation step.
+#
+# Special case — fully-CID-encoded PDFs: some WP14 born-digital PDFs use a
+# proprietary font with a custom glyph-ID→Unicode mapping that pdftotext cannot
+# resolve, so EVERY character comes out as (cid:N).  In those cases stripping
+# all CIDs leaves an empty document.  We detect this (>60% of non-whitespace
+# "characters" are CID tokens) and decode by finding the additive offset that
+# maximises the fraction of printable Latin characters.
+# Known case: 14169.pdf uses offset +29 (chr(cid+29) gives ASCII text).
 RE_CID = re.compile(r"\(cid:\d+\)")
 
-# --- Step 4: standalone page numbers (extended) ---
+# Garbled-printable detection: some pdftotext builds decode a proprietary font's
+# glyphs to the wrong Unicode code points (every non-space char shifted by -N from
+# the correct value).  Known case: HPC pdftotext for WP14 14169.pdf uses shift -29,
+# turning "Plenarprotokoll" into "3OHQDUSURWRNROO".  We detect this via short probe
+# strings (the garbled form of words guaranteed to appear in every protocol) and fix
+# by adding +shift to every printable non-space character in range 0x21–(0x7E–shift).
+# Whitespace (0x20, \n, \t, \r) is left unchanged — pdftotext inserts it via PDF
+# positioning commands, not via glyph lookups, so it is always correct.
+_GARBLED_SHIFT_PROBES: dict[int, str] = {
+    29: "3OHQDU",   # "Plenar" with every char shifted -29
+}
+
+# CID-encoded probe for pdfminer output: the sequence below is "Plenar" where
+# each glyph's CID is the correct Unicode code point minus 29.
+# If this exact CID sequence appears in the raw text, offset +29 is forced
+# without ratio guessing (ratio detection can be fooled by rare high-CID glyphs
+# that produce non-printable chars with offset 29 but printable ones with offset 0).
+_CID_OFFSET_PROBES: dict[int, tuple] = {
+    # offset → (cid_probe_string, post_decode_corrections_dict)
+    #
+    # The corrections dict fixes characters that the font places at non-standard
+    # byte positions and therefore decode to the wrong code point with a plain +offset.
+    # For 14169.pdf the font places German lowercase umlauts at bytes that produce
+    # C1 control codes or broken-bar when shifted by +29:
+    #   'ä' font-byte 108 → chr(137)=\x89  (should be chr(228)=ä)
+    #   'ö' font-byte 124 → chr(153)=\x99  (should be chr(246)=ö)
+    #   'ü' font-byte 129 → chr(158)=\x9e  (should be chr(252)=ü)
+    #   'ß' font-byte 137 → chr(166)=¦     (should be chr(223)=ß)
+    # Capital umlauts (Ä, Ö, Ü) follow the +29 rule correctly and need no fix.
+    29: (
+        "(cid:51)(cid:79)(cid:72)(cid:81)(cid:68)(cid:85)",  # "Plenar" CID sequence
+        {"\x89": "ä", "\x99": "ö", "\x9e": "ü", "¦": "ß"},
+    ),
+}
+
 # Matches lines that contain only:
 #   - an optional Roman-numeral prefix   e.g. "II 42"  (ToC pages)
 #   - digits (the page number)
@@ -133,7 +142,6 @@ RE_PAGE_NUMBER = re.compile(
     re.MULTILINE,
 )
 
-# --- Step 5: table of contents ---
 
 # A ToC entry line.  Must end with a page/column reference (with optional
 # asterisk), preceded by one of three separator patterns:
@@ -185,7 +193,6 @@ RE_ANCHOR_SPEAKER = re.compile(
     re.MULTILINE,
 )
 
-# --- Step 6: footnotes and colophon ---
 RE_FOOTNOTE_MARKER = re.compile(
     r"^\s*(?:"
     r"\*\s+"           # asterisk footnote
@@ -212,7 +219,6 @@ RE_COLOPHON = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 
-# --- Step 7: column/margin position markers ---
 # Isolated "(A)", "(B)", "(C)", "(D)" on their own line or inline.
 # Also catches the concatenated form "(A)(C)(B)(D)" found at session ends.
 RE_MARGIN_MARKER = re.compile(
@@ -221,7 +227,6 @@ RE_MARGIN_MARKER = re.compile(
     re.MULTILINE,
 )
 
-# --- Step 8: bare separator lines ---
 # Lines consisting solely of one or two hyphen/dash/em-dash characters.
 # These are OCR artefacts from the two-column vertical rule.
 RE_BARE_SEPARATOR = re.compile(
@@ -229,7 +234,6 @@ RE_BARE_SEPARATOR = re.compile(
     re.MULTILINE,
 )
 
-# --- Step 9: back-matter reference blocks ---
 # Lines in the "Amtliche Mitteilungen" / EU-document appendix that consist
 # only of reference codes.  Matched line-by-line inside a detected zone.
 RE_BACKM_REF = re.compile(
@@ -248,7 +252,6 @@ RE_BACKM_START = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 
-# --- Step 10: hyphenation ---
 # Matches a word character, a plain or soft hyphen, optional horizontal
 # whitespace (born-digital PDFs sometimes have a trailing space after the
 # hyphen before the newline), one or more newlines, and the first character
@@ -267,13 +270,35 @@ RE_BACKM_START = re.compile(
 #           "CDU-\n\nCSU"           ->  "CDU-CSU"
 RE_HYPHEN_BREAK = re.compile(r"(\w)[-\xad][ \t]*\n+(\w)", re.UNICODE)
 
-# --- Step 11: whitespace normalisation ---
 RE_EXCESS_BLANK = re.compile(r"\n{3,}")
 
+# Born-digital Bundestag PDFs (WP11+) use a two-column layout: speech text
+# on the left, interjections (Beifall, Zurufe, etc.) on the right.  pdfminer
+# reads pages in horizontal bands, so a right-column interjection block is
+# inserted mid-sentence, splitting a single sentence into a fragment above and
+# a lowercase continuation below.
+#
+# Detection pattern:
+#   Group 1 — a non-parenthesised text line  (the sentence fragment)
+#   Group 2 — one or more interjection blocks in parentheses, separated by
+#              blank lines  (the interleaved right-column content)
+#   Group 3 — a line starting with a lowercase letter  (the continuation)
+#
+# Replacement: fragment + " " + continuation + "\n\n" + interjection block(s)
+# Applied in a loop until no more matches (handles multiple consecutive
+# interjections splitting the same sentence).
+# Interjection-paragraph detector: a paragraph whose first line starts with
+# "(" followed immediately by one of the known floor-reaction keywords.
+# Matching only the START of the paragraph avoids any backtracking risk.
+_INTERJECTION_KW = (
+    r"Beifall|Zurufe?|Heiterkeit|Lachen|Widerspruch|Gegenrufe?"
+    r"|Lebhafter?|Anhaltender?|Stürmischer?|Erneuter?"
+    r"|Vereinzelt|Sehr |Wiederholte?|Große[nr]?"
+)
+RE_INTJ_PARA = re.compile(r"^\((?:" + _INTERJECTION_KW + r")", re.MULTILINE)
 
-# ---------------------------------------------------------------------------
+
 # Individual cleaning steps
-# ---------------------------------------------------------------------------
 
 def remove_page_breaks(text: str) -> str:
     """Step 1 — remove '--- Page Break ---' markers."""
@@ -285,11 +310,72 @@ def remove_headers(text: str) -> str:
     text = RE_HEADER_NEW.sub("", text)
     text = RE_HEADER_OLD.sub("", text)
     text = RE_HEADER_SPEAKER_TAG.sub("", text)
+    # Non-anchored pass: catches headers fused mid-line by two-column OCR merging
+    # (e.g. "öffent690 2. Deutscher Bundestag — 20. Sitzung. Bonn, ...").
+    # Runs after the anchored passes so it only fires on genuine residuals.
+    text = RE_HEADER_INLINE.sub("", text)
     return text
 
 
 def remove_cid_artefacts(text: str) -> str:
-    """Step 3 — strip (cid:N) glyph-mapping failure tokens from pdftotext."""
+    """Strip (cid:N) tokens; for fully-CID-encoded PDFs decode via offset (+29 for WP14 14169.pdf).
+
+    Also detects garbled-printable output where pdftotext decoded all glyphs with a wrong
+    code-point shift (e.g. shift -29, turning "Plenarprotokoll" into "3OHQDUSURWRNROO").
+    """
+    cid_values = RE_CID.findall(text)
+
+    # --- Mode B: no CID tokens but garbled printable characters ---
+    if not cid_values:
+        for shift, probe in _GARBLED_SHIFT_PROBES.items():
+            if probe in text:
+                ceiling = 0x7E - shift          # max input char that stays in printable range
+                return "".join(
+                    chr(ord(c) + shift) if (0x21 <= ord(c) <= ceiling) else c
+                    for c in text
+                )
+        return text
+
+    # Estimate fraction of content that is CID tokens.
+    non_cid = RE_CID.sub("", text).replace("\n", "").replace(" ", "")
+    if len(cid_values) <= len(non_cid):
+        # Normal case: CIDs are a minority — just strip them.
+        return RE_CID.sub("", text)
+
+    # Fully-CID-encoded document: try to decode.
+    def _decode(offset: int) -> str:
+        def _sub(m: "re.Match") -> str:
+            cp = int(m.group(0)[5:-1]) + offset   # (cid:N) → N + offset
+            return chr(cp) if 0x20 <= cp <= 0xFFFF else ""
+        return RE_CID.sub(_sub, text)
+
+    # Fast path: if a known CID-sequence probe is found, the offset is certain.
+    # Ratio-based detection can be fooled when a handful of high-CID glyphs produce
+    # non-printable chars with the correct offset but printable chars with offset 0.
+    for forced_offset, (cid_probe, corrections) in _CID_OFFSET_PROBES.items():
+        if cid_probe in text:
+            decoded = _decode(forced_offset)
+            if corrections:
+                decoded = decoded.translate(str.maketrans(corrections))
+            return decoded
+
+    def _printable_ratio(s: str) -> float:
+        chars = [c for c in s if c not in " \n\t\r"]
+        if not chars:
+            return 0.0
+        ok = sum(1 for c in chars if 0x20 <= ord(c) <= 0x7E or 0xC0 <= ord(c) <= 0x2AF)
+        return ok / len(chars)
+
+    best_offset, best_ratio = 29, 0.0          # 29 is the known offset for 14169.pdf
+    for offset in [29, 30, 27, 28, 31, 32, 26, 25, 33, 0]:
+        ratio = _printable_ratio(_decode(offset))
+        if ratio > best_ratio:
+            best_ratio, best_offset = ratio, offset
+
+    if best_ratio >= 0.85:
+        return _decode(best_offset)
+
+    # No clean decoding found — fall back to stripping.
     return RE_CID.sub("", text)
 
 
@@ -299,24 +385,11 @@ def remove_page_numbers(text: str) -> str:
 
 
 def remove_toc(text: str) -> str:
-    """
-    Step 4 — remove the table of contents block.
+    """Remove the ToC and session cover preamble by discarding everything before the first anchor.
 
-    Two-pass anchor search:
-      1. Strong anchor  — unambiguous proceedings opener ("Beginn: HH.MM Uhr"
-         or "Die Sitzung wird … eröffnet").  These cannot appear inside a ToC.
-      2. Speaker anchor — first presidential speaker-colon line preceded by a
-         blank line.  Less reliable than the strong anchor but catches sessions
-         where the strong opener is absent or differently formatted.
-
-    Within the preamble (everything before the anchor):
-      - Lines matching RE_TOC_ENTRY  (dot-leader or wide-space + page ref) are
-        removed.
-      - Lines matching RE_TOC_HEADING (spaced-letter headings like "I n h a l t")
-        are removed.
-
-    Everything from the anchor line onward is left completely untouched.
-    If no anchor is found the function returns the text unchanged.
+    Two-pass: strong anchor ("Beginn: HH.MM Uhr" / "Die Sitzung wird eröffnet"),
+    then fallback speaker anchor (first presidential speaker-colon line after blank line).
+    Returns text unchanged if no anchor is found.
     """
     # Pass 1: strong anchor
     anchor = RE_ANCHOR_STRONG.search(text)
@@ -328,22 +401,11 @@ def remove_toc(text: str) -> str:
     if anchor is None:
         return text  # no anchor found — play it safe
 
-    anchor_pos = anchor.start()
-    preamble = text[:anchor_pos]
-    body = text[anchor_pos:]
-
-    cleaned_preamble = RE_TOC_ENTRY.sub("", preamble)
-    cleaned_preamble = RE_TOC_HEADING.sub("", cleaned_preamble)
-    return cleaned_preamble + body
+    return text[anchor.start():]
 
 
 def remove_footnotes(text: str) -> str:
-    """
-    Step 6 — remove footnote lines and colophon/printer lines.
-
-    Uses a line-by-line scan so that we never accidentally consume the
-    following paragraph when a footnote marker appears mid-text.
-    """
+    """Remove footnote lines (*, †, numbered) and colophon/printer lines."""
     lines = text.split("\n")
     cleaned = []
     for line in lines:
@@ -356,40 +418,17 @@ def remove_footnotes(text: str) -> str:
 
 
 def remove_margin_markers(text: str) -> str:
-    """
-    Step 7 — remove OCR column/margin markers (A) (B) (C) (D).
-
-    Handles both isolated single markers and the concatenated form
-    "(A)(C)(B)(D)" that appears at the end of some born-digital sessions.
-    Replaces with a single space to avoid accidentally joining words.
-    """
+    """Remove isolated (A)/(B)/(C)/(D) column markers and concatenated forms like (A)(C)(B)(D)."""
     return RE_MARGIN_MARKER.sub(" ", text)
 
 
 def remove_bare_separators(text: str) -> str:
-    """
-    Step 8 — remove lines that consist solely of one or two hyphens/dashes.
-
-    These are OCR artefacts of the vertical column rule in the two-column
-    Plenarprotokoll layout.  A single '-' or '–' on its own line is never
-    meaningful speech content.
-    """
+    """Remove lines of only one or two hyphens/dashes (OCR column-rule artefacts)."""
     return RE_BARE_SEPARATOR.sub("", text)
 
 
 def remove_backm_references(text: str) -> str:
-    """
-    Step 9 — remove EU/Ratsdokument reference lines from back-matter blocks.
-
-    Back-matter blocks begin with an "Amtliche Mitteilungen" heading and
-    contain committee notifications and EU document reference codes.  These
-    carry no speech content.
-
-    Strategy: find each "Amtliche Mitteilungen" heading.  From that point
-    to the end of the text, remove lines that match the reference-code
-    pattern.  Non-matching lines (e.g. descriptive sentences) are kept,
-    keeping the step conservative.
-    """
+    """Remove EU/Ratsdokument reference lines in back-matter blocks (after "Amtliche Mitteilungen")."""
     start = RE_BACKM_START.search(text)
     if start is None:
         return text
@@ -401,24 +440,10 @@ def remove_backm_references(text: str) -> str:
 
 
 def rejoin_hyphens(text: str) -> str:
-    """
-    Step 10 — rejoin words broken by end-of-line hyphenation.
+    """Rejoin end-of-line hyphenation: lowercase continuation → join, uppercase → keep hyphen.
 
-    Two-case logic based on the first character of the continuation word:
-      lowercase  -> line-break artefact -> remove hyphen and join
-        'Bun-\\ndesrepublik'      ->  'Bundesrepublik'
-        'Her-\\n\\nren'              ->  'Herren'
-        'Deutsch-\\n\\n\\n\\nland'  ->  'Deutschland'
-      uppercase  -> genuine compound hyphen -> keep hyphen, drop newline(s)
-        'Baden-\\n\\nWürttemberg' ->  'Baden-Württemberg'
-        'CDU-\\n\\nCSU'          ->  'CDU-CSU'
-
-    Uses \\n+ (not \\n{1,2}) because some scanned pages produce 3-4 newlines
-    at page boundaries; this step must run before normalise_whitespace so it
-    catches all counts before they collapse to \\n\\n.
-    Handles both plain hyphens and soft-hyphens (U+00AD).  Fires only when
-    both sides of the break are word characters, so legitimate em-dash usage
-    is unaffected.
+    Uses \\n+ (not \\n{1,2}) because some scanned pages produce 3–4 newlines at page boundaries.
+    Handles both plain hyphens and soft-hyphens (U+00AD).
     """
     def _fix(m: re.Match) -> str:
         before, after = m.group(1), m.group(2)
@@ -439,22 +464,120 @@ def normalise_whitespace(text: str) -> str:
     return text.strip()
 
 
-# ---------------------------------------------------------------------------
+def _fix_page_column_order(page: str) -> str:
+    """Sort column blocks within one page to canonical A→B→C→D order."""
+    markers = [
+        (m.group(1), m.start(), m.end())
+        for m in _RE_COL_MARKER_LINE.finditer(page)
+    ]
+    if len(markers) < 2:
+        return page  # not enough markers to detect or correct ordering
+
+    letters = [letter for letter, _s, _e in markers]
+
+    # Detect out-of-order: any C/D appearing before a later A/B → ACBD / CDAB / etc.
+    saw_right_col = False
+    needs_reorder = False
+    for letter in letters:
+        if letter in ("C", "D"):
+            saw_right_col = True
+        elif letter in ("A", "B") and saw_right_col:
+            needs_reorder = True
+            break
+
+    if not needs_reorder:
+        return page
+
+    # Text before the first column marker (page header, stray lines, etc.) is
+    # kept as-is; only the marker blocks themselves are reordered.
+    pre_text = page[: markers[0][1]]
+
+    # Each block spans from its marker line start to just before the next marker.
+    blocks: list[tuple[str, str]] = []
+    for i, (letter, start, _end) in enumerate(markers):
+        block_end = markers[i + 1][1] if i + 1 < len(markers) else len(page)
+        blocks.append((letter, page[start:block_end]))
+
+    # Stable sort: same-letter duplicates (rare edge case) keep original order.
+    sorted_blocks = sorted(blocks, key=lambda x: _COL_ORDER.get(x[0], 99))
+    return pre_text + "".join(content for _letter, content in sorted_blocks)
+
+
+def fix_column_order(text: str) -> str:
+    """Fix two-column horizontal-band interleaving in born-digital PDFs (ACBD → ABCD).
+
+    pdftotext reads pages in horizontal bands, producing ACBD block order instead
+    of the correct column order A→B→C→D. ~45,000 pages affected across WP13–WP20.
+    """
+    pages = text.split(_TXT_PAGE_SEP)
+    fixed_pages = [_fix_page_column_order(page) for page in pages]
+    return _TXT_PAGE_SEP.join(fixed_pages)
+
+
+def _is_interjection_para(para: str) -> bool:
+    """Return True if *para* is a floor-reaction block like '(Beifall bei …)'."""
+    return bool(RE_INTJ_PARA.match(para))
+
+
+def fix_column_interleave(text: str) -> str:
+    """Reorder interjection blocks inserted mid-sentence by two-column pdfminer band reading.
+
+    Pattern: sentence-fragment + (Beifall/Zuruf block) + lowercase-continuation →
+    reordered to: sentence + continuation → interjection. Loops until stable.
+    """
+    paras = text.split("\n\n")
+    changed = True
+    while changed:
+        changed = False
+        new_paras: list[str] = []
+        i = 0
+        while i < len(paras):
+            p = paras[i]
+            # Skip paragraphs that themselves start with "(" — they are
+            # interjections or parenthetical asides, not sentence fragments.
+            if p.lstrip().startswith("("):
+                new_paras.append(p)
+                i += 1
+                continue
+            # Collect the run of interjection paragraphs immediately following.
+            j = i + 1
+            while j < len(paras) and _is_interjection_para(paras[j]):
+                j += 1
+            # Pattern requires at least one interjection AND a lowercase
+            # continuation paragraph right after the interjection run.
+            if (j > i + 1                               # at least one interjection
+                    and j < len(paras)                  # continuation exists
+                    and paras[j]                        # non-empty
+                    and paras[j][0] in
+                        "abcdefghijklmnopqrstuvwxyzäöüß"):
+                new_paras.append(p + " " + paras[j])   # fragment + continuation
+                new_paras.extend(paras[i + 1 : j])     # interjections after
+                i = j + 1
+                changed = True
+            else:
+                new_paras.append(p)
+                i += 1
+        paras = new_paras
+    return "\n\n".join(paras)
+
+
 # Full cleaning pipeline
-# ---------------------------------------------------------------------------
 
 PIPELINE = [
+    ("fix_column_order",         fix_column_order),       # step 0 — before page-break removal so pages are still individually addressable; before margin-marker removal so (A)-(D) are still present
     ("remove_page_breaks",       remove_page_breaks),
     ("remove_cid_artefacts",     remove_cid_artefacts),   # before headers: some headers have (cid:9) between page-no and "Deutscher"
     ("remove_headers",           remove_headers),
-    ("remove_toc",               remove_toc),        # must run BEFORE remove_page_numbers
-    ("remove_page_numbers",      remove_page_numbers),  # strips refs ToC step relied on
+    ("remove_toc",               remove_toc),             # must run BEFORE remove_page_numbers
+    ("remove_page_numbers",      remove_page_numbers),    # strips refs ToC step relied on
     ("remove_footnotes",         remove_footnotes),
     ("remove_margin_markers",    remove_margin_markers),
     ("remove_bare_separators",   remove_bare_separators),
     ("remove_backm_references",  remove_backm_references),
     ("normalise_whitespace",     normalise_whitespace),   # strip trailing spaces BEFORE hyphen-join so blank lines with spaces don't hide patterns
     ("rejoin_hyphens",           rejoin_hyphens),
+    ("fix_column_interleave",    fix_column_interleave),  # must run AFTER normalise_whitespace (needs clean \n\n separators) and rejoin_hyphens
+    ("remove_headers",           remove_headers),         # second pass: catches headers fused mid-line by rejoin_hyphens or moved by fix_column_interleave
 ]
 
 
@@ -465,9 +588,7 @@ def clean(text: str) -> str:
     return text
 
 
-# ---------------------------------------------------------------------------
 # Path helpers
-# ---------------------------------------------------------------------------
 
 def cleaned_path_for(txt_path: Path) -> Path:
     """
@@ -480,23 +601,10 @@ def cleaned_path_for(txt_path: Path) -> Path:
     return txt_path.with_name(txt_path.stem + "_cleaned.txt")
 
 
-# ---------------------------------------------------------------------------
 # Main runner
-# ---------------------------------------------------------------------------
 
-def run(force: bool = False) -> None:
-    """
-    Walk the preprocessed folder, find all extracted .txt files (those whose
-    name does NOT end in '_cleaned'), clean each one, and write the result as
-    a sibling _cleaned.txt file.
-
-    Parameters
-    ----------
-    force : bool
-        If True, overwrite existing _cleaned.txt files.
-        If False (default), skip files whose _cleaned.txt already exists.
-    """
-    in_root = Path(PREPROCESSED_FOLDER)
+def run(force: bool = False, preprocessed_dir=None, wp_filter=None) -> None:
+    in_root = Path(preprocessed_dir or _DEFAULT_PREPROCESSED)
 
     if not in_root.exists():
         print(f"ERROR: Preprocessed folder not found: {in_root}")
@@ -508,9 +616,11 @@ def run(force: bool = False) -> None:
         done = set(log_path.read_text(encoding="utf-8").splitlines())
 
     metadata_dir = in_root / "metadata"
+    _NON_SESSION = {"validation_report", "validation_report_cleaned"}
     txt_files = sorted(
         p for p in in_root.rglob("*.txt")
         if not p.stem.endswith("_cleaned")
+        and p.stem not in _NON_SESSION
         and metadata_dir not in p.parents
     )
 
@@ -519,6 +629,15 @@ def run(force: bool = False) -> None:
     ok_count = skip_count = error_count = 0
 
     for txt_path in txt_files:
+        # WP filter: skip sessions not in the requested Wahlperioden.
+        # Path structure: .../WP{NN}/{year}/session_file
+        if wp_filter is not None:
+            wp_dir = txt_path.parent.parent.name  # e.g. "WP07"
+            if wp_dir.upper().startswith("WP"):
+                if wp_dir[2:].zfill(2) not in wp_filter:
+                    skip_count += 1
+                    continue
+
         out_path = cleaned_path_for(txt_path)
 
         if not force and (str(out_path) in done or out_path.exists()):
@@ -544,8 +663,7 @@ def run(force: bool = False) -> None:
 
         try:
             out_path.write_text(cleaned_text, encoding="utf-8")
-            with open(log_path, "a", encoding="utf-8") as lg:
-                lg.write(str(out_path) + "\n")
+            append_log(log_path, str(out_path))  # flock-safe for concurrent SLURM jobs
             print(f"OK -> {out_path.relative_to(in_root)}")
             ok_count += 1
         except Exception as e:
@@ -556,11 +674,38 @@ def run(force: bool = False) -> None:
 
 
 if __name__ == "__main__":
-    # Pass --force as a command-line argument to reprocess already-cleaned files.
-    force = "--force" in sys.argv
-    if force:
+    parser = argparse.ArgumentParser(description="Bundestag text cleaner")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite existing _cleaned.txt files.",
+    )
+    parser.add_argument(
+        "--preprocessed-dir",
+        default=None,
+        metavar="PATH",
+        help=f"Root preprocessed folder (input and output). Default: {_DEFAULT_PREPROCESSED}",
+    )
+    parser.add_argument(
+        "--wp",
+        default=None,
+        metavar="WP",
+        help="Comma-separated Wahlperiode numbers to process (e.g. '14' or '01,02'). "
+             "Default: all WPs.",
+    )
+    args = parser.parse_args()
+
+    pre_dir = args.preprocessed_dir or _DEFAULT_PREPROCESSED
+    wp_filter = (
+        {w.strip().zfill(2) for w in args.wp.split(",")}
+        if args.wp else None
+    )
+
+    if args.force:
         print("Force mode: existing _cleaned.txt files will be overwritten.\n")
     print("Bundestag text cleaner")
-    print(f"Input/Output: {PREPROCESSED_FOLDER}")
+    print(f"Input/Output: {pre_dir}")
+    if wp_filter:
+        print(f"WP filter   : {sorted(wp_filter)}")
     print()
-    run(force=force)
+    run(force=args.force, preprocessed_dir=pre_dir, wp_filter=wp_filter)

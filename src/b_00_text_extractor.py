@@ -1,62 +1,13 @@
-"""
-bundestag_extractor.py
-======================
-Extracts raw text from Bundestag Plenarprotokoll PDFs and writes THREE files
-per session plus a running metadata catalogue CSV.
+"""Extract raw text from Bundestag Plenarprotokoll PDFs.
 
-Per-session outputs (all share the same folder structure and base name):
-  preprocessed/WP{wp}/{year}/WP{wp}_Session{session}.json          ← full record (metadata + text)
-  preprocessed/WP{wp}/{year}/WP{wp}_Session{session}_metadata.json ← metadata only (no text field)
-  preprocessed/WP{wp}/{year}/WP{wp}_Session{session}.txt           ← plain text only
-
-Catalogue output (fully regenerated every run):
-  preprocessed/metadata/metadata_catalogue.csv                     ← one row per session
-
-Design principles
------------------
-- Faithful extraction: no dehyphenation, no reflow, no NLP at this stage.
-- Page boundaries preserved in the JSON text field using the form-feed character
-  (\f). In the .txt output \f is rendered as \n\n--- Page Break ---\n\n so the
-  file looks clean in any text editor.
-- Metadata extracted from BOTH filename AND document text, cross-validated.
-- Warnings emitted (never silent failures) when something looks wrong.
-- Resume-safe: a PDF is skipped only when ALL THREE per-session output files
-  already exist OR the main JSON path appears in processed.log.
-- The processing log records only the main JSON path (one line per session).
-- The metadata catalogue is fully regenerated each run from the existing
-  metadata JSON files, so it always reflects the current state of the corpus.
-
-Filename convention (Bundestag standard)
------------------------------------------
-  WWSSS.pdf  →  WW = zero-padded Wahlperiode, SSS = zero-padded session
-  e.g.  01061.pdf  → WP 01, Session 061
-        20146.pdf  → WP 20, Session 146
-
-CSV catalogue columns
-----------------------
-  session_id           : unique identifier e.g. "WP01_Session001" (first column)
-  wp_filename          : WP extracted from filename (e.g. "01")
-  session_filename     : Session extracted from filename (e.g. "061")
-  wp_text              : WP extracted from document text (or empty)
-  session_text         : Session extracted from document text (or empty)
-  wp                   : Final WP used
-  session              : Final session used
-  date                 : "DD-MM-YYYY" (or empty)
-  date_iso             : "YYYY-MM-DD" (or empty)
-  city                 : "Bonn" or "Berlin" (or empty)
-  year                 : "1949", "2022", etc. (or empty)
-  source_pdf           : relative path from INPUT_PDF_FOLDER
-  md5                  : hex digest of source PDF
-  engine               : "pdftotext" or "pdfminer"
-  meta_warnings_count  : number of cross-validation warnings (integer)
-  meta_warnings_detail : warnings serialised as a JSON string
+Outputs per session: WP{wp}_Session{s}.json (full), _metadata.json (no text), .txt (plain text).
+Catalogue: preprocessed/metadata/metadata_catalogue.csv  — regenerated every run.
+PDF filename convention: WWSSS.pdf → WW = Wahlperiode, SSS = session (e.g. 01061.pdf → WP01/S061).
 """
 
-# ============================================================
-# USER SETTINGS
-# ============================================================
-INPUT_PDF_FOLDER = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundestag-project\data\raw"
-OUTPUT_FOLDER    = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundestag-project\data\preprocessed"
+# defaults — override via --input-dir / --output-dir
+_DEFAULT_INPUT  = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundestag-project\data\raw"
+_DEFAULT_OUTPUT = r"C:\Users\adama\Sciebo\Adama-Ali\Germany & Politics\bundestag-project\data\preprocessed"
 # ============================================================
 
 import argparse
@@ -67,9 +18,9 @@ import re
 import subprocess
 from pathlib import Path
 
-# ---------------------------------------------------------------------------
-# Month lookup (German → zero-padded month number)
-# ---------------------------------------------------------------------------
+from utils import append_log
+
+
 MONTHS = {
     "januar": "01", "february": "02", "februar": "02",
     "märz": "03", "maerz": "03", "april": "04",
@@ -83,7 +34,44 @@ MONTHS = {
 # this string replaces it only in the .txt file.
 TXT_PAGE_SEP = "\n\n--- Page Break ---\n\n"
 
-# CSV column order — matches the docstring above.
+# Expected session-year range (inclusive) for each Wahlperiode.
+# Used to reject OCR-corrupted or historically-referenced years that happen
+# to match the date regex before the actual session date in the page header.
+#
+# Ranges are the EXACT calendar years in which each parliament held sessions
+# (no buffer).  _try_correct_ocr_year() handles single-digit OCR errors such
+# as "1958" → "1957" for a WP02 session, so a buffer is no longer needed.
+#
+# Adjacent parliaments legitimately share a year (e.g. WP02 and WP03 both
+# have sessions in 1957 — WP02 through October, WP03 from November).  Year
+# subfolders with the same name in consecutive WPs are expected and correct.
+#
+# Sources: official Bundestag Wahlperiode dates.
+_WP_YEAR_RANGE: dict[int, tuple[int, int]] = {
+    1:  (1949, 1953),  # 07 Sep 1949 – 06 Oct 1953
+    2:  (1953, 1957),  # 06 Oct 1953 – 15 Oct 1957
+    3:  (1957, 1961),  # 15 Oct 1957 – 17 Oct 1961
+    4:  (1961, 1965),  # 17 Oct 1961 – 19 Oct 1965
+    5:  (1965, 1969),  # 19 Oct 1965 – 20 Oct 1969
+    6:  (1969, 1972),  # 20 Oct 1969 – 13 Dec 1972
+    7:  (1972, 1976),  # 13 Dec 1972 – 14 Dec 1976
+    8:  (1976, 1980),  # 14 Dec 1976 – 04 Nov 1980
+    9:  (1980, 1983),  # 04 Nov 1980 – 29 Mar 1983
+    10: (1983, 1987),  # 29 Mar 1983 – 18 Jan 1987
+    11: (1987, 1990),  # 18 Feb 1987 – 20 Dec 1990
+    12: (1991, 1994),  # 17 Jan 1991 – 10 Nov 1994  (first all-Germany parliament)
+    13: (1994, 1998),  # 10 Nov 1994 – 26 Sep 1998
+    14: (1998, 2002),  # 26 Oct 1998 – 17 Sep 2002
+    15: (2002, 2005),  # 17 Oct 2002 – 18 Sep 2005
+    16: (2005, 2009),  # 18 Oct 2005 – 27 Sep 2009
+    17: (2009, 2013),  # 27 Oct 2009 – 22 Sep 2013
+    18: (2013, 2017),  # 22 Oct 2013 – 24 Sep 2017
+    19: (2017, 2021),  # 24 Oct 2017 – 26 Oct 2021
+    20: (2021, 2025),  # 26 Nov 2021 – 25 Mar 2025
+    21: (2025, 2030),  # 25 Apr 2025 – present (upper bound generous)
+}
+
+
 CSV_COLUMNS = [
     "session_id",
     "wp_filename",
@@ -103,9 +91,7 @@ CSV_COLUMNS = [
     "meta_warnings_detail",
 ]
 
-# ---------------------------------------------------------------------------
 # Compiled regexes for metadata extraction
-# ---------------------------------------------------------------------------
 
 # Modern format (WP11+): "Plenarprotokoll 19/236"
 RE_SLUG = re.compile(
@@ -128,14 +114,56 @@ RE_SESSION = re.compile(
 
 # Date: "Bonn, Donnerstag, den 4. Mai 1950"
 #   or  "Berlin, Mittwoch, den 17. Januar 2024"
+#   or  "Bonn , Donnerstag, den 4. Mai 1950"       (OCR: space before comma)
+#   or  "Berlin-Charlottenburg, Mittwoch, den 19. Oktober 1955"
+#         (Bundestag occasionally met in West Berlin; city suffix after hyphen)
+#   or  "Bonn, den 24. und 25. November 1949"
+#         (two-day session header — no weekday, "und 25." skipped, first day used)
+#
+# Design notes:
+#   Berlin(?:-\w+)?    — matches "Berlin", "Berlin-Charlottenburg", etc.
+#   \s*[,.]?\s+        — handles OCR space before comma ("Bonn ,")
+#   \w+[,.]?\s+        — day-of-week token or "den" when no weekday is given
+#   (?:den\s+)?        — optional "den" before the day number
+#   (?:und\s+\d{1,2}\.\s+)?  — skips "und 25." in two-day ranges (first day kept)
 RE_DATE = re.compile(
-    r"(Bonn|Berlin)[,.]?\s+\w+,?\s+(?:den\s+)?(\d{1,2})\.\s+([A-Za-zÄÖÜäöüß]+)[,\s]+(\d{4})",
+    r"(Bonn|Berlin(?:-\w+)?)\s*[,.]?\s+\w+[,.]?\s+(?:den\s+)?(\d{1,2})\.\s+"
+    r"(?:und\s+\d{1,2}\.\s+)?([A-Za-zÄÖÜäöüß]+)[,\s]+(\d{4})",
     re.IGNORECASE,
 )
 
-# ---------------------------------------------------------------------------
 # Helpers
-# ---------------------------------------------------------------------------
+
+def _try_correct_ocr_year(bad_year_str: str, lo: int, hi: int) -> str | None:
+    """Single-digit substitution to fix OCR year errors (e.g. "1940" → "1949").
+
+    Returns the closest in-range correction, preferring rightmost position on ties.
+    """
+    if len(bad_year_str) != 4 or not bad_year_str.isdigit():
+        return None
+    bad_int = int(bad_year_str)
+    best: str | None = None
+    best_diff = 10_000
+    best_pos  = -1
+    for pos in range(4):
+        orig = bad_year_str[pos]
+        for d in "0123456789":
+            if d == orig:
+                continue
+            candidate = bad_year_str[:pos] + d + bad_year_str[pos + 1:]
+            try:
+                y = int(candidate)
+            except ValueError:
+                continue
+            if lo <= y <= hi:
+                diff = abs(y - bad_int)
+                # Prefer smallest numeric difference; break ties with rightmost position.
+                if diff < best_diff or (diff == best_diff and pos > best_pos):
+                    best      = candidate
+                    best_diff = diff
+                    best_pos  = pos
+    return best
+
 
 def md5_of_file(path: Path) -> str:
     h = hashlib.md5()
@@ -157,25 +185,42 @@ def parse_wp_session_from_filename(stem: str):
     return None, None
 
 
-def extract_text_pdftotext(pdf_path: Path) -> str:
+def _wp_from_path(pdf_path: Path) -> int | None:
     """
-    Primary extraction engine.
-    Uses system pdftotext (poppler) which handles the column layout of
-    Bundestag PDFs better than pure-Python alternatives.
-    Returns the raw text string (pages separated by \f).
-    Raises RuntimeError on failure.
+    Infer the Wahlperiode number from a PDF path.
 
-    Note: -raw (PDF content-stream order) is used intentionally.
-    For Bundestag WP01–WP09 scanned two-column PDFs, the OCR places text in
-    the content stream left-column-first, so -raw gives the correct speaker
-    sequence.  Without -raw, pdftotext's own layout analysis interleaves lines
-    across both columns, producing worse within-speech text mixing.
-    A minor side-effect of -raw: 1–3 sentences from an adjacent column may
-    appear inside a speaker's body text.  Impact on bag-of-words topic models
-    (the primary analysis) is low.
+    Tries the filename first (Bundestag convention: WWSSS.pdf, e.g.
+    19210.pdf → WP 19), then walks the parent directories looking for
+    a component like "WP19" or "19".  Returns None if undetermined.
     """
+    m = re.match(r"^(\d{2})\d{3}\.pdf$", pdf_path.name, re.IGNORECASE)
+    if m:
+        return int(m.group(1))
+    for part in reversed(pdf_path.parts):
+        m2 = re.match(r"(?i:WP)?0*(\d{1,2})$", part)
+        if m2:
+            wp = int(m2.group(1))
+            if 1 <= wp <= 25:
+                return wp
+    return None
+
+
+def extract_text_pdftotext(pdf_path: Path) -> str:
+    """Extract text via pdftotext (poppler). Returns raw text with pages separated by \f.
+
+    WP01–09 (scanned): uses -raw (content-stream order matches column layout of OCR output).
+    WP10+ (born-digital): no -raw flag; pdftotext layout analysis handles two-column correctly.
+    """
+    wp = _wp_from_path(pdf_path)
+    use_raw = (wp is None or wp <= 9)
+
+    cmd = ["pdftotext", "-enc", "UTF-8"]
+    if use_raw:
+        cmd.append("-raw")
+    cmd += [str(pdf_path), "-"]
+
     result = subprocess.run(
-        ["pdftotext", "-raw", "-enc", "UTF-8", str(pdf_path), "-"],
+        cmd,
         capture_output=True,
         timeout=120,
     )
@@ -191,10 +236,7 @@ def extract_text_pdftotext(pdf_path: Path) -> str:
 
 
 def extract_text_pdfminer(pdf_path: Path) -> str:
-    """
-    Fallback extraction engine (pure Python, no binary deps).
-    Used when pdftotext is unavailable or crashes.
-    """
+    """Fallback extraction engine using pdfminer.six (pure Python, no binary deps)."""
     try:
         from pdfminer.high_level import extract_text
     except ImportError:
@@ -208,10 +250,7 @@ def extract_text_pdfminer(pdf_path: Path) -> str:
 
 
 def extract_text(pdf_path: Path) -> tuple[str, str]:
-    """
-    Try pdftotext first, fall back to pdfminer.
-    Returns (text, engine_name).
-    """
+    """Try pdftotext, fall back to pdfminer. Returns (text, engine_name)."""
     try:
         return extract_text_pdftotext(pdf_path), "pdftotext"
     except Exception as e:
@@ -225,14 +264,15 @@ def extract_text(pdf_path: Path) -> tuple[str, str]:
             )
 
 
-def parse_metadata_from_text(text: str) -> dict:
+def parse_metadata_from_text(text: str, wp: int | None = None) -> dict:
+    """Extract wp, session, date, city from document text.
+
+    WP/session from first 3 KB (always in page-1 header); date from full text
+    (OCR sessions sometimes have the date header on page 2 or 3).
+    When wp is given, date year is validated against _WP_YEAR_RANGE to reject
+    OCR-corrupted years and historical references.
     """
-    Scan the first ~3 KB of text (covers page 1 and part of page 2,
-    which is where all headers appear) for:
-      - wp_text, session_text  from Plenarprotokoll XX/YYY slug or Wahlperiode
-      - date (DD-MM-YYYY), city, year
-    Returns a dict; absent fields are None.
-    """
+    # WP/session identifiers are always in the first page header — 3 KB is enough.
     head = text[:3000]
 
     wp_text = None
@@ -256,53 +296,123 @@ def parse_metadata_from_text(text: str) -> dict:
         if m:
             session_text = m.group(1).zfill(3)
 
-    # 4. Date and city
+    # 4. Date and city — search the FULL document text.
+    # In early OCR sessions (WP01–WP09) the date header sometimes appears on
+    # page 2 or 3 (after a table of contents or preliminary pages), so limiting
+    # to 3 KB caused those sessions to fall into the 'unclassified' subfolder.
+    # Scanning the full text is safe: RE_DATE is a linear scan (~5 ms per PDF).
     date = None
     date_iso = None
     city = None
     year = None
+    year_out_of_range = False
 
-    m = RE_DATE.search(head)
-    if m:
-        city = m.group(1)
-        day = m.group(2).zfill(2)
-        month_name = m.group(3).lower()
-        year = m.group(4)
+    lo, hi = _WP_YEAR_RANGE.get(wp, (1, 9999)) if wp is not None else (1, 9999)
+    all_matches = list(RE_DATE.finditer(text))
+    chosen = None
+    if all_matches:
+        for candidate in all_matches:
+            try:
+                y = int(candidate.group(4))
+            except ValueError:
+                continue
+            if lo <= y <= hi:
+                chosen = candidate
+                break
+        if chosen is None:
+            # Date matches were found but none has a year in the expected range.
+            # Last resort: try a single-digit OCR correction on the first match.
+            # This handles corrupted session headers like "1940" → "1949" or
+            # "1052" → "1952" where the year digit was misread by the scanner.
+            bad_year = all_matches[0].group(4)
+            corrected = _try_correct_ocr_year(bad_year, lo, hi)
+            if corrected is not None:
+                # Re-parse the first match with the corrected year.
+                m0 = all_matches[0]
+                city_corr = m0.group(1)
+                day_corr  = m0.group(2).zfill(2)
+                month_name_corr = m0.group(3).lower()
+                month_corr = MONTHS.get(month_name_corr)
+                if month_corr:
+                    date_corr    = f"{day_corr}-{month_corr}-{corrected}"
+                    date_iso_corr = f"{corrected}-{month_corr}-{day_corr}"
+                    return {
+                        "wp_text":           wp_text,
+                        "session_text":      session_text,
+                        "date":              date_corr,
+                        "date_iso":          date_iso_corr,
+                        "city":              city_corr,
+                        "year":              corrected,
+                        "year_out_of_range": False,
+                        "year_ocr_corrected": True,
+                        "year_raw":          bad_year,
+                    }
+            # No single-digit correction worked — fall through to 'unclassified'.
+            year_out_of_range = True
+            return {
+                "wp_text":           wp_text,
+                "session_text":      session_text,
+                "date":              None,
+                "date_iso":          None,
+                "city":              None,
+                "year":              None,
+                "year_out_of_range": True,
+                "year_raw":          bad_year,
+            }
+
+    if chosen is not None:
+        city = chosen.group(1)
+        day = chosen.group(2).zfill(2)
+        month_name = chosen.group(3).lower()
+        year = chosen.group(4)
         month = MONTHS.get(month_name)
         if month:
             date = f"{day}-{month}-{year}"
             date_iso = f"{year}-{month}-{day}"
 
     return {
-        "wp_text": wp_text,
-        "session_text": session_text,
-        "date": date,
-        "date_iso": date_iso,
-        "city": city,
-        "year": year,
+        "wp_text":           wp_text,
+        "session_text":      session_text,
+        "date":              date,
+        "date_iso":          date_iso,
+        "city":              city,
+        "year":              year,
+        "year_out_of_range": year_out_of_range,
     }
 
 
 def build_record(pdf_path: Path, in_root: Path) -> dict:
-    """
-    Full pipeline for one PDF:
-      1. Extract text
-      2. Parse metadata from text
-      3. Parse WP/session from filename
-      4. Cross-validate; build warnings list
-      5. Return the full JSON payload dict (including "text")
-    """
+    """Extract text and metadata from one PDF; return the full JSON payload dict."""
     text, engine = extract_text(pdf_path)
 
     if not text.strip():
         raise RuntimeError("Extraction produced empty text")
 
-    meta = parse_metadata_from_text(text)
-
     stem = pdf_path.stem
     wp_fn, session_fn = parse_wp_session_from_filename(stem)
 
+    wp_int = int(wp_fn) if wp_fn else _wp_from_path(pdf_path)
+    meta = parse_metadata_from_text(text, wp=wp_int)
+
     warnings = []
+
+    if meta.get("year_ocr_corrected"):
+        bad  = meta.get("year_raw", "unknown")
+        good = meta.get("year", "unknown")
+        warnings.append(
+            f"Date year OCR-corrected: {bad!r} → {good!r} "
+            f"(single-digit substitution within WP{wp_int} expected range)"
+        )
+
+    if meta.get("year_out_of_range"):
+        bad = meta.get("year_raw") or meta.get("year") or "unknown"
+        yr_range = _WP_YEAR_RANGE.get(wp_int) if wp_int else None
+        range_str = f"{yr_range[0]}–{yr_range[1]}" if yr_range else "unknown"
+        warnings.append(
+            f"Date year {bad!r} is outside expected range "
+            f"{range_str} for WP{wp_int}; "
+            f"session placed in 'unclassified' subfolder"
+        )
 
     if wp_fn and meta["wp_text"]:
         if wp_fn.lstrip("0") != meta["wp_text"].lstrip("0"):
@@ -325,9 +435,6 @@ def build_record(pdf_path: Path, in_root: Path) -> dict:
     wp = meta["wp_text"] or wp_fn
     session = meta["session_text"] or session_fn
 
-    # Unique identifier — constructed from the final resolved wp and session
-    # values so it always matches the output file name stem exactly.
-    # Falls back gracefully if either value is still None.
     session_id = f"WP{wp or 'unknown'}_Session{session or 'unknown'}"
 
     try:
@@ -355,20 +462,10 @@ def build_record(pdf_path: Path, in_root: Path) -> dict:
     }
 
 
-# ---------------------------------------------------------------------------
 # Output path helpers
-# ---------------------------------------------------------------------------
 
 def output_paths_for(record: dict, out_root: Path) -> tuple[Path, Path, Path]:
-    """
-    Derive all three per-session output paths from a record (or a minimal
-    preview dict used for the skip check).
-
-    Returns:
-        out_full  – WP{wp}/{year}/WP{wp}_Session{session}.json
-        out_meta  – WP{wp}/{year}/WP{wp}_Session{session}_metadata.json
-        out_txt   – WP{wp}/{year}/WP{wp}_Session{session}.txt
-    """
+    """Return (out_full.json, out_metadata.json, out.txt) for a session record."""
     wp      = record.get("wp")      or "WPunknown"
     session = record.get("session") or "unknownSession"
     year    = record.get("year")    or "unclassified"
@@ -383,18 +480,10 @@ def output_paths_for(record: dict, out_root: Path) -> tuple[Path, Path, Path]:
     )
 
 
-# ---------------------------------------------------------------------------
 # Write helpers
-# ---------------------------------------------------------------------------
 
 def write_outputs(record: dict, out_full: Path, out_meta: Path, out_txt: Path) -> None:
-    """
-    Write all three per-session output files.
-
-    out_full  – complete record including the "text" field
-    out_meta  – same record with the "text" field removed
-    out_txt   – raw text with \f replaced by a human-readable page separator
-    """
+    """Write full JSON, metadata-only JSON, and plain-text output for one session."""
     # 1. Full JSON (metadata + text)
     out_full.write_text(
         json.dumps(record, ensure_ascii=False, indent=2),
@@ -414,14 +503,7 @@ def write_outputs(record: dict, out_full: Path, out_meta: Path, out_txt: Path) -
 
 
 def record_to_csv_row(record: dict) -> dict:
-    """
-    Flatten a metadata JSON record (without "text") into a CSV row dict.
-
-    meta_warnings is split into:
-      meta_warnings_count  – integer count for quick filtering
-      meta_warnings_detail – JSON-serialised list for full detail
-    None values become empty strings so the CSV stays clean.
-    """
+    """Flatten a metadata record to a CSV row dict; splits meta_warnings into count + JSON detail."""
     warnings = record.get("meta_warnings", [])
     return {
         "session_id":           record.get("session_id")          or "",
@@ -444,14 +526,7 @@ def record_to_csv_row(record: dict) -> dict:
 
 
 def rebuild_catalogue(out_root: Path) -> None:
-    """
-    Scan all *_metadata.json files under out_root, collect their data, and
-    write a fresh metadata_catalogue.csv to out_root/metadata/.
-
-    The catalogue is always fully regenerated — it reflects every session
-    that has been successfully extracted, sorted by WP then session number.
-    Sessions in the metadata/ subfolder are excluded from the scan.
-    """
+    """Regenerate metadata_catalogue.csv from all *_metadata.json files under out_root."""
     catalogue_dir = out_root / "metadata"
     catalogue_dir.mkdir(parents=True, exist_ok=True)
     catalogue_path = catalogue_dir / "metadata_catalogue.csv"
@@ -479,26 +554,12 @@ def rebuild_catalogue(out_root: Path) -> None:
     print(f"\nCatalogue written: {catalogue_path}  ({len(rows)} session(s))")
 
 
-# ---------------------------------------------------------------------------
 # Main runner
-# ---------------------------------------------------------------------------
 
-def run(force: bool = False, wp_filter: set[str] | None = None):
-    """
-    Main extraction loop.
-
-    Parameters
-    ----------
-    force : bool
-        If True, re-process PDFs even if output files already exist or the
-        session is in processed.log.  Useful after changing the extraction
-        engine (e.g. removing the -raw flag).
-    wp_filter : set[str] | None
-        If provided, only process PDFs whose WP number (zero-padded to 2
-        digits) is in this set.  E.g. {"01", "02"} to re-extract WP01+WP02.
-    """
-    in_root  = Path(INPUT_PDF_FOLDER)
-    out_root = Path(OUTPUT_FOLDER)
+def run(force: bool = False, wp_filter: set[str] | None = None,
+        in_root=None, out_root=None):
+    in_root  = Path(in_root  or _DEFAULT_INPUT)
+    out_root = Path(out_root or _DEFAULT_OUTPUT)
     out_root.mkdir(parents=True, exist_ok=True)
 
     # The log tracks the main JSON path only (one line per successfully
@@ -563,9 +624,8 @@ def run(force: bool = False, wp_filter: set[str] | None = None):
         try:
             write_outputs(record, out_full, out_meta, out_txt)
 
-            # Log only the main JSON path
-            with open(log_path, "a", encoding="utf-8") as lg:
-                lg.write(str(out_full) + "\n")
+            # Log only the main JSON path (flock-safe for concurrent SLURM jobs)
+            append_log(log_path, str(out_full))
 
             print(f"OK -> {out_full.relative_to(out_root)}")
             ok_count += 1
@@ -599,14 +659,29 @@ if __name__ == "__main__":
             "All others are skipped."
         ),
     )
+    parser.add_argument(
+        "--input-dir",
+        default=None,
+        metavar="PATH",
+        help=f"Directory containing source PDFs. Default: {_DEFAULT_INPUT}",
+    )
+    parser.add_argument(
+        "--output-dir",
+        default=None,
+        metavar="PATH",
+        help=f"Root directory for preprocessed output. Default: {_DEFAULT_OUTPUT}",
+    )
     args = parser.parse_args()
 
     wp_filter: set[str] | None = None
     if args.wp:
         wp_filter = {w.strip().zfill(2) for w in args.wp.split(",")}
 
+    in_dir  = args.input_dir  or _DEFAULT_INPUT
+    out_dir = args.output_dir or _DEFAULT_OUTPUT
+
     print("Bundestag PDF -> JSON extractor")
-    print(f"Input:  {INPUT_PDF_FOLDER}")
-    print(f"Output: {OUTPUT_FOLDER}")
+    print(f"Input:  {in_dir}")
+    print(f"Output: {out_dir}")
     print()
-    run(force=args.force, wp_filter=wp_filter)
+    run(force=args.force, wp_filter=wp_filter, in_root=in_dir, out_root=out_dir)

@@ -1,0 +1,25 @@
+# Data — too large, raw PDFs are from bundestag.de
+data/
+
+# Dataset — published on Zenodo (https://doi.org/10.5281/zenodo.21258818)
+bundestag_dataset_v1/
+
+# Pipeline outputs (figures, tables, logs)
+outputs/
+
+# PDFs downloaded by the scraper script
+script/bundestag_pdfs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env
+
+# Editor / OS
+.vscode/
+*.code-workspace
+.DS_Store
+Thumbs.db
