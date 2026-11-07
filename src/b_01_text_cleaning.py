@@ -561,6 +561,54 @@ def fix_column_interleave(text: str) -> str:
     return "\n\n".join(paras)
 
 
+# A speaker qualifier split across a line break by the two-column layout:
+#
+#   Dr. Jan-Niclas Gesenhues (BÜNDNIS 90/DIE
+#   GRÜNEN):
+#
+# b_02's Pattern B requires the parenthetical to contain no newline, so a
+# wrapped label makes the whole attribution invisible and the speech is
+# absorbed into the preceding speaker's record.  Long surnames push the
+# label over the column edge, so the loss is not random: it falls mostly on
+# BÜNDNIS 90/DIE GRÜNEN members and on double-barrelled (often women's) names.
+#
+# The trailing colon is the discriminator.  An interjection such as
+# "(Beifall bei der CDU/CSU\nund der SPD)" is never followed by one, so it is
+# left alone.
+_RE_WRAPPED_QUALIFIER = re.compile(r"\(([^()\n]{0,60})\n+[ \t]*([^()\n]{0,60})\)([ \t]*:)")
+
+# Only rejoin content that is actually a speaker qualifier.  Without this the
+# rule would also join page and document references — "(Drucksachen 1252,\n573,
+# 614):" — which b_02 could then mistake for a name + qualifier and turn into
+# a speaker that never existed.
+_RE_QUAL_BEIFALL = re.compile(r"\bbegrüßt\b", re.I)
+_RE_QUAL_PARTY = re.compile(
+    r"^(?:BÜNDNIS\s*90|DIE\s+GRÜNEN?|GRÜNEN?|DIE\s+LINKE|LINKE|PDS|CDU|CSU|SPD|FDP|F\.D\.P\.|"
+    r"AFD|DP|KPD|BP|WAV|SSW|Z|GB/BHE|DRP|FU|FVP|DA|SRP|SPP|SDP|GRUPPE|FRAKTIONSLOS|PARTEILOS)"
+    r"[A-ZÄÖÜ0-9/.\s\-]*$", re.I)
+_RE_QUAL_PLACE = re.compile(r"^[A-ZÄÖÜ][a-zäöüß\-]+(?:\s+[A-ZÄÖÜ][a-zäöüß\-]+){0,2}$")
+_RE_QUAL_REJECT = re.compile(r"Drucksache|Sitzung|Anlage|Umdruck|\d{3,}", re.I)
+
+
+def _is_speaker_qualifier(text: str) -> bool:
+    """True when a joined parenthetical looks like a party, place or Beifall note."""
+    if _RE_QUAL_REJECT.search(text):
+        return False
+    return bool(_RE_QUAL_BEIFALL.search(text)
+                or _RE_QUAL_PARTY.match(text)
+                or _RE_QUAL_PLACE.match(text))
+
+
+def rejoin_wrapped_qualifiers(text: str) -> str:
+    """Join a speaker's parenthesised qualifier that the column layout split."""
+    def _sub(m: re.Match) -> str:
+        joined = " ".join((m.group(1) + " " + m.group(2)).split())
+        if not _is_speaker_qualifier(joined):
+            return m.group(0)
+        return f"({joined}){m.group(3)}"
+    return _RE_WRAPPED_QUALIFIER.sub(_sub, text)
+
+
 # Full cleaning pipeline
 
 PIPELINE = [
@@ -578,6 +626,7 @@ PIPELINE = [
     ("rejoin_hyphens",           rejoin_hyphens),
     ("fix_column_interleave",    fix_column_interleave),  # must run AFTER normalise_whitespace (needs clean \n\n separators) and rejoin_hyphens
     ("remove_headers",           remove_headers),         # second pass: catches headers fused mid-line by rejoin_hyphens or moved by fix_column_interleave
+    ("rejoin_wrapped_qualifiers", rejoin_wrapped_qualifiers),  # last: operates on the final text b_02 will match against
 ]
 
 
