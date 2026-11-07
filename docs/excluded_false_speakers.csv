@@ -1,0 +1,190 @@
+name,reason
+ABM-Ost,statistical table header (Arbeitsbeschaffungsmaßnahmen regional data)
+ABM-West,statistical table header (Arbeitsbeschaffungsmaßnahmen regional data)
+Abgeordneten,standalone salutation fragment (not a name — 2 speeches WP10)
+Auch,common German word leaked as attribution
+Immerhin,common German adverb leaked as attribution
+Antwort,parliamentary procedure term
+Berichtigung,parliamentary procedure term
+Fragestunde,parliamentary procedure term
+Zusatztagesordnungspunkt,parliamentary procedure term
+Jahre,common German word (years)
+Lernen,common German word (learning)
+Organ,common German word (body/organ)
+Regierung,common German word (government)
+Republik,common German word (republic)
+Unterhändler,common German word (negotiator)
+Haushalte,common German word (budgets/households)
+Bundesregierung,government institution
+Bundesrates,government institution (genitive)
+Bundestages,government institution (genitive)
+Bundeskanzleramtes,government institution (genitive)
+Bundeseisenbahnvermögen,government institution
+Bundes,government institution fragment
+Bundeskanzler-Helmut-Schmidt-Stiftung,foundation name
+Bundespersonalvertretungsgesetzes,law name (genitive)
+Bundesmietengesetzes,law name (genitive)
+Grundgesetzes,law name (genitive — Basic Law)
+Kriegsfolgengesetzen,law name (dative plural)
+Deutschland-Vertrages,law/treaty name (genitive)
+Gesetze,legislative term (laws)
+Entscheidungen,legislative term (decisions)
+Verfahren,legislative term (procedure)
+Zollsatzänderungen,legislative term (tariff changes)
+Maßnahmen,policy term (measures)
+Arbeitslosenhilfe,policy/sector term
+Außenhandelsfragen,policy/sector term
+Bauleistungen,policy/sector term (construction services)
+Bauwesen,policy/sector term (construction sector)
+Bildungsforschung,policy/sector term
+BaFin,institution abbreviation (financial regulator)
+DDR-Regimes,political term (genitive)
+Forschung,ministry/sector fragment (research)
+Forsten,ministry/sector fragment (forestry)
+GmbH,corporation form abbreviation
+Innern,ministry name fragment (des Innern)
+Katastrophenhilfe,policy/sector term
+Koalitionsmehrheit,political term (coalition majority)
+Medien,policy/sector term (media)
+Minister,title fragment without name
+Personalkosten,policy/sector term (personnel costs)
+Pflegeversicherung,policy/sector term (care insurance)
+Pkw-Gesamtzulassungen,statistical table header (total car registrations)
+Raumfahrt,policy/sector term (aerospace)
+Rohstoffbeauftragtem,title fragment (raw materials commissioner — dative)
+Sozialmietwohnungen,policy/sector term (social rental housing)
+Stabsunteroffizier,military rank (not a name)
+Steuern,policy/sector term (taxes)
+Technikfolgenabschätzung,policy/sector term
+Verkehr,ministry name fragment (transport)
+Wiedergutmachung,policy/sector term (reparations)
+Wirtschaft,ministry name fragment (economy)
+Wohnhausförderung,policy/sector term (housing promotion)
+Zusammenarbeit,policy/sector term (cooperation)
+Hauptleute,military rank plural (not a name)
+Leutnante,military rank plural (not a name)
+Oberleutnante,military rank plural (not a name)
+Hessen,German state name leaked as speaker
+Rheinland-Pfalz,German state name leaked as speaker
+Agreement,English word leaked as attribution
+Allgemeine Vorschriften,document section header (general provisions)
+Auswärtigen Amts,institution name fragment (Foreign Office genitive)
+Betriebs von Kohlekraftwerken zur Stromerzeugung,document/report section header
+Datenbank Elektronische Vorschriftensammlung Finanzverwaltung,database/programme name
+DIE GRÜNEN Lebenslanges Lernen,party name + policy term concatenated
+DP,party abbreviation parsed as speaker (Deutsche Partei WP1)
+EWG,institution abbreviation (Europäische Wirtschaftsgemeinschaft)
+Ebermann GRÜNE Zusatztagesordnungspunkt,speaker name + party + procedure term concatenated
+European Molecular Biology Laboratory,institution name
+Fernsprechbuch Frankfurt,document title (Frankfurt phone directory)
+Financial Intelligence Unit,institution name
+Finanzkontrolle Schwarzarbeit,agency/programme name
+Förderung von Stiftungen,law/policy fragment (promotion of foundations)
+Frankfurt,city name leaked as speaker
+Gesetzes zur Neuordnung von Steuern,law name (genitive)
+Globale Umweltveränderungen,programme/report name (global environmental changes)
+Internationale Währungsfonds,institution name (International Monetary Fund)
+Linke Liste,party name parsed as speaker (WP12 group name)
+Neuordnung von Steuern,law/policy fragment
+Raum Düsseldorf,geographic term (Düsseldorf area)
+SPD,party abbreviation parsed as speaker
+Tagesordnungspunkt II,agenda item marker
+Tagesordnungspunkt III,agenda item marker
+Verteidigung zur Kultusministerkonferenz,ministry/conference fragment
+von Familienausgleichskassen,law fragment (from family equalization funds)
+von Landpachtverträgen,law fragment (from agricultural lease contracts)
+von Steuern,law fragment (from taxes)
+Ausschuss Digitale Agenda Klaus Ernst,committee name + speaker name concatenated
+Zwischenfrage von Herrn Fabio De Masi,question preamble fragment (real person appears correctly elsewhere)
+Herrn Abgeordneten Bauer,question preamble fragment (real person appears correctly elsewhere)
+Herrn Abgeordneten Fischer,question preamble fragment (real person appears correctly elsewhere)
+Herrn Abgeordneten Fritsch,question preamble fragment (real person appears correctly elsewhere)
+Herrn Abgeordneten Peters,question preamble fragment (real person appears correctly elsewhere)
+von Herrn Abgeordneten Höhmann,question preamble fragment (real person appears correctly elsewhere)
+Kollegen Volker Beck,question preamble fragment (real person appears correctly elsewhere)
+Herrn Abgeordneten Müller,question preamble fragment (real person appears correctly elsewhere)
+Herrn Abgeordneten Schmidt,question preamble fragment (real person appears correctly elsewhere)
+Aktuelle Stunde Amke Dietert Scheuer,procedure header + name concatenated (b_02 parse artefact)
+Aktuelle Stunde Vera Lengsfeld,procedure header + name concatenated (b_02 parse artefact)
+Amtliche Mitteilungen Friedhelm Julius Beucher,procedure header + name concatenated (b_02 parse artefact)
+Ausnahmen von der Fahrzeug-Zulassungsverordnung Kirsten Lühmann,law title + name concatenated (b_02 parse artefact)
+Auswärtiger Ausschuß Rechtsausschuß Verteidigungsausschuß Haushaltsausschuß Jörg Tauss,committee list + name concatenated (b_02 parse artefact)
+CSU,party abbreviation parsed as speaker (duplicate of SPD entry)
+Das Volker Beck,German sentence fragment + name concatenated (b_02 parse artefact)
+Die Kollegen von der Sozialdemokratischen ParBaum,sentence fragment + garbled name (b_02 parse artefact)
+Dritte Beratung Axel Müller,procedure term + name concatenated (b_02 parse artefact)
+Ein Schlepplift Kleinert,garbled sentence fragment + name (b_02 parse artefact)
+Enthalten FDP Nicole Bracht-Bendt Sebastian Körber Burkhardt Müller-Sönksen Katja Dörner,vote result line parsed as speaker (b_02 parse artefact)
+Entwicklung Hartwig Fischer,topic/committee fragment + name concatenated (b_02 parse artefact)
+Entwicklung Wilhelm Schmidt,topic/committee fragment + name concatenated (b_02 parse artefact)
+Finanzausschuss Markus Kurth,committee name + name concatenated (b_02 parse artefact)
+Finanzierungsregelung Werner,regulation term + surname concatenated (b_02 parse artefact)
+Fitnessbereich Dagmar Freitag,topic fragment + name concatenated (b_02 parse artefact)
+Gestatten Sie Cem Özdemir,German phrase (allow me) + name concatenated (b_02 parse artefact)
+Haushaltsausschuss Norbert Otto,committee name + name concatenated (b_02 parse artefact)
+Haushaltsausschuss Ulrich Lange,committee name + name concatenated (b_02 parse artefact)
+Haushaltsausschusses,committee name in genitive — no speaker name present
+HonD Albert Weiler,garbled honorific prefix + name (b_02 parse artefact)
+Jetzt Lothar Fischer,German adverb + name concatenated (b_02 parse artefact)
+Kollege Christian Schmidt,honorific + name concatenated (real person appears correctly elsewhere)
+Kollege Jens Jens Ackermann,honorific + duplicated name (b_02 parse artefact)
+Kollege Schmidt Schmidt,honorific + duplicated surname (b_02 parse artefact)
+Kollege Wilhelm Schmidt,honorific + name concatenated (real person appears correctly elsewhere)
+Kollegen Franz Franz Müntefering,honorific + duplicated name (b_02 parse artefact)
+Kollegen Hubertus Heil,honorific + name concatenated (real person appears correctly elsewhere)
+Kollegen Rainer Arnold,honorific + name concatenated (real person appears correctly elsewhere)
+Kollegen Ulrike Merten,honorific + name concatenated (real person appears correctly elsewhere)
+Kollegen Werner Schulz,honorific + name concatenated (real person appears correctly elsewhere)
+Kollegin Kerstin Müller,honorific + name concatenated (real person appears correctly elsewhere)
+Kollegin Manfred Kolbe,honorific + name concatenated (b_02 parse artefact — wrong gendered honorific)
+Kollegin Marlene Marlene Rupprecht,honorific + duplicated name (b_02 parse artefact)
+Kollegin Sabine Sabine Zimmermann,honorific + duplicated name (b_02 parse artefact)
+Möchten Sie,German question phrase — not a speaker name
+MündlicheFragedesAbgeordneten Schäfer,question preamble run-together + name (b_02 parse artefact)
+Nun Arne Bömsen,German adverb + name concatenated (b_02 parse artefact)
+Nun Bernd Henn,German adverb + name concatenated (b_02 parse artefact)
+Nun Gerhart Rudolf Baum,German adverb + name concatenated (b_02 parse artefact)
+Nun Harald B. Schäfer,German adverb + name concatenated (b_02 parse artefact)
+Nun Horst Peter,German adverb + name concatenated (b_02 parse artefact)
+Petitionsausschuss Daniela Kolbe,committee name + name concatenated (b_02 parse artefact)
+Selbstverständlich Carl-Ludwig Thiele,German adverb + name concatenated (b_02 parse artefact)
+Sie Wolfgang Vogt,German pronoun + name concatenated (b_02 parse artefact)
+Stutzer Abgeordneten,garbled title fragment — not a name
+Verbraucherschutz Nina Hauer,policy term + name concatenated (b_02 parse artefact)
+Weitere Zusatz-Wolfgang Roth,procedure term + name concatenated (b_02 parse artefact)
+Weitere Zusatzfrage Peter,procedure term + surname concatenated (b_02 parse artefact)
+WernerZywietz,no-space OCR variant — real person appears correctly elsewhere as Werner Zywietz
+Zweite Herbert Werner,ordinal + name concatenated (b_02 parse artefact)
+ordenten Graf,fragment of "Abgeordneten Graf" — preamble fragment without speaker name
+ordenten Müller,fragment of "Abgeordneten Müller" — preamble fragment without speaker name
+Zusatzfrage von Frau Frau Blunck,question preamble with duplicated "Frau" (b_02 parse artefact)
+Zusatzfrage von Frau Frau Schmidt,question preamble with duplicated "Frau" (b_02 parse artefact)
+Zunächst Frau Stein-Frau Steinhauer,garbled preamble + duplicated fragment (b_02 parse artefact)
+München,city name (Munich) leaked as speaker attribution — WP8 OCR artefact
+Bitte Christian Schmidt,"chair's ""Bitte"" fused with the next speaker's name (1 speech WP12)"
+Bitte Franz Müntefering,"chair's ""Bitte"" fused with the next speaker's name (1 speech WP12)"
+Bitte Günter Graf,"chair's ""Bitte"" fused with the next speaker's name (1 speech WP12)"
+Bitte Konrad Weiß,"chair's ""Bitte"" fused with the next speaker's name (2 speeches WP12)"
+Bitte Lisa Peters,"chair's ""Bitte"" fused with the next speaker's name (1 speech WP12)"
+Bitte Manfred Kolbe,"chair's ""Bitte"" fused with the next speaker's name (1 speech WP12)"
+Bitte Simon Wittmann,"chair's ""Bitte"" fused with the next speaker's name (1 speech WP12)"
+Bitte Werner Schulz,"chair's ""Bitte"" fused with the next speaker's name (1 speech WP12)"
+Eine Zusatz-Gernot Erler,"""Eine Zusatzfrage"" fused with the next speaker's name (1 speech WP13)"
+Eine Zusatz-Marlene Rupprecht,"""Eine Zusatzfrage"" fused with the next speaker's name (1 speech WP13)"
+Eine Zusatz-Michael Müller,"""Eine Zusatzfrage"" fused with the next speaker's name (1 speech WP13)"
+Eine Zusatz-Regina Schmidt Zadel,"""Eine Zusatzfrage"" fused with the next speaker's name (1 speech WP12)"
+Eine Zusatz-Thomas Krüger,"""Eine Zusatzfrage"" fused with the next speaker's name (2 speeches WP13)"
+Eine Zusatz-Wilhelm Schmidt,"""Eine Zusatzfrage"" fused with the next speaker's name (1 speech WP13)"
+Hervorragend Johannes Wagner,"interjection ""Hervorragend"" fused with the next speaker's name (1 speech WP21)"
+Meine Schäfer,"""Meine Damen und Herren"" fragment fused with a surname (1 speech WP10)"
+Bastian Frau Steinhauer,two-column leakage: stray first name + honorific + surname (1 speech WP10)
+Anette Kramme Ulla Schmidt,two speakers fused into one attribution (1 speech WP14)
+Dr. Birgit Reinemund Manfred Kolbe,two speakers fused into one attribution (1 speech WP17)
+Dr. Dieter Wiefelspütz Axel Schäfer,two speakers fused into one attribution (1 speech WP17)
+Dr. Gesine Lötzsch Ute Berg,two speakers fused into one attribution (1 speech WP15)
+Dr. Konstantin von Notz Thomas Hacker,two speakers fused into one attribution (1 speech WP19)
+Eberhard Diepgen Thomas Krüger,two speakers fused into one attribution (1 speech WP13)
+Hans Michelbach Anke Fuchs,two speakers fused into one attribution (1 speech WP13)
+Joachim Graf von Schönburg-Glauchau Hinrich Kuessner,two speakers fused into one attribution (1 speech WP12)
+Lisa Paus Volker Beck,two speakers fused into one attribution (1 speech WP17)
+Sarah Lahrkamp Nicole Bauer,two speakers fused into one attribution (1 speech WP20)

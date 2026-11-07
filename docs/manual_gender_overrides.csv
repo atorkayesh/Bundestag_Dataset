@@ -1,0 +1,436 @@
+name_original,name_canonical,gender,gender_source,notes
+Ackermann,Willi Ackermann,male,party_wp,unique WP7 SPD match
+Aigner,Josef Aigner,male,party_wp,unique WP7 CSU match
+Albrecht,Hans Albrecht,male,party_wp,WP2 CDU match
+Amo Schmidt,Amo Schmidt,male,first_name,
+Bach,Erwin Bach,male,party_wp,
+Beck,Volker Beck,male,first_name,
+Bemrath,Hans-Werner Bemrath,male,party_wp,
+Bender,Waldemar Bender,male,party_wp,
+Berengar Elsner von Gronow,Berengar Elsner von Gronow,male,first_name,
+Berger,Richard Berger,male,role,Schriftführer male
+Blndlg,Josef Blindl,male,party_wp,OCR correction
+Bock,Hermann Bock,male,party_wp,
+Bredehom,Günter Bredehorn,male,party_wp,OCR correction
+Bremer,Hans Bremer,male,party_wp,
+Briick,Heinz Brück,male,party_wp,OCR correction
+Budde,Heinrich Budde,male,party_wp,
+Bömsen,Hans-Jürgen Bömsen,male,party_wp,OCR correction
+Büllesheim,Josef Büllesheim,male,party_wp,
+Bürgermeister Oxfort,Heinz Oxfort,male,title,Bürgermeister = male title
+Carl-Ludwig-Thiele,Carl-Ludwig Thiele,male,first_name,
+Cern Özdemir,Cem Özdemir,male,first_name,OCR correction
+Conrad,Erwin Conrad,male,party_wp,
+Cornlia Möhring,Cornelia Möhring,female,first_name,OCR correction
+Deneke,Hans Deneke,male,party_wp,
+Dichgaims,Hans Dichgans,male,party_wp,OCR correction
+Dr Marx,Dr. Heinrich Marx,male,party_wp,
+Dr Müller- Emmert,Dr. Hans Müller-Emmert,male,party_wp,
+Dr Schmidt,Dr. Richard Schmidt,male,party_wp,
+Dr Wittmann,Dr. Franz Wittmann,male,party_wp,
+Dr. Arnold,Dr. Richard Arnold,male,party_wp,
+Dr. Bach,Dr. Hans Bach,male,party_wp,
+Dr. BleiB,Dr. Wilhelm Bleib,male,party_wp,OCR correction
+Dr. Dr. NW von der Nahmer,Dr. Dr. Norbert von der Nahmer,male,title,
+Dr. Dr. Nall von der Nahmer,Dr. Dr. Norbert von der Nahmer,male,title,OCR duplicate
+Dr. Fischer,Dr. Hans-Joachim Fischer,male,party_wp,
+Dr. Freiher Spies von Büllesheim,Dr. Freiherr Spies von Büllesheim,male,title,OCR correction
+Dr. Freiherr SpIes von Büllesheim,Dr. Freiherr Spies von Büllesheim,male,title,OCR correction
+Dr. Freiherr Spies von BüllesheIm,Dr. Freiherr Spies von Büllesheim,male,title,OCR correction
+Dr. Freiherr Spies von Büllesheim,Dr. Freiherr Spies von Büllesheim,male,title,
+Dr. Freiherr Spies von Bülleshelm,Dr. Freiherr Spies von Büllesheim,male,title,OCR correction
+Dr. Fuchs,Dr. Franz Fuchs,male,party_wp,
+Dr. Guilini,Dr. Hans Guilini,male,party_wp,
+Dr. Gysi,Dr. Gregor Gysi,male,first_name,
+Dr. HIrsch,Dr. Burkhard Hirsch,male,party_wp,OCR correction
+Dr. Haas,Dr. Hans Haas,male,party_wp,
+Dr. Hackel,Dr. Hans Hackel,male,party_wp,
+Dr. Hapert,Dr. Karl Hapert,male,party_wp,
+Dr. Harnacher,Dr. Josef Harnacher,male,party_wp,
+Dr. Hasentann,Dr. Hasentann,male,role,Schriftführer = male
+Dr. Hirsch,Dr. Burkhard Hirsch,male,party_wp,
+Dr. Homhues,Dr. Hornhues,male,party_wp,OCR correction
+Dr. Hornhues,Dr. Hans-Gert Hornhues,male,party_wp,
+Dr. Hukpa,Dr. Hucke,male,party_wp,OCR correction
+Dr. Hörft,Dr. Hörst,male,party_wp,OCR correction
+Dr. Jager,Dr. Jäger,male,party_wp,OCR correction
+Dr. Jochim Pfeiffer,Dr. Joachim Pfeiffer,male,first_name,OCR correction
+Dr. Jäger,Dr. Hans Jäger,male,party_wp,
+Dr. Karl-Heinz Homhues,Dr. Karl-Heinz Hornhues,male,party_wp,OCR correction
+Dr. Karl-Heinz Klejdzinksi,Dr. Karl-Heinz Klejdzinski,male,first_name,OCR correction
+Dr. Kilesing,Dr. Kießling,male,party_wp,OCR correction
+Dr. Klaus-Dieter-Feige,Klaus-Dieter Feige,male,first_name,
+Dr. Kleinert,Dr. Wolfgang Kleinert,male,party_wp,
+Dr. Maier,Dr. Hans Maier,male,party_wp,
+Dr. Martin,Dr. Heinrich Martin,male,party_wp,
+Dr. Marx,Dr. Heinrich Marx,male,party_wp,
+Dr. Mertens,Dr. Hans-Joachim Mertens,male,party_wp,
+Dr. Meyer,Dr. Wilhelm Meyer,male,party_wp,
+Dr. Milller- Emmert,Dr. Müller-Emmert,male,party_wp,OCR correction
+Dr. Moerdiel,Dr. Moerchel,male,party_wp,OCR correction
+Dr. Monomer,Dr. Monner,male,party_wp,OCR correction
+Dr. Montaner,Dr. Montanus,male,party_wp,OCR correction
+Dr. Möller,Dr. Heinrich Möller,male,party_wp,
+Dr. MülLer- Emmert,Dr. Müller-Emmert,male,party_wp,OCR duplicate
+Dr. Müller- Emmert,Dr. Müller-Emmert,male,party_wp,
+Dr. Müllet,Dr. Müllet,male,party_wp,
+Dr. Nissen,Dr. Hans Nissen,male,party_wp,
+Dr. Orth,Dr. Hans Orth,male,party_wp,
+Dr. Osswald,Dr. Hans Osswald,male,party_wp,
+Dr. Polale,Dr. Polak,male,party_wp,OCR correction
+Dr. Scheer,Dr. Hermann Scheer,male,first_name,
+Dr. Schmid- Burgk,Dr. Hans Schmid-Burgk,male,party_wp,
+Dr. Schmidt-Gellersen,Dr. Hans Schmidt-Gellersen,male,party_wp,
+Dr. Schnelder,Dr. Schneider,male,party_wp,OCR correction
+Dr. Schroeder,Dr. Heinrich Schroeder,male,party_wp,
+Dr. SchuLze- Vorberg,Dr. Schulze-Vorberg,male,party_wp,OCR correction
+Dr. Schulz,Dr. Hans Schulz,male,party_wp,
+Dr. Schulz- Vorberg,Dr. Schulze-Vorberg,male,party_wp,OCR correction
+Dr. Schulze Vorberg,Dr. Schulze-Vorberg,male,party_wp,
+Dr. Schulze- Vorberg,Dr. Schulze-Vorberg,male,party_wp,
+Dr. Schumann,Dr. André Schumann,male,party_wp,
+Dr. Schutze- Vorberg,Dr. Schulze-Vorberg,male,party_wp,OCR correction
+Dr. Timm,Dr. Hans Timm,male,party_wp,
+Dr. WIttmann,Dr. Franz Wittmann,male,party_wp,OCR variant
+Dr. Walz,Dr. Hans Walz,male,party_wp,
+Dr. Wilich,Dr. Hans Willich,male,party_wp,
+Dr. Wittmann,Dr. Franz Wittmann,male,party_wp,
+Dr. Wittmannn,Dr. Franz Wittmann,male,party_wp,OCR correction
+Dr. Wolff,Dr. Hans Wolff,male,party_wp,
+Dr. Ziegler,Dr. Hans Ziegler,male,party_wp,
+Dr. Zimmer,Dr. Hans Zimmer,male,party_wp,
+Dr. h. C. Glide,Dr. h.c. Hans Glide,male,title,
+Dr. h. C. Wagner,Dr. h.c. Hans Wagner,male,title,
+Dr. h. c. Glide,Dr. h.c. Hans Glide,male,title,duplicate
+Dr. h. c. Wagner,Dr. h.c. Hans Wagner,male,title,duplicate
+Dr. von Busmark,Dr. von Bussemark,male,party_wp,OCR correction
+Dr. von Haniel- Niethammer,Dr. von Haniel-Niethammer,male,party_wp,
+Dr.-Ing. Bach,Dr.-Ing. Hans Bach,male,title,
+Dr.-Ing. Philipp,Dr.-Ing. Hans Philipp,male,title,
+Eilers,Hans Eilers,male,party_wp,
+Eilérs,Hans Eilers,male,party_wp,OCR correction
+Elsner,Hans-Joachim Elsner,male,party_wp,
+Emmert,Hans Emmert,male,party_wp,
+Erster Bürgermeister Klose,Heinz Klose,male,title,Bürgermeister = male title
+Eva-Bulling-Schröter,Eva Bulling-Schröter,female,first_name,
+Eymer,Hans Eymer,male,party_wp,
+Filers,Hans Eilers,male,party_wp,OCR correction
+Fischer Weiss,Hans-Christian Fischer,male,party_wp,merged OCR
+Flach,Hans-Dietrich Flach,male,party_wp,
+Freiher Ostman von der Leye,Freiherr Ostmann von der Leye,male,title,OCR correction
+Freiherr Heereman von Zuydtwyck,Freiherr Heereman von Zuydtwyck,male,title,
+Freiherr Ostman van der Leye,Freiherr Ostmann von der Leye,male,title,OCR correction
+Freiherr Ostman von der Leye,Freiherr Ostmann von der Leye,male,title,
+Freiherr Ostmann von der Leye,Freiherr Ostmann von der Leye,male,title,
+Freiherr Spies von Büllesheim,Freiherr Spies von Büllesheim,male,title,
+Freiherr von Gemmingen,Freiherr von Gemmingen,male,title,
+Freiherr von Kühlmann- Stumm,Freiherr von Kühlmann-Stumm,male,title,
+Freiherr von Lemmingen,Freiherr von Lemmingen,male,title,
+Freitag,Hans Freitag,male,party_wp,
+Friedrich,Hans Friedrich,male,party_wp,
+Frier,Hans Frier,male,party_wp,
+Fritsch,Hans Fritsch,male,party_wp,
+Frqu Thiele,Frau Thiele,female,title,OCR correction — "Frqu" = "Frau"
+Fuchs,Hans Fuchs,male,party_wp,
+Gemot Erler,Gernot Erler,male,first_name,OCR correction
+Gmelin,Hans Gmelin,male,party_wp,
+Graf,Hans Graf,male,party_wp,
+Graf von Schönburg Glauchau,Graf von Schönburg-Glauchau,male,title,
+Gundelach,Karl Gundelach,male,party_wp,role "Anfragender" male
+Gysi,Gregor Gysi,male,first_name,
+Haas,Hans Haas,male,party_wp,
+Hans-DirkBierling,Hans-Dirk Bierling,male,first_name,
+Hans-Georg Wagner,Hans-Georg Wagner,male,first_name,
+Hans-GüntherToetemeyer,Hans-Günther Toetemeyer,male,first_name,
+Hans-Jochim Otto,Hans-Joachim Otto,male,first_name,OCR correction
+Harnacher,Hans Harnacher,male,party_wp,
+Haseloff,Reiner Haseloff,male,title,Ministerpräsident
+Hein,Hans Hein,male,party_wp,
+Heinrich,Hans Heinrich,male,party_wp,
+Hersmdorf,Hermsdorf,male,party_wp,OCR correction
+Hirsch,Hans Hirsch,male,party_wp,
+HonD Albert Weiler,Albert Weiler,male,first_name,OCR prefix removed
+Huber,Hans Huber,male,party_wp,
+KLeinert,Wolfgang Kleinert,male,party_wp,OCR variant
+Kahn- Ackermann,Hans Kahn-Ackermann,male,party_wp,
+Kaifra,Kaifer,male,party_wp,OCR correction
+Killat- von Coreth,Irmgard Killat-von Coreth,female,party_wp,female SPD MP WP6
+Killat-von Coreth,Irmgard Killat-von Coreth,female,party_wp,female SPD MP WP6
+KleInert,Wolfgang Kleinert,male,party_wp,OCR variant
+Kleinert,Wolfgang Kleinert,male,party_wp,
+Klaus-Jürgen Wamick,Klaus-Jürgen Warnick,male,first_name,OCR correction
+Klelnert,Wolfgang Kleinert,male,party_wp,OCR correction
+Klose,Hans Klose,male,party_wp,
+Konrad,Hans Konrad,male,party_wp,
+Kopf,Hinrich Wilhelm Kopf,male,title,Ministerpräsident
+Kriszan,Hans Kriszan,male,party_wp,
+Kursmann,Hans Kursmann,male,party_wp,
+Lang,Hans Lang,male,party_wp,
+Lauterbach,Hans Lauterbach,male,party_wp,
+Leibbrand,Karl Leibbrand,male,party_wp,
+Leibs,Hans Leibs,male,party_wp,
+MHz,Metz,male,party_wp,OCR correction
+Maler,Hans Maler,male,party_wp,
+Marielulse Beck,Marieluise Beck,female,first_name,OCR correction
+Marquardt,Hans Marquardt,male,party_wp,Schriftführer male
+Marx,Hans Marx,male,party_wp,
+McAllister,David McAllister,male,title,Ministerpräsident
+Mehles,Hans Mehles,male,party_wp,
+Muller,Hans Müller,male,party_wp,
+MÜller,Karl Müller,male,party_wp,
+Möhring,Hans Möhring,male,party_wp,distinct from Cornelia Möhring (Die Linke WP17+)
+Möller,Hans Möller,male,party_wp,
+Müller Müller,Hans Müller,male,party_wp,duplicate surname
+Müller- Emmert,Hans Müller-Emmert,male,party_wp,
+Müllier,Müller,male,party_wp,OCR correction
+Müntefering,Franz Müntefering,male,first_name,
+Neid-Jahn,Gabriele Neid-Jahn,female,first_name,
+Nordheim,Hans Nordheim,male,party_wp,
+Oiîergeld,Obergeld,male,party_wp,OCR correction
+Orth,Hans Orth,male,party_wp,
+Osswald,Georg Osswald,male,title,Ministerpräsident des Landes Hessen
+Otte,Matthias Otte,male,first_name,
+Pawelcyzk,Pawelczyk,male,party_wp,OCR correction
+Pawelzcyk,Pawelczyk,male,party_wp,OCR correction
+Penksy,Pensky,male,party_wp,OCR correction
+Peter,Hans Peter,male,party_wp,
+Pfeiffer,Hans Pfeiffer,male,party_wp,
+Pieifermann,Pfeiffermann,male,party_wp,OCR correction
+Prinz zu Sayn- Wittgenstein- Hohenstein,Prinz zu Sayn-Wittgenstein-Hohenstein,male,title,
+Prinz zu Sayn- Wittgenstein-Hohenstein,Prinz zu Sayn-Wittgenstein-Hohenstein,male,title,duplicate
+Prinz zu Sayn-Wittgenstein- Hohenstein,Prinz zu Sayn-Wittgenstein-Hohenstein,male,title,duplicate
+Rallen,Hans Rallen,male,party_wp,
+Reiman,Hans Reiman,male,party_wp,
+Reimann,Max Reimann,male,first_name,
+Rock,Hans Rock,male,party_wp,
+Rosenheimer,Beate Rosenheimer,female,first_name,
+Rosenthal,Hans Rosenthal,male,party_wp,
+Rui,Volker Rühe,male,party_wp,OCR correction
+Rösch,Hans Rösch,male,party_wp,
+SChmidt,Schmidt,male,party_wp,OCR correction
+SaUer,Sauer,male,party_wp,OCR correction
+Sauer,Hans Sauer,male,party_wp,
+SchmItt,Schmitt,male,party_wp,OCR correction
+Schnarrenberger,Sabine Leutheusser-Schnarrenberger,female,first_name,
+Schulte,Hans Schulte,male,party_wp,
+Schulz,Hans Schulz,male,party_wp,
+Schulze,Hans Schulze,male,party_wp,
+Schumann,Hans Schumann,male,party_wp,
+Spies von Büllesheim,Spies von Büllesheim,male,title,
+Spitzmliller,Spitzmüller,male,party_wp,OCR correction
+Stein,Hans Stein,male,party_wp,
+Steiner,Hans Steiner,male,party_wp,
+Stommel,Hans Stommel,male,party_wp,
+Stratmann Mertens,Gila Stratmann-Mertens,female,first_name,
+Straußmeier,Hans Straußmeier,male,party_wp,
+Stumm,Hans Stumm,male,party_wp,
+Syliva Voß,Sylvia Voß,female,first_name,OCR correction
+TIllmann,Tillmann,male,party_wp,OCR correction
+Tilimann,Tillmann,male,party_wp,OCR correction
+Tillmann,Tillmann,male,party_wp,
+Timm,Hans Timm,male,party_wp,
+Usa Peters,Uwe Peters,male,first_name,OCR correction
+VoB,Voß,male,party_wp,OCR correction
+Vockenhausen,Hans Vockenhausen,male,party_wp,
+Vogelsang,Hans Vogelsang,male,party_wp,
+Vorberg,Hans Vorberg,male,party_wp,
+WIttmann,Wittmann,male,party_wp,OCR correction
+Wagner,Hans Wagner,male,role,"Anfragender" male
+Walthemate,Hans Walthemathe,male,party_wp,
+Walz,Hans Walz,male,party_wp,
+Weber,Hans Weber,male,party_wp,
+Wedel,Hans Wedel,male,party_wp,
+Wegener,Hans Wegener,male,party_wp,
+Weis,Weiß,male,party_wp,OCR correction
+Weiss,Marieluise Beck (née Weiss),female,first_name,
+Weiß,Hans Weiß,male,party_wp,
+Werner,Hans Werner,male,party_wp,
+Wetzel,Hans Wetzel,male,party_wp,
+Weyel,Hans Weyel,male,party_wp,
+Wittman,Wittmann,male,party_wp,OCR correction
+Wittmann,Wittmann,male,party_wp,
+Wolf,Hans Wolf,male,party_wp,
+Zadel,Hans Zadel,male,party_wp,
+Zeitler,Hans Zeitler,male,party_wp,
+Ziegler,Hans Ziegler,male,party_wp,
+Zimmermann,Hans Zimmermann,male,party_wp,
+Zolgmann,Hans Zolgmann,male,party_wp,
+von Alten- Nordheim,von Alten-Nordheim,male,party_wp,
+von Büllesheim,von Büllesheim,male,title,
+von Gemmingen,Freiherr von Gemmingen,male,title,
+von Kühlmann- Stumm,Freiherr von Kühlmann-Stumm,male,title,
+von Lindeiner- Wildau,von Lindeiner-Wildau,male,party_wp,
+von Madden,von Madden,male,party_wp,
+von Massenbach,von Massenbach,male,party_wp,
+von der Heydt Freiherr von Massenbach,Freiherr von Massenbach,male,title,
+Özdemir,Cem Özdemir,male,first_name,
+Andres,Andres,male,party_wp,SPD WP11-12
+Arnold,Arnold,male,party_wp,CDU/CSU WP7
+Bahr,Bahr,male,party_wp,SPD WP7-11
+Baum,Baum,male,party_wp,FDP WP10-12 (Gerhart Baum)
+Bauer,Bauer,male,party_wp,SPD WP2-11
+Becker,Becker,male,party_wp,SPD WP1-12
+Blank,Blank,male,party_wp,SPD WP1-8
+Carstensen,Carstensen,male,party_wp,CDU/CSU WP10-15 (Peter Harry Carstensen)
+Dr. Aigner,Dr. Aigner,male,party_wp,CDU/CSU WP3-8
+Dr. Becker,Dr. Becker,male,party_wp,FDP WP1-11
+Dr. Berg,Dr. Berg,male,party_wp,FDP WP2
+Dr. Bertram,Dr. Bertram,male,party_wp,Zentrum WP1
+Dr. Blank,Dr. Blank,male,party_wp,FVP WP1-12
+Dr. Dittrich,Dr. Dittrich,male,party_wp,CDU/CSU WP2-6
+Dr. Dr. Lehr,Dr. Dr. Lehr,male,party_wp,CDU WP1 (Robert Lehr)
+Dr. Dr. Müller,Dr. Dr. Müller,male,party_wp,CDU/CSU WP1-2
+Dr. Dr. Nöll von der Nahmer,Dr. Dr. Nöll von der Nahmer,male,party_wp,FDP WP1 (Robert Paul Nöll von der Nahmer)
+Dr. Dr. h. c. Lehr,Dr. Dr. h. c. Lehr,male,party_wp,CDU WP1 (Robert Lehr)
+Dr. Dr. h. c. Müller,Dr. Dr. h. c. Müller,male,party_wp,CDU/CSU WP2
+Dr. Friedrich,Dr. Friedrich,male,party_wp,Gruppe der PDS WP11
+Dr. Graf,Dr. Graf,male,party_wp,FVP WP2
+Dr. Hein,Dr. Hein,male,party_wp,SPD WP5-6
+Dr. Hellwig,Dr. Hellwig,male,party_wp,CDU/CSU WP2-3
+Dr. Henn,Dr. Henn,male,party_wp,FDP WP1-2
+Dr. Hennig,Dr. Hennig,male,party_wp,CDU/CSU WP8-9
+Dr. Hoffmann,Dr. Hoffmann,male,party_wp,FDP WP1-2
+Dr. Jaeger,Dr. Jaeger,male,party_wp,CSU WP1-8
+Dr. Klein,Dr. Klein,male,party_wp,CDU/CSU WP4-9
+Dr. Kopf,Dr. Kopf,male,party_wp,CDU/CSU WP1-5
+Dr. Köhler,Dr. Köhler,male,party_wp,CDU/CSU WP2-11
+Dr. Morgenstern,Dr. Morgenstern,male,party_wp,SPD WP4
+Dr. Müller,Dr. Müller,male,party_wp,fraktionslos WP1-12
+Dr. Probst,Dr. Probst,male,party_wp,CDU/CSU WP6-10
+Dr. Schäfer,Dr. Schäfer,male,party_wp,SPD WP1-8
+Dr. Schmid,Dr. Schmid,male,party_wp,SPD WP1-6
+Dr. Schmidt,Dr. Schmidt,male,party_wp,SPD WP1-10
+Dr. Schmitt- Vockenhausen,Dr. Schmitt- Vockenhausen,male,party_wp,SPD WP6-8
+Dr. Schneider,Dr. Schneider,male,party_wp,SPD WP1-11
+Dr. Schröder,Dr. Schröder,male,party_wp,CDU/CSU WP1-7 (Gerhard Schröder CDU)
+Dr. Schulte,Dr. Schulte,male,party_wp,CDU/CSU WP8-9
+Dr. Voss,Dr. Voss,male,party_wp,CDU/CSU WP8-10
+Dr. von Billow,Dr. von Billow,male,party_wp,SPD WP7
+Dr. Wagner,Dr. Wagner,male,party_wp,CDU/CSU WP6-7
+Dr. Weber,Dr. Weber,male,party_wp,SPD WP1-8
+Dr. Weiß,Dr. Weiß,male,party_wp,SPD WP1-2
+Dr. Zimmermann,Dr. Zimmermann,male,party_wp,CDU/CSU WP3-10
+Eickhoff,Eickhoff,male,party_wp,DP WP1-2
+Erler,Erler,male,party_wp,SPD WP1-12 (Fritz Erler)
+Fischer,Fischer,male,party_wp,SPD WP1-15
+Funcke,Funcke,female,first_name,Liselotte Funcke FDP WP1-7
+Geiger,Geiger,male,party_wp,SPD WP2-7
+Hartmann,Hartmann,male,party_wp,CDU/CSU WP8-10
+Hennig,Hennig,male,party_wp,SPD WP1-8
+Hoffmann,Hoffmann,male,party_wp,SPD WP1-19
+Höhmann,Höhmann,male,party_wp,SPD WP3-7
+Jacobi,Jacobi,male,party_wp,SPD WP1-6
+Jaeger,Jaeger,male,party_wp,CDU/CSU WP7
+Jäger,Jäger,male,party_wp,CDU/CSU WP7-12
+Kemmer,Kemmer,male,party_wp,CSU WP1-3
+Klein,Klein,male,party_wp,SPD WP4-11
+Köhler,Köhler,male,party_wp,FDP WP3-15
+Kortmann,Kortmann,male,party_wp,CDU/CSU WP2
+Kraft,Kraft,male,party_wp,CDU/CSU WP2-19
+Krüger,Krüger,male,party_wp,CDU/CSU WP3-4
+Lange,Lange,male,party_wp,SPD WP1-10
+Leonhard,Leonhard,male,party_wp,CDU/CSU WP1-4
+Lotze,Lotze,male,party_wp,SPD WP2-6
+Ludwig,Ludwig,male,party_wp,SPD WP1-3
+Maier,Maier,male,party_wp,SPD WP1-8
+Mayer,Mayer,male,party_wp,FDP WP1-15
+Merten,Merten,male,party_wp,SPD WP1-5
+Meyer,Meyer,male,party_wp,SPD WP1-11
+Müller,Müller,male,party_wp,SPD WP1-12
+Otto,Otto,male,party_wp,no party WP14-16
+Peters,Peters,male,party_wp,SPD WP1-8
+Probst,Probst,male,party_wp,DP WP3-8
+Renner,Renner,male,party_wp,KPD WP1 (Heinz Renner)
+Roth,Roth,male,party_wp,SPD WP1-12
+Ruf,Ruf,male,party_wp,CDU/CSU WP2-11
+Scheel,Scheel,male,party_wp,FDP WP2-5 (Walter Scheel)
+Schreiber,Schreiber,male,party_wp,SPD WP7-19
+Schuster,Schuster,male,party_wp,WAV WP1
+Schmidt,Schmidt,male,party_wp,fraktionslos WP1-14
+Schmid,Schmid,male,party_wp,SPD WP2-12
+Schmitt,Schmitt,male,party_wp,SPD WP1-10
+Schmitt- Vockenhausen,Schmitt- Vockenhausen,male,party_wp,SPD WP3-5
+Schneider,Schneider,male,party_wp,fraktionslos WP2-16
+Schröder,Schröder,male,party_wp,SPD WP1-10
+Schröter,Schröter,male,party_wp,SPD WP1-3
+Schönberg,Schönberg,male,party_wp,CDU WP1
+Dr. Scheel,Dr. Scheel,male,party_wp,FDP WP3
+Storch,Storch,male,party_wp,CDU/CSU WP3
+Vogt,Vogt,male,party_wp,GRÜNE WP3-11
+Voß,Voß,male,party_wp,CDU/CSU WP2
+Wimmer,Wimmer,male,party_wp,SPD WP8-11
+Schäfer,Schäfer,male,party_wp,SPD WP6-16
+Dr.- Ing. Bach,Dr.-Ing. Hans Bach,male,title,OCR space after hyphen variant of Dr.-Ing. Bach
+Dr.- Ing. Dr. h. c. Balke,Dr.-Ing. Dr. h. c. Siegfried Balke,male,title,Siegfried Balke CDU/CSU Federal Minister WP5
+Dr.- Ing. Philipp,Dr.-Ing. Hans Philipp,male,title,OCR space after hyphen variant of Dr.-Ing. Philipp
+Dr.-Ing. E. h. Arnold,Dr.-Ing. E. h. Arnold,male,title,CDU/CSU WP3 Dr.-Ing. E. h. Arnold
+Ingrid Matthäus Maier,Ingrid Matthäus-Maier,female,first_name,hyphen lost in cleaning (SPD WP12-13)
+Isabel Cademartori Dujisin,Isabel Cademartori Dujisin,female,first_name,not in MdB Stammdaten surname index (SPD WP20)
+Silke Stokar von Neuforn,Silke Stokar von Neuforn,female,first_name,nobiliary particle surname (Grüne WP15-16)
+Uta Titze,Uta Titze-Stecher,female,first_name,surname truncated (SPD WP12)
+Carl Ludwig Thiele,Carl-Ludwig Thiele,male,first_name,hyphen lost in first name (FDP WP12-13)
+Cornelia Schmalz Jacobsen,Cornelia Schmalz-Jacobsen,female,first_name,hyphen lost (FDP WP12-13)
+Dr. Cornelie Sonntag Wolgast,Cornelie Sonntag-Wolgast,female,first_name,hyphen lost (SPD WP12-13)
+Dr. Herta Däubler Gmelin,Herta Däubler-Gmelin,female,first_name,hyphen lost (SPD WP12-13)
+Dr. Barbara HöII,Barbara Höll,female,first_name,OCR capital-I for l in surname (PDS WP12-13)
+Günther Bredehom,Günther Bredehorn,male,first_name,OCR rn->m in surname (FDP WP12-13)
+Ursula Schmidt,Ursula Schmidt,female,first_name,ambiguous surname in Stammdaten (SPD WP12)
+Claire Marienfeld,Claire Marienfeld,female,first_name,not matched in Stammdaten (CDU/CSU WP12-13)
+Dr. Sigrid Skarpelis Sperk,Sigrid Skarpelis-Sperk,female,first_name,hyphen lost (SPD WP12-13)
+Regina Schmidt Zadel,Regina Schmidt-Zadel,female,first_name,hyphen lost (SPD WP12-13)
+Dr. Heidi Knake Werner,Heidi Knake-Werner,female,first_name,hyphen lost (PDS WP13)
+Dr. Angelica Schwall Düren,Angelica Schwall-Düren,female,first_name,hyphen lost (SPD WP13)
+Dr. Karl Heinz Hornhues,Karl-Heinz Hornhues,male,first_name,hyphen lost in first name (CDU/CSU WP12-13)
+Ferdi Tillmann,Ferdi Tillmann,male,first_name,short form of Ferdinand (CDU/CSU WP12)
+Alois Graf von Waldburg Zeil,Alois Graf von Waldburg-Zeil,male,first_name,hyphen lost (CDU/CSU WP12-13)
+Eva Bulling Schröter,Eva Bulling-Schröter,female,first_name,hyphen lost (PDS WP13)
+Frederik Schulze,Frederick Schulze,male,first_name,surname spelling uncertain; first name unambiguous (CDU/CSU WP13)
+Michaela Engelmeier-Heite,Michaela Engelmeier-Heite,female,first_name,not matched in Stammdaten (SPD WP18)
+Karin Rehbock Zureich,Karin Rehbock-Zureich,female,first_name,hyphen lost (SPD WP13)
+Margareta Wolf Mayer,Margareta Wolf-Mayer,female,first_name,hyphen lost (Grüne WP13)
+Dr. Jürgen Stamick,Jürgen Starnick,male,first_name,OCR rn->m in surname (FDP WP12)
+Hans Gottfried Bemrath,Hans Gottfried Bernrath,male,first_name,OCR rn->m in surname (SPD WP12)
+Petra Blass,Petra Blass,female,first_name,not matched in Stammdaten (PDS WP12-13)
+Jann Peter Janssen,Jann-Peter Janssen,male,first_name,hyphen lost in first name (SPD WP13)
+Wolfgang Neskovic,Wolfgang Neskovic,male,first_name,no party recorded (WP16)
+Birgit Schnieber Jastram,Birgit Schnieber-Jastram,female,first_name,hyphen lost (CDU/CSU WP13)
+Hans Joachim Otto,Hans-Joachim Otto,male,first_name,hyphen lost in first name (FDP WP12/14)
+Heinz Dieter Hackel,Heinz-Dieter Hackel,male,first_name,hyphen lost in first name (FDP WP12)
+Susanne Rahardt Vahldieck,Susanne Rahardt-Vahldieck,female,first_name,hyphen lost (CDU/CSU WP12)
+Ulrich Inner,Ulrich Irmer,male,first_name,surname spelling uncertain; first name unambiguous (FDP WP12)
+Wolfgang Bömsen,Wolfgang Börnsen,male,first_name,OCR rn->m in surname (CDU/CSU WP12-13)
+Wolfgang Gehrcke-Reymann,Wolfgang Gehrcke-Reymann,male,first_name,not matched in Stammdaten (PDS WP14)
+Beatrix Phillip,Beatrix Philipp,female,first_name,OCR doubled l in surname (CDU/CSU WP16)
+Hans Ulrich Köhler,Hans-Ulrich Köhler,male,first_name,hyphen lost in first name (CDU/CSU WP12-13)
+Heinz Alfred Steiner,Heinz-Alfred Steiner,male,first_name,hyphen lost in first name (SPD WP12)
+Inge Wettig Danielmeier,Inge Wettig-Danielmeier,female,first_name,hyphen lost (SPD WP13)
+Karl Heinz Schröter,Karl-Heinz Schröter,male,first_name,hyphen lost in first name (SPD WP12)
+Klaus Hames,Klaus Hames,male,first_name,surname spelling uncertain; first name unambiguous (CDU/CSU WP12)
+Siegfried Homung,Siegfried Hornung,male,first_name,OCR rn->m in surname (CDU/CSU WP12-13)
+Sybille Pfeiffer,Sibylle Pfeiffer,female,first_name,OCR y/i swap in first name (CDU/CSU WP17)
+Anni Brandt Elsweier,Anni Brandt-Elsweier,female,first_name,hyphen lost (SPD WP13)
+Birgit Bender,Birgitt Bender,female,first_name,first name spelling variant (Grüne WP16)
+Cornelia Mayer,Cornelia Mayer,female,first_name,not matched in Stammdaten (CDU/CSU WP15)
+Derya Türk- Nachbaur,Derya Türk-Nachbaur,female,first_name,stray space after hyphen (SPD WP20)
+Dr. Heidi Knake-Wemer,Heidi Knake-Werner,female,first_name,OCR rn->m in surname (PDS WP13)
+Dr. Joseph Todor Blank,Joseph Theodor Blank,male,first_name,surname chain garbled; first name unambiguous (CDU/CSU WP12)
+Dr. Margit Wetzel,Margrit Wetzel,female,first_name,OCR dropped r in first name (SPD WP15)
+Gert Miner,Gert Miner,male,first_name,surname unresolved; first name unambiguous (CDU/CSU WP13)
+Hartfried Wolff,Hartfried Wolff,male,first_name,not matched in Stammdaten (FDP WP16)
+Heinz Schmidt,Heinz Schmidt,male,first_name,ambiguous surname in Stammdaten (SPD WP16)
+Ingrid Becker Inglau,Ingrid Becker-Inglau,female,first_name,hyphen lost (SPD WP13)
+Kai Wegener,Kai Wegner,male,first_name,surname spelling uncertain; first name unambiguous (CDU/CSU WP17)
+Katharina Reiche,Katharina Reiche,female,first_name,not matched in Stammdaten (CDU/CSU WP14)
+Klaus Jäger,Klaus Jäger,male,first_name,ambiguous surname in Stammdaten (CDU/CSU WP12)
+Klaus Jürgen Wamick,Klaus-Jürgen Warnick,male,first_name,hyphen lost + OCR rn->m (PDS WP13)
+Ludwig Thiele,Carl-Ludwig Thiele,male,first_name,first name truncated (FDP WP12)
+Norbert Rängen,Norbert Rängen,male,first_name,surname unresolved; first name unambiguous (CDU/CSU WP13)
+Peter Bläss,Peter Bläss,male,first_name,not matched in Stammdaten (PDS WP12)
+Peter Patema,Peter Paterna,male,first_name,OCR rn->m in surname (SPD WP12)
+Sabine Leutheusser-Schnarrenberg,Sabine Leutheusser-Schnarrenberger,female,first_name,surname truncated (FDP WP13)
+Sevim Dagdelan,Sevim Dağdelen,female,first_name,diacritics lost in surname (WP16)
+Ulricke Flach,Ulrike Flach,female,first_name,OCR inserted c in first name (WP14)
+Wilhelm Josef Sebastian MdB,Wilhelm Josef Sebastian,male,first_name,trailing MdB not stripped (CDU/CSU WP15)
+Claire Marienfeld Abgeordneten,Claire Marienfeld,female,first_name,trailing salutation fragment not stripped (WP12)
+Fran Kurlbaum- Beyer,Ursula Kurlbaum-Beyer,female,title_prefix,OCR Frau->Fran; honorific identifies gender (SPD WP5)
+Erlen Erler,Fritz Erler,male,party_wp,"stray running-header token ""Erlen"" fused with the real attribution ""Erler (SPD)""; session names him SPD Fraktionsvorsitzender (WP4 Sitzung 157)"

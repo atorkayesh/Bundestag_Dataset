@@ -4,6 +4,10 @@ data/
 # Dataset — published on Zenodo (https://doi.org/10.5281/zenodo.21258818)
 bundestag_dataset_v1/
 
+# Rolling dataset rebuilt by the monthly update (~1.7 GB, regenerable from
+# data/ + docs/ by src/f_01_build_dataset.py)
+bundestag_dataset_current/
+
 # Pipeline outputs (figures, tables, logs)
 outputs/
 
@@ -18,8 +22,15 @@ __pycache__/
 venv/
 .env
 
+# Timestamped backups taken before editing the curated reference CSVs
+*.bak_*
+
 # Editor / OS
 .vscode/
 *.code-workspace
 .DS_Store
 Thumbs.db
+src_verbose/
+
+# VS Code Workspace Files
+*.code-workspace
