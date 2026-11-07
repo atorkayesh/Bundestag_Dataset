@@ -1440,8 +1440,38 @@ _ROLE_OCR_FIXES: list[tuple[re.Pattern, str]] = [
     # "Bundes" continuation; irrecoverable ministry, strip tail:
     (re.compile(r'\bim\s+Bundesusw\b.*', re.I | re.DOTALL), ''),
 
+    # ---- C5: WP21 ministry stubs (found after the poppler re-extraction) -----
+
+    # "Bundesminister für Digita-Der Auftrag ist sehr klar" — right-column
+    # leakage after a hyphen at the column boundary.  Only the "Digita-" +
+    # uppercase form is broken: a correct "Digitales und …" is always followed
+    # by lowercase "und", so this cannot fire on a clean role.
+    (re.compile(r'\bDigita-[A-ZÄÖÜ].*', re.DOTALL),
+     'Digitales und Staatsmodernisierung'),
+
+    # "Bundesminister für Umwelt, Kli-" — truncated at the column boundary.
+    # Unambiguous: "Klimaschutz" follows "Umwelt," only in the WP21 environment
+    # ministry (WP20's Habeck title begins "Wirtschaft und Klimaschutz").
+    (re.compile(r'\bUmwelt,\s*Kli-?\s*$', re.I),
+     'Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit'),
+
+    # "Bundesministerin für wirtklar" — "wirt" fused with a leaked speech word.
+    # (?!schaft) protects the correct "wirtschaftliche …" spelling; the {1,8}
+    # bound requires a stub, so a bare "wirt" (handled earlier) is unaffected.
+    (re.compile(r'\bwirt(?!schaft)[a-zäöüß]{1,8}\s*$', re.I),
+     'wirtschaftliche Zusammenarbeit und Entwicklung'),
+
     # ---- Final-pass trailing period (may survive late-stage rules) -----------
     (re.compile(r'\s+\.\s*$'), ''),
+    # Same, but for a period attached directly to the preceding letter.  The
+    # earlier trailing-period rule runs before the interjection / [Fraktion] /
+    # Präsident strips, so those can re-expose a sentence period that nothing
+    # then removes, e.g.
+    #   "Staatsministerin beim Bundeskanzler. (Mahmut Özdemir [Duisburg] [SPD]"
+    #     → "Staatsministerin beim Bundeskanzler."
+    # Must stay after every truncating rule.  The lookbehind leaves "Dr." and
+    # "Parl." alone, since neither ever ends a role string.
+    (re.compile(r'(?<=[a-zäöüA-ZÄÖÜ])\.\s*$'), ''),
 
     # Collapse multiple spaces
     (re.compile(r"  +"),                               " "),
