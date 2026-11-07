@@ -582,6 +582,7 @@ _RE_WRAPPED_QUALIFIER = re.compile(r"\(([^()\n]{0,60})\n+[ \t]*([^()\n]{0,60})\)
 # 614):" — which b_02 could then mistake for a name + qualifier and turn into
 # a speaker that never existed.
 _RE_QUAL_BEIFALL = re.compile(r"\bbegrüßt\b", re.I)
+
 _RE_QUAL_PARTY = re.compile(
     r"^(?:BÜNDNIS\s*90|DIE\s+GRÜNEN?|GRÜNEN?|DIE\s+LINKE|LINKE|PDS|CDU|CSU|SPD|FDP|F\.D\.P\.|"
     r"AFD|DP|KPD|BP|WAV|SSW|Z|GB/BHE|DRP|FU|FVP|DA|SRP|SPP|SDP|GRUPPE|FRAKTIONSLOS|PARTEILOS)"
@@ -589,14 +590,32 @@ _RE_QUAL_PARTY = re.compile(
 _RE_QUAL_PLACE = re.compile(r"^[A-ZÄÖÜ][a-zäöüß\-]+(?:\s+[A-ZÄÖÜ][a-zäöüß\-]+){0,2}$")
 _RE_QUAL_REJECT = re.compile(r"Drucksache|Sitzung|Anlage|Umdruck|\d{3,}", re.I)
 
+# A party or place qualifier is short.  Where a column interleave has dropped a
+# sentence between the two halves of a label, re.IGNORECASE lets that prose
+# through the pattern's trailing character class and the whole fragment is
+# accepted:
+#
+#     Albert Schmidt (Hitzhofen) (BÜNDNIS 90/DIE
+#     einer Senkung der Abgaben für die Sozialkassen ver
+#     GRÜNEN): ...
+#
+# which gave one WP13 speech a 70-character party value.  The length cap is
+# what rules that out.  Dropping re.IGNORECASE instead would also have rejected
+# legitimate qualifiers — "PDS/Linke Liste", "GRÜNE/Bündnis 90", "Gruppe der
+# PDS" — and so lost roughly 2,500 genuine joins.  The cap does not apply to
+# the Beifall branch, whose annotations are long by nature.
+_MAX_LABEL_QUAL_LEN = 40
+
 
 def _is_speaker_qualifier(text: str) -> bool:
     """True when a joined parenthetical looks like a party, place or Beifall note."""
     if _RE_QUAL_REJECT.search(text):
         return False
-    return bool(_RE_QUAL_BEIFALL.search(text)
-                or _RE_QUAL_PARTY.match(text)
-                or _RE_QUAL_PLACE.match(text))
+    if _RE_QUAL_BEIFALL.search(text):
+        return True
+    if len(text) > _MAX_LABEL_QUAL_LEN:
+        return False
+    return bool(_RE_QUAL_PARTY.match(text) or _RE_QUAL_PLACE.match(text))
 
 
 def rejoin_wrapped_qualifiers(text: str) -> str:
