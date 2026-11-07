@@ -38,7 +38,11 @@ if ($pt) {
     "WARNING: pdftotext not on PATH - extraction will fall back to pdfminer." | Add-Content $log -Encoding utf8
 }
 
-python src/monthly_update.py *>> $log
+# Append through cmd rather than PowerShell's own redirection: Windows
+# PowerShell 5.1 writes "*>>" as UTF-16, which would interleave unreadably
+# with the UTF-8 header above.  cmd appends the raw bytes python emits, and
+# PYTHONIOENCODING above guarantees those are UTF-8.
+& cmd /c "python src\monthly_update.py >> `"$log`" 2>&1"
 $code = $LASTEXITCODE
 
 "=== finished $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') exit=$code ===" | Add-Content $log -Encoding utf8
