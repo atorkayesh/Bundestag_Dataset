@@ -302,6 +302,7 @@ def main() -> None:
         "--parties-csv", str(docs / "political-parties-past-75-years.csv"),
         "--excluded-speakers-csv", str(docs / "excluded_false_speakers.csv"),
         "--manual-gender-csv", str(docs / "manual_gender_overrides.csv"),
+        "--name-corrections-csv", str(docs / "name_corrections.csv"),
         "--stammdaten", str(docs / "MdB-Stammdaten.xml"),
         "--output-dir", str(dataset),
     ]

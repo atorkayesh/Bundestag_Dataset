@@ -1191,6 +1191,11 @@ def main() -> None:
     ap.add_argument("--manual-gender-csv", default=None, metavar="PATH",
                     help="Path to docs/manual_gender_overrides.csv. "
                          "Default: auto-resolved from project root.")
+    ap.add_argument("--name-corrections-csv", default=None, metavar="PATH",
+                    help="Path to docs/name_corrections.csv, mapping observed "
+                         "spelling variants onto one canonical speaker name "
+                         "(columns: name_original,name_canonical). "
+                         "Default: auto-resolved from project root.")
     ap.add_argument("--stammdaten", default=None, metavar="PATH",
                     help="Path to MdB-Stammdaten.xml for WP/party/role disambiguation. "
                          "Default: docs/MdB-Stammdaten.xml (relative to project root). "
@@ -1227,6 +1232,12 @@ def main() -> None:
         manual_gender_csv = Path(args.manual_gender_csv)
     else:
         manual_gender_csv = Path(__file__).parent.parent / "docs" / "manual_gender_overrides.csv"
+
+    # Resolve name-corrections CSV (optional; silently skipped if absent).
+    if args.name_corrections_csv:
+        name_corrections_csv = Path(args.name_corrections_csv)
+    else:
+        name_corrections_csv = Path(__file__).parent.parent / "docs" / "name_corrections.csv"
 
     # ── input validation ───────────────────────────────────────────────────────
     for p, label in [
@@ -1312,6 +1323,64 @@ def main() -> None:
     if verbose:
         n_reattr = len(speeches_df) - (n_before_kolumn - (n_before_kolumn - len(speeches_df)))
         print(f"  After Kolumnentitel fix: {len(speeches_df):,} speeches.", flush=True)
+
+    # ── 2e. Canonicalise speaker names ────────────────────────────────────────
+    # Maps observed spelling variants of the same speaker onto one canonical
+    # name, from docs/name_corrections.csv (name_original,name_canonical).
+    #
+    # Two things produce variants.  Extraction drops or displaces characters,
+    # so a double-barrelled surname arrives unhyphenated ("Dr. Angelika Köster
+    # Loßack") or an umlaut is lost ("Weiss"); and b_02 occasionally fuses
+    # neighbouring text into the attribution, so the chair's words or a wrapped
+    # role fragment ends up in the name field ("Kollege Albert Schmidt",
+    # "Sozialordnung" for Dr. Norbert Blüm).  Left alone, each variant is a
+    # separate speaker and the member's speeches are split across them.
+    #
+    # Must run AFTER exclusion (2c), whose list keys on the raw observed names,
+    # and BEFORE the gender join (3) so the canonical name is what the
+    # Stammdaten lookup sees — which is usually enough to resolve the gender
+    # without a manual override.
+    if name_corrections_csv.exists():
+        corr_df = pd.read_csv(name_corrections_csv, dtype=str)
+        missing = {"name_original", "name_canonical"} - set(corr_df.columns)
+        if missing:
+            print(f"  WARNING: {name_corrections_csv.name} is missing column(s) "
+                  f"{', '.join(sorted(missing))} — skipping name canonicalisation.",
+                  flush=True)
+        else:
+            corr_df = corr_df.dropna(subset=["name_original", "name_canonical"])
+            corr_df["name_original"] = corr_df["name_original"].str.strip()
+            corr_df["name_canonical"] = corr_df["name_canonical"].str.strip()
+            corr_df = corr_df[corr_df["name_original"] != corr_df["name_canonical"]]
+            corr_df = corr_df.drop_duplicates("name_original", keep="first")
+            name_map = dict(zip(corr_df["name_original"], corr_df["name_canonical"]))
+
+            # A canonical name that is itself someone else's original would make
+            # the result depend on row order, so refuse to chain.
+            chained = set(name_map.values()) & set(name_map)
+            if chained:
+                print(f"  WARNING: {len(chained)} correction(s) would chain "
+                      f"(e.g. {sorted(chained)[0]!r}) — those are skipped.",
+                      flush=True)
+                name_map = {k: v for k, v in name_map.items() if v not in chained}
+
+            mask = speeches_df["name"].isin(name_map)
+            n_corr = int(mask.sum())
+            if n_corr:
+                n_names = int(speeches_df.loc[mask, "name"].nunique())
+                merged = speeches_df.loc[mask, "name"].map(name_map).isin(
+                    set(speeches_df.loc[~mask, "name"])).sum()
+                speeches_df.loc[mask, "name"] = speeches_df.loc[mask, "name"].map(name_map)
+                if verbose:
+                    print(f"  Canonicalised {n_corr:,} speeches across {n_names} "
+                          f"name variant(s); {merged:,} merged into a speaker "
+                          f"already in the corpus.", flush=True)
+            elif verbose:
+                print(f"  Name canonicalisation: no variant in "
+                      f"{name_corrections_csv.name} occurs in the corpus.", flush=True)
+    elif verbose:
+        print(f"  NOTE: name_corrections.csv not found at {name_corrections_csv} "
+              f"— skipping name canonicalisation.", flush=True)
 
     # ── 3. Join gender ─────────────────────────────────────────────────────────
     if verbose:

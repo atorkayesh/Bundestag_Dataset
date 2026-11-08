@@ -434,3 +434,4 @@ Wilhelm Josef Sebastian MdB,Wilhelm Josef Sebastian,male,first_name,trailing MdB
 Claire Marienfeld Abgeordneten,Claire Marienfeld,female,first_name,trailing salutation fragment not stripped (WP12)
 Fran Kurlbaum- Beyer,Ursula Kurlbaum-Beyer,female,title_prefix,OCR Frau->Fran; honorific identifies gender (SPD WP5)
 Erlen Erler,Fritz Erler,male,party_wp,"stray running-header token ""Erlen"" fused with the real attribution ""Erler (SPD)""; session names him SPD Fraktionsvorsitzender (WP4 Sitzung 157)"
+Ronald Reagan,Ronald Reagan,male,manual,"guest head of state addressing the Bundestag (WP9 Sitzung 105); not in MdB-Stammdaten, so the automatic passes cannot resolve him"
