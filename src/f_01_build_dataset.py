@@ -1196,6 +1196,11 @@ def main() -> None:
                          "spelling variants onto one canonical speaker name "
                          "(columns: name_original,name_canonical). "
                          "Default: auto-resolved from project root.")
+    ap.add_argument("--role-corrections-csv", default=None, metavar="PATH",
+                    help="Path to docs/role_corrections.csv, mapping spelling "
+                         "variants of one office onto a single role string "
+                         "(columns: role_original,role_canonical). "
+                         "Default: auto-resolved from project root.")
     ap.add_argument("--stammdaten", default=None, metavar="PATH",
                     help="Path to MdB-Stammdaten.xml for WP/party/role disambiguation. "
                          "Default: docs/MdB-Stammdaten.xml (relative to project root). "
@@ -1238,6 +1243,12 @@ def main() -> None:
         name_corrections_csv = Path(args.name_corrections_csv)
     else:
         name_corrections_csv = Path(__file__).parent.parent / "docs" / "name_corrections.csv"
+
+    # Resolve role-corrections CSV (optional; silently skipped if absent).
+    if args.role_corrections_csv:
+        role_corrections_csv = Path(args.role_corrections_csv)
+    else:
+        role_corrections_csv = Path(__file__).parent.parent / "docs" / "role_corrections.csv"
 
     # ── input validation ───────────────────────────────────────────────────────
     for p, label in [
@@ -1383,6 +1394,71 @@ def main() -> None:
     elif verbose:
         print(f"  NOTE: name_corrections.csv not found at {name_corrections_csv} "
               f"— skipping name canonicalisation.", flush=True)
+
+    # ── 2f. Canonicalise role strings ─────────────────────────────────────────
+    # Maps spelling variants of one office onto a single role string, from
+    # docs/role_corrections.csv (role_original,role_canonical).
+    #
+    # Extraction splits or fuses words inside a long official title, so the
+    # same office arrives as "Bundesminister für Wi rt schaft" or
+    # "Bundesminister für das Postund Fernmeldewesen"; and the protocols
+    # themselves vary the preposition, so "Bundesminister der Verteidigung"
+    # also appears as "für Verteidigung".
+    #
+    # The mapping must never fold a feminine role form into a masculine one:
+    # stage 3a reads the role string as a gender source, so that would both
+    # lose the distinction and mis-gender the speaker. The generator asserts
+    # it, and the guard below refuses any row that would do it anyway.
+    #
+    # Runs BEFORE the gender join (3) so the role-title pass sees the
+    # canonical string.
+    if role_corrections_csv.exists():
+        rcorr = pd.read_csv(role_corrections_csv, dtype=str, comment="#")
+        missing = {"role_original", "role_canonical"} - set(rcorr.columns)
+        if missing:
+            print(f"  WARNING: {role_corrections_csv.name} is missing column(s) "
+                  f"{', '.join(sorted(missing))} — skipping role canonicalisation.",
+                  flush=True)
+        else:
+            rcorr = rcorr.dropna(subset=["role_original", "role_canonical"])
+            rcorr["role_original"] = rcorr["role_original"].str.strip()
+            rcorr["role_canonical"] = rcorr["role_canonical"].str.strip()
+            rcorr = rcorr[rcorr["role_original"] != rcorr["role_canonical"]]
+            rcorr = rcorr.drop_duplicates("role_original", keep="first")
+            role_map = dict(zip(rcorr["role_original"], rcorr["role_canonical"]))
+
+            fem = re.compile(r"(?:ministerin|sekretärin|präsidentin|kanzlerin|"
+                             r"senatorin|direktorin|staatsministerin)", re.I)
+            flips = [o for o, k in role_map.items()
+                     if bool(fem.search(o)) != bool(fem.search(k))]
+            if flips:
+                print(f"  WARNING: {len(flips)} role correction(s) would change the "
+                      f"grammatical gender of the title (e.g. {flips[0]!r}) "
+                      f"— those are skipped.", flush=True)
+                role_map = {o: k for o, k in role_map.items() if o not in flips}
+
+            chained = set(role_map.values()) & set(role_map)
+            if chained:
+                print(f"  WARNING: {len(chained)} role correction(s) would chain "
+                      f"(e.g. {sorted(chained)[0]!r}) — those are skipped.", flush=True)
+                role_map = {o: k for o, k in role_map.items() if k not in chained}
+
+            rmask = speeches_df["role"].isin(role_map)
+            n_rcorr = int(rmask.sum())
+            if n_rcorr:
+                n_before_roles = int(speeches_df["role"].nunique())
+                speeches_df.loc[rmask, "role"] = speeches_df.loc[rmask, "role"].map(role_map)
+                if verbose:
+                    print(f"  Canonicalised {n_rcorr:,} speeches across "
+                          f"{len(role_map)} role variant(s); distinct roles "
+                          f"{n_before_roles:,} → {speeches_df['role'].nunique():,}.",
+                          flush=True)
+            elif verbose:
+                print(f"  Role canonicalisation: no variant in "
+                      f"{role_corrections_csv.name} occurs in the corpus.", flush=True)
+    elif verbose:
+        print(f"  NOTE: role_corrections.csv not found at {role_corrections_csv} "
+              f"— skipping role canonicalisation.", flush=True)
 
     # ── 3. Join gender ─────────────────────────────────────────────────────────
     if verbose:
