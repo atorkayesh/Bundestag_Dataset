@@ -295,6 +295,13 @@ def main() -> None:
             output_dir=str(outputs))
 
     _section("Stage 7 — Dataset build (f_01)")
+    # f_01 defaults to "v1", and monthly_update never overrode it, so every
+    # build stamped '"version": "v1"' into datapackage.json and the README
+    # whatever directory it wrote to. bundestag_dataset_current was therefore
+    # indistinguishable from the published Zenodo deposit by its own metadata,
+    # which is exactly what someone reaching for the data needs to be able to
+    # tell apart. Only the v1 directory may still claim to be v1.
+    version_label = "v1" if dataset.name == "bundestag_dataset_v1" else "v1.1-internal"
     build = [
         sys.executable, str(Path(__file__).parent / "f_01_build_dataset.py"),
         "--preprocessed-dir", str(pre),
@@ -306,6 +313,7 @@ def main() -> None:
         "--role-corrections-csv", str(docs / "role_corrections.csv"),
         "--stammdaten", str(docs / "MdB-Stammdaten.xml"),
         "--output-dir", str(dataset),
+        "--version", version_label,
     ]
     if subprocess.call(build) != 0:
         sys.exit("f_01 failed; stopping before validation.")
