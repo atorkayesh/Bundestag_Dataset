@@ -1341,7 +1341,9 @@ def main() -> None:
     # Stammdaten lookup sees — which is usually enough to resolve the gender
     # without a manual override.
     if name_corrections_csv.exists():
-        corr_df = pd.read_csv(name_corrections_csv, dtype=str)
+        # comment="#" so the file can record corrections that were considered
+        # and rejected, with the reason, next to the ones that are applied.
+        corr_df = pd.read_csv(name_corrections_csv, dtype=str, comment="#")
         missing = {"name_original", "name_canonical"} - set(corr_df.columns)
         if missing:
             print(f"  WARNING: {name_corrections_csv.name} is missing column(s) "

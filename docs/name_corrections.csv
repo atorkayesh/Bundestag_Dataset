@@ -10,7 +10,12 @@ Kollege Albert Schmidt,Albert Schmidt,3,wrapped_qualifier_triage,"chair's ""Herr
 Sozialordnung,Dr. Norbert Blüm,3,wrapped_qualifier_triage,"wrapped role ""Bundesminister für Arbeit und / Sozialordnung"" taken as the name; WP12 session 217 chair: ""Als erster erhält Bundesminister Blüm das Wort."""
 Vereinten Nationen Marieluise Beck,Marieluise Beck,1,wrapped_qualifier_triage,"wrapped resolution text fused into the name of a written Erklärung zur Abstimmung; WP16 session 183"
 von Amerika,Ronald Reagan,2,wrapped_qualifier_triage,"wrapped role ""Präsident der Vereinigten Staaten / von Amerika"" taken as the name; WP09 session 105. Guest head of state, not an MdB: party and role stay null"
-Weiss,Weiß,124,ocr_name_candidates_approved,"umlaut lost at extraction; approved=Yes in docs/name_corrections.xlsx"
+# Weiss -> Weiß REJECTED: two different people. "Weiss" is 124 speeches, all
+# female by manual curation, GRÜNE/BÜNDNIS 90 in WP11 and WP19; "Weiß" is 18
+# speeches, all male by manual curation, mostly CDU/CSU across WP09-WP15.
+# The workbook marked it approved=Yes on string distance alone (match_type
+# "umlaut_only"), with no party or Wahlperiode evidence. Merging flipped 124
+# speeches from female to male.
 Jaffé,Jaffe,21,ocr_name_candidates_approved,"spurious accent at extraction; approved=Yes in docs/name_corrections.xlsx"
 Dr. Jager,Dr. Jäger,1,ocr_name_candidates_approved,"umlaut lost at extraction; approved=Yes in docs/name_corrections.xlsx"
 Eilérs,Eilers,1,ocr_name_candidates_approved,"spurious accent at extraction; approved=Yes in docs/name_corrections.xlsx"
