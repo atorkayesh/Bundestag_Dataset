@@ -49,3 +49,38 @@ Sabel-,Sabel,1,encoding_equivalent,"same name once ß/ss, hyphenation and punctu
 Sabine LeutheusserSchnarrenberger,Sabine Leutheusser-Schnarrenberger,1,encoding_equivalent,"same name once ß/ss, hyphenation and punctuation are normalised"
 Frau Blohm-,Frau Blohm,1,encoding_equivalent,"same name once ß/ss, hyphenation and punctuation are normalised"
 Wolfgang Neskovic,Wolfgang Nešković,4,diacritic_only,"identical but for diacritics, and 'neskovic' is not a member in those terms"
+Broil,Broll,170,adjudicated_with_evidence,"i/l misread; not an MdB, same CDU/CSU and WP8-10 as Werner Broll, 36 shared sessions"
+Westpahl,Westphal,22,adjudicated_with_evidence,"ph/hp transposition; both carry role Vizepräsident, 14 shared sessions"
+Dr. Barbara HöII,Dr. Barbara Höll,15,adjudicated_with_evidence,"capital-I for l; same PDS and WP12-13, 11 shared sessions"
+Günther Bredehom,Günther Bredehorn,15,adjudicated_with_evidence,"rn/m misread; same FDP and WP12-13, 7 shared sessions"
+Frau Matthäus-Maler,Frau Matthäus-Maier,12,adjudicated_with_evidence,i/l misread; chair announces 'Frau Abgeordnete Matthäus-Maier'
+Baler,Baier,12,adjudicated_with_evidence,"i/l misread; same CDU/CSU, WP3-5 inside Fritz Baier's WP2-7"
+Tilimann,Tillmann,11,adjudicated_with_evidence,l/i misread; chair announces 'der Abgeordnete Tillmann'
+Dr. Billow,Dr. Bülow,10,adjudicated_with_evidence,"ü read as il; BOTH carry role 'Staatssekretär im Bundesministerium der Justiz', same WP4-5"
+Selters,Seiters,9,adjudicated_with_evidence,"i/l misread; chair announces 'der Abgeordnete Seiters', same CDU/CSU"
+Schedi,Schedl,9,adjudicated_with_evidence,i/l misread; same CDU/CSU and WP6-8 as Albert Schedl
+Gengier,Gengler,9,adjudicated_with_evidence,"i/l misread; chair announces 'der Abgeordnete Gengler als Berichterstatter', both Berichterstatter"
+Kuribaum,Kurlbaum,7,adjudicated_with_evidence,"l/i misread; chair announces 'der Abgeordnete Kurlbaum', same SPD"
+Dr. Halistein,Dr. Hallstein,7,adjudicated_with_evidence,ll read as li; BOTH carry role 'Staatssekretär des Auswärtigen Amtes' - Walter Hallstein
+Waiter,Walter,7,adjudicated_with_evidence,"l/i misread; chair announces 'der Abgeordnete Walter', same DP and WP1-2"
+Dr. h. c. Glide,Dr. h. c. Güde,6,adjudicated_with_evidence,"ü read as li; same CDU/CSU and WP4-5, 5 shared sessions"
+Dr. Asthammer,Dr. Althammer,6,adjudicated_with_evidence,lt read as st; chair announces 'der Herr Abgeordnete Althammer'
+Frau Fundre,Frau Funcke,5,adjudicated_with_evidence,"ck read as dr; BOTH carry role Vizepräsident, chair announces 'Frau Abgeordnete Funcke'"
+Wilhelm Rave,Wilhelm Rawe,5,adjudicated_with_evidence,"w/v and transposition; BOTH carry role 'Parl. Staatssekretär', same WP12"
+Hans Gottfried Bemrath,Hans Gottfried Bernrath,5,adjudicated_with_evidence,rn/m misread; same SPD and WP12
+Dr. Jürgen Stamick,Dr. Jürgen Starnick,5,adjudicated_with_evidence,rn/m misread; same FDP and WP12
+Dr. Schwenke,Dr. Schwencke,5,adjudicated_with_evidence,"dropped c; same SPD, WP7 inside Olaf Schwencke's WP7-8"
+Rolf Kähne,Rolf Köhne,5,adjudicated_with_evidence,ö/ä misread; same PDS and WP13
+Bolling,Bölling,42,adjudicated_with_evidence,"lost umlaut; role 'Staatssekretär, Chef des Presse- und Informationsamts der Bundesregierung' and WP7-8 match Bölling exactly - the workbook proposed Nölling, which is a different person"
+Boiling,Bölling,7,adjudicated_with_evidence,"ö read as oi; role 'Staatssekretär, Chef des Presse- und Informationsamtes der Bundesregierung' and WP8 match Bölling - the workbook proposed Bühling, which is a different person"
+#
+# Adjudicated and REJECTED - the two names are different people.
+# The decisive signal was the role field: a speaker carrying a
+# government office is not a misspelling of a backbencher.
+# Bölling -> Nölling (401 speeches): Klaus Bölling, Regierungssprecher - role 'Staatssekretär, Chef des Presse- und Informationsamtes der Bundesregierung'. Wilhelm Nölling was an SPD member. Different people.
+# Dr. Wolters -> Dr. Gölter (220 speeches): role 'Staatssekretär im Bundesministerium für Jugend, Familie und Gesundheit'; Georg Gölter was a CDU/CSU member. Different people.
+# Bornemann -> Hörnemann (158 speeches): role 'Staatssekretär im Bundesministerium für das Post- und Fernmeldewesen'; Heinrich Hörnemann was a CDU/CSU member. Different people.
+# Killat -> Kinat (157 speeches): Arthur Killat is an MdB in his own right (WP3-6) and the chair announces him by name; Georg Richard Kinat sat WP1-3. Different people.
+# Chory -> Horn (145 speeches): role 'Staatssekretär'; Erwin Horn was a CDU/CSU member. Different people.
+# Pfahls -> Pfuhl (45 speeches): role 'Staatssekretär im Bundesministerium der Verteidigung' - Ludwig-Holger Pfahls; Albert Pfuhl was an SPD member. Different people.
+# Dr. Abreß -> Dr. Ahrens (8 speeches): role 'Staatssekretär im Bundesministerium für Raumordnung, Bauwesen und Städtebau'; Ahrens is an MdB. Not a clean OCR pair either - left alone.
