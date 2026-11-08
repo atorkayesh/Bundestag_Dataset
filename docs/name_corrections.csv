@@ -84,3 +84,330 @@ Boiling,Bölling,7,adjudicated_with_evidence,"ö read as oi; role 'Staatssekret�
 # Chory -> Horn (145 speeches): role 'Staatssekretär'; Erwin Horn was a CDU/CSU member. Different people.
 # Pfahls -> Pfuhl (45 speeches): role 'Staatssekretär im Bundesministerium der Verteidigung' - Ludwig-Holger Pfahls; Albert Pfuhl was an SPD member. Different people.
 # Dr. Abreß -> Dr. Ahrens (8 speeches): role 'Staatssekretär im Bundesministerium für Raumordnung, Bauwesen und Städtebau'; Ahrens is an MdB. Not a clean OCR pair either - left alone.
+Dr. von Billow,Dr. von Bülow,4,tail_rule,edit distance 2; 'Billow' is not a member in those terms and the name carries no office 'Dr. von Bülow' lacks
+Bredehom,Bredehorn,4,tail_rule,edit distance 2; 'Bredehom' is not a member in those terms and the name carries no office 'Bredehorn' lacks
+Maler,Maier,4,tail_rule,edit distance 1; 'Maler' is not a member in those terms and the name carries no office 'Maier' lacks
+D. Dr. Gerstemnaier,D. Dr. Gerstenmaier,4,tail_rule,edit distance 2; 'Gerstemnaier' is not a member in those terms and the name carries no office 'D. Dr. Gerstenmaier' lacks
+Dr. Karl-Heinz Homhues,Dr. Karl-Heinz Hornhues,4,tail_rule,edit distance 2; 'Homhues' is not a member in those terms and the name carries no office 'Dr. Karl-Heinz Hornhues' lacks
+D. Dr. Gerstenmaler,D. Dr. Gerstenmaier,4,tail_rule,edit distance 1; 'Gerstenmaler' is not a member in those terms and the name carries no office 'D. Dr. Gerstenmaier' lacks
+Dr. Barbara Hall,Dr. Barbara Höll,4,tail_rule,edit distance 1; 'Hall' is not a member in those terms and the name carries no office 'Dr. Barbara Höll' lacks
+Dr. Biens,Dr. Blens,4,tail_rule,edit distance 1; 'Biens' is not a member in those terms and the name carries no office 'Dr. Blens' lacks
+Dr. Gradi,Dr. Gradl,4,tail_rule,edit distance 1; 'Gradi' is not a member in those terms and the name carries no office 'Dr. Gradl' lacks
+Fellermeier,Fellermaier,4,tail_rule,edit distance 1; 'Fellermeier' is not a member in those terms and the name carries no office 'Fellermaier' lacks
+Mattik,Mattick,4,tail_rule,edit distance 1; 'Mattik' is not a member in those terms and the name carries no office 'Mattick' lacks
+Melles,Mellies,4,tail_rule,edit distance 1; 'Melles' is not a member in those terms and the name carries no office 'Mellies' lacks
+Feliner,Fellner,3,tail_rule,edit distance 1; 'Feliner' is not a member in those terms and the name carries no office 'Fellner' lacks
+Dr. BleiB,Dr. Bleiß,3,tail_rule,edit distance 2; 'BleiB' is not a member in those terms and the name carries no office 'Dr. Bleiß' lacks
+Schmidt-Vockenhausen,Schmitt-Vockenhausen,3,tail_rule,edit distance 1; 'Schmidt-Vockenhausen' is not a member in those terms and the name carries no office 'Schmitt-Vockenhausen' lacks
+Ostergetelo,Oostergetelo,3,tail_rule,edit distance 1; 'Ostergetelo' is not a member in those terms and the name carries no office 'Oostergetelo' lacks
+Kriszan,Krizsan,3,tail_rule,edit distance 2; 'Kriszan' is not a member in those terms and the name carries no office 'Krizsan' lacks
+Kühltau,Kühlthau,3,tail_rule,edit distance 1; 'Kühltau' is not a member in those terms and the name carries no office 'Kühlthau' lacks
+Kursbaum,Kurlbaum,3,tail_rule,edit distance 1; 'Kursbaum' is not a member in those terms and the name carries no office 'Kurlbaum' lacks
+Ulrich Inner,Ulrich Irmer,3,tail_rule,edit distance 2; 'Inner' is not a member in those terms and the name carries no office 'Ulrich Irmer' lacks
+Wolfgang Bömsen,Wolfgang Börnsen,3,tail_rule,edit distance 2; 'Bömsen' is not a member in those terms and the name carries no office 'Wolfgang Börnsen' lacks
+Frau Erier,Frau Erler,3,tail_rule,edit distance 1; 'Erier' is not a member in those terms and the name carries no office 'Frau Erler' lacks
+Horstmeler,Horstmeier,3,tail_rule,edit distance 1; 'Horstmeler' is not a member in those terms and the name carries no office 'Horstmeier' lacks
+Hoffle,Hoffie,3,tail_rule,edit distance 1; 'Hoffle' is not a member in those terms and the name carries no office 'Hoffie' lacks
+Erti,Ertl,3,tail_rule,edit distance 1; 'Erti' is not a member in those terms and the name carries no office 'Ertl' lacks
+Dr. Zawadll,Dr. Zawadil,3,tail_rule,edit distance 1; 'Zawadll' is not a member in those terms and the name carries no office 'Dr. Zawadil' lacks
+Dr. Weilhausen,Dr. Wellhausen,3,tail_rule,edit distance 1; 'Weilhausen' is not a member in those terms and the name carries no office 'Dr. Wellhausen' lacks
+Dr. Mülhan,Dr. Mühlhan,3,tail_rule,edit distance 1; 'Mülhan' is not a member in those terms and the name carries no office 'Dr. Mühlhan' lacks
+Dr. Resold,Dr. Besold,2,tail_rule,edit distance 1; 'Resold' is not a member in those terms and the name carries no office 'Dr. Besold' lacks
+Dr. Scheider,Dr. Schneider,2,tail_rule,edit distance 1; 'Scheider' is not a member in those terms and the name carries no office 'Dr. Schneider' lacks
+Dr. Schmidt-Vockenhausen,Dr. Schmitt-Vockenhausen,2,tail_rule,edit distance 1; 'Schmidt-Vockenhausen' is not a member in those terms and the name carries no office 'Dr. Schmitt-Vockenhausen' lacks
+Dr. Seeios,Dr. Seelos,2,tail_rule,edit distance 1; 'Seeios' is not a member in those terms and the name carries no office 'Dr. Seelos' lacks
+Zühike,Zühlke,2,tail_rule,edit distance 1; 'Zühike' is not a member in those terms and the name carries no office 'Zühlke' lacks
+Engeisberger,Engelsberger,2,tail_rule,edit distance 1; 'Engeisberger' is not a member in those terms and the name carries no office 'Engelsberger' lacks
+Euter,Euler,2,tail_rule,edit distance 1; 'Euter' is not a member in those terms and the name carries no office 'Euler' lacks
+Giombig,Glombig,2,tail_rule,edit distance 1; 'Giombig' is not a member in those terms and the name carries no office 'Glombig' lacks
+Dr. Graf Lambsdorf,Dr. Graf Lambsdorff,2,tail_rule,edit distance 1; 'Lambsdorf' is not a member in those terms and the name carries no office 'Dr. Graf Lambsdorff' lacks
+Frau Karwarzki,Frau Karwatzki,2,tail_rule,edit distance 1; 'Karwarzki' is not a member in those terms and the name carries no office 'Frau Karwatzki' lacks
+Frau Schiei,Frau Schlei,2,tail_rule,edit distance 1; 'Schiei' is not a member in those terms and the name carries no office 'Frau Schlei' lacks
+Dr. Glich,Dr. Gülich,2,tail_rule,edit distance 1; 'Glich' is not a member in those terms and the name carries no office 'Dr. Gülich' lacks
+Dr. Gerstenmaler,Dr. Gerstenmaier,2,tail_rule,edit distance 1; 'Gerstenmaler' is not a member in those terms and the name carries no office 'Dr. Gerstenmaier' lacks
+Dr. Fohle,Dr. Pohle,2,tail_rule,edit distance 1; 'Fohle' is not a member in those terms and the name carries no office 'Dr. Pohle' lacks
+Dr. Drill,Dr. Brill,2,tail_rule,edit distance 1; 'Drill' is not a member in those terms and the name carries no office 'Dr. Brill' lacks
+Dr. Bieiß,Dr. Bleiß,2,tail_rule,edit distance 1; 'Bieiß' is not a member in those terms and the name carries no office 'Dr. Bleiß' lacks
+Mischnik,Mischnick,2,tail_rule,edit distance 1; 'Mischnik' is not a member in those terms and the name carries no office 'Mischnick' lacks
+Bluther,Blücher,2,tail_rule,edit distance 2; 'Bluther' is not a member in those terms and the name carries no office 'Blücher' lacks
+Bachmaler,Bachmaier,2,tail_rule,edit distance 1; 'Bachmaler' is not a member in those terms and the name carries no office 'Bachmaier' lacks
+Heilwege,Hellwege,2,tail_rule,edit distance 1; 'Heilwege' is not a member in those terms and the name carries no office 'Hellwege' lacks
+Dr. Krelle,Dr. Kreile,2,tail_rule,edit distance 1; 'Krelle' is not a member in those terms and the name carries no office 'Dr. Kreile' lacks
+Dr. Müller-Herrmann,Dr. Müller-Hermann,2,tail_rule,edit distance 1; 'Müller-Herrmann' is not a member in those terms and the name carries no office 'Dr. Müller-Hermann' lacks
+Dr. Peter Raumsauer,Dr. Peter Ramsauer,2,tail_rule,edit distance 1; 'Raumsauer' is not a member in those terms and the name carries no office 'Dr. Peter Ramsauer' lacks
+Jürgen Koppeln,Jürgen Koppelin,2,tail_rule,edit distance 1; 'Koppeln' is not a member in those terms and the name carries no office 'Jürgen Koppelin' lacks
+Kaibitzer,Kalbitzer,2,tail_rule,edit distance 1; 'Kaibitzer' is not a member in those terms and the name carries no office 'Kalbitzer' lacks
+Dr. Guilini,Dr. Giulini,2,tail_rule,edit distance 2; 'Guilini' is not a member in those terms and the name carries no office 'Dr. Giulini' lacks
+Dr. Wilich,Dr. Gülich,2,tail_rule,edit distance 2; 'Wilich' is not a member in those terms and the name carries no office 'Dr. Gülich' lacks
+Dr. h. C. Glide,Dr. h. C. Güde,2,tail_rule,edit distance 2; 'Glide' is not a member in those terms and the name carries no office 'Dr. h. C. Güde' lacks
+Schönberg,Scharnberg,2,tail_rule,edit distance 2; 'Schönberg' is not a member in those terms and the name carries no office 'Scharnberg' lacks
+Rui,Ruf,2,tail_rule,edit distance 1; 'Rui' is not a member in those terms and the name carries no office 'Ruf' lacks
+Katrin Göring-Eckhardt,Katrin Göring-Eckardt,2,tail_rule,edit distance 1; 'Göring-Eckhardt' is not a member in those terms and the name carries no office 'Katrin Göring-Eckardt' lacks
+Kiechie,Kiechle,2,tail_rule,edit distance 1; 'Kiechie' is not a member in those terms and the name carries no office 'Kiechle' lacks
+Klaus-Peter Wilsch,Klaus-Peter Willsch,2,tail_rule,edit distance 1; 'Wilsch' is not a member in those terms and the name carries no office 'Klaus-Peter Willsch' lacks
+Klep,Kiep,2,tail_rule,edit distance 1; 'Klep' is not a member in those terms and the name carries no office 'Kiep' lacks
+Miederalt,Niederalt,2,tail_rule,edit distance 1; 'Miederalt' is not a member in those terms and the name carries no office 'Niederalt' lacks
+Siegfried Homung,Siegfried Hornung,2,tail_rule,edit distance 2; 'Homung' is not a member in those terms and the name carries no office 'Siegfried Hornung' lacks
+Raflert,Raffert,2,tail_rule,edit distance 1; 'Raflert' is not a member in those terms and the name carries no office 'Raffert' lacks
+Rörner,Börner,2,tail_rule,edit distance 1; 'Rörner' is not a member in those terms and the name carries no office 'Börner' lacks
+Frau Kaianke,Frau Kalinke,2,tail_rule,edit distance 2; 'Kaianke' is not a member in those terms and the name carries no office 'Frau Kalinke' lacks
+Dr. Heilige,Dr. Hellige,2,tail_rule,edit distance 1; 'Heilige' is not a member in those terms and the name carries no office 'Dr. Hellige' lacks
+Schöffer,Schäffer,2,tail_rule,edit distance 1; 'Schöffer' is not a member in those terms and the name carries no office 'Schäffer' lacks
+Schüttier,Schüttler,2,tail_rule,edit distance 1; 'Schüttier' is not a member in those terms and the name carries no office 'Schüttler' lacks
+Urbanik,Urbaniak,2,tail_rule,edit distance 1; 'Urbanik' is not a member in those terms and the name carries no office 'Urbaniak' lacks
+Uwe Göliner,Uwe Göllner,2,tail_rule,edit distance 1; 'Göliner' is not a member in those terms and the name carries no office 'Uwe Göllner' lacks
+Pohie,Pohle,2,tail_rule,edit distance 1; 'Pohie' is not a member in those terms and the name carries no office 'Pohle' lacks
+Wielel,Wiefel,2,tail_rule,edit distance 1; 'Wielel' is not a member in those terms and the name carries no office 'Wiefel' lacks
+Wanner,Wagner,2,tail_rule,edit distance 1; 'Wanner' is not a member in those terms and the name carries no office 'Wagner' lacks
+Beatrix Phillip,Beatrix Philipp,2,tail_rule,edit distance 2; 'Phillip' is not a member in those terms and the name carries no office 'Beatrix Philipp' lacks
+Dr. Erik Schweikert,Dr. Erik Schweickert,1,tail_rule,edit distance 1; 'Schweikert' is not a member in those terms and the name carries no office 'Dr. Erik Schweickert' lacks
+Dr. Furier,Dr. Furler,1,tail_rule,edit distance 1; 'Furier' is not a member in those terms and the name carries no office 'Dr. Furler' lacks
+Dr. Furter,Dr. Furler,1,tail_rule,edit distance 1; 'Furter' is not a member in those terms and the name carries no office 'Dr. Furler' lacks
+Dr. Gifle,Dr. Gille,1,tail_rule,edit distance 1; 'Gifle' is not a member in those terms and the name carries no office 'Dr. Gille' lacks
+Dr. Grads,Dr. Gradl,1,tail_rule,edit distance 1; 'Grads' is not a member in those terms and the name carries no office 'Dr. Gradl' lacks
+Dr. Graf Lambdorff,Dr. Graf Lambsdorff,1,tail_rule,edit distance 1; 'Lambdorff' is not a member in those terms and the name carries no office 'Dr. Graf Lambsdorff' lacks
+Dr. Graf Lambsdoff,Dr. Graf Lambsdorff,1,tail_rule,edit distance 1; 'Lambsdoff' is not a member in those terms and the name carries no office 'Dr. Graf Lambsdorff' lacks
+Dr. Hack,Dr. Haack,1,tail_rule,edit distance 1; 'Hack' is not a member in those terms and the name carries no office 'Dr. Haack' lacks
+Dr. Harlacher,Dr. Horlacher,1,tail_rule,edit distance 1; 'Harlacher' is not a member in those terms and the name carries no office 'Dr. Horlacher' lacks
+Dr. Hermann Otto Soims,Dr. Hermann Otto Solms,1,tail_rule,edit distance 1; 'Soims' is not a member in those terms and the name carries no office 'Dr. Hermann Otto Solms' lacks
+Dr. Heuchler,Dr. Hauchler,1,tail_rule,edit distance 1; 'Heuchler' is not a member in those terms and the name carries no office 'Dr. Hauchler' lacks
+Dr. Ingomar Heuchler,Dr. Ingomar Hauchler,1,tail_rule,edit distance 1; 'Heuchler' is not a member in those terms and the name carries no office 'Dr. Ingomar Hauchler' lacks
+Dr. Klaus Dieter Uelhof,Dr. Klaus Dieter Uelhoff,1,tail_rule,edit distance 1; 'Uelhof' is not a member in those terms and the name carries no office 'Dr. Klaus Dieter Uelhoff' lacks
+Dr. Kllesing,Dr. Kliesing,1,tail_rule,edit distance 1; 'Kllesing' is not a member in those terms and the name carries no office 'Dr. Kliesing' lacks
+Dr. Konrad Elmar,Dr. Konrad Elmer,1,tail_rule,edit distance 1; 'Elmar' is not a member in those terms and the name carries no office 'Dr. Konrad Elmer' lacks
+Dr. Kother,Dr. Kather,1,tail_rule,edit distance 1; 'Kother' is not a member in those terms and the name carries no office 'Dr. Kather' lacks
+Dr. Kupka,Dr. Hupka,1,tail_rule,edit distance 1; 'Kupka' is not a member in those terms and the name carries no office 'Dr. Hupka' lacks
+Dr. Lauts,Dr. Laufs,1,tail_rule,edit distance 1; 'Lauts' is not a member in those terms and the name carries no office 'Dr. Laufs' lacks
+Dr. Margret Funke-Schmidt-Rink,Dr. Margret Funke-Schmitt-Rink,1,tail_rule,edit distance 1; 'Funke-Schmidt-Rink' is not a member in those terms and the name carries no office 'Dr. Margret Funke-Schmitt-Rink' lacks
+Dr. Mars,Dr. Marx,1,tail_rule,edit distance 1; 'Mars' is not a member in those terms and the name carries no office 'Dr. Marx' lacks
+Dr. Mechterheimer,Dr. Mechtersheimer,1,tail_rule,edit distance 1; 'Mechterheimer' is not a member in those terms and the name carries no office 'Dr. Mechtersheimer' lacks
+Dr. Miller-Hermann,Dr. Müller-Hermann,1,tail_rule,edit distance 1; 'Miller-Hermann' is not a member in those terms and the name carries no office 'Dr. Müller-Hermann' lacks
+Dr. Monde,Dr. Mende,1,tail_rule,edit distance 1; 'Monde' is not a member in those terms and the name carries no office 'Dr. Mende' lacks
+Dr. Mühienfeld,Dr. Mühlenfeld,1,tail_rule,edit distance 1; 'Mühienfeld' is not a member in those terms and the name carries no office 'Dr. Mühlenfeld' lacks
+Dr. Mühihan,Dr. Mühlhan,1,tail_rule,edit distance 1; 'Mühihan' is not a member in those terms and the name carries no office 'Dr. Mühlhan' lacks
+Dr. Müler-Emmert,Dr. Müller-Emmert,1,tail_rule,edit distance 1; 'Müler-Emmert' is not a member in those terms and the name carries no office 'Dr. Müller-Emmert' lacks
+Dr. Pecker,Dr. Becker,1,tail_rule,edit distance 1; 'Pecker' is not a member in those terms and the name carries no office 'Dr. Becker' lacks
+Dr. Peismann,Dr. Reismann,1,tail_rule,edit distance 1; 'Peismann' is not a member in those terms and the name carries no office 'Dr. Reismann' lacks
+Dr. Pilaumbaum,Dr. Pflaumbaum,1,tail_rule,edit distance 1; 'Pilaumbaum' is not a member in those terms and the name carries no office 'Dr. Pflaumbaum' lacks
+Dr. Pohimeier,Dr. Pohlmeier,1,tail_rule,edit distance 1; 'Pohimeier' is not a member in those terms and the name carries no office 'Dr. Pohlmeier' lacks
+Dr. Pohlmeler,Dr. Pohlmeier,1,tail_rule,edit distance 1; 'Pohlmeler' is not a member in those terms and the name carries no office 'Dr. Pohlmeier' lacks
+Dr. Richtar,Dr. Richter,1,tail_rule,edit distance 1; 'Richtar' is not a member in those terms and the name carries no office 'Dr. Richter' lacks
+Dr. Schaefer,Dr. Schäfer,1,tail_rule,edit distance 2; 'Schaefer' is not a member in those terms and the name carries no office 'Dr. Schäfer' lacks
+Dr. Selleder,Dr. Solleder,1,tail_rule,edit distance 1; 'Selleder' is not a member in those terms and the name carries no office 'Dr. Solleder' lacks
+Dr. Sigrid Skarpells-Sperk,Dr. Sigrid Skarpelis-Sperk,1,tail_rule,edit distance 1; 'Skarpells-Sperk' is not a member in those terms and the name carries no office 'Dr. Sigrid Skarpelis-Sperk' lacks
+Dr. Spör,Dr. Spöri,1,tail_rule,edit distance 1; 'Spör' is not a member in those terms and the name carries no office 'Dr. Spöri' lacks
+Dr. Stavenhaben,Dr. Stavenhagen,1,tail_rule,edit distance 1; 'Stavenhaben' is not a member in those terms and the name carries no office 'Dr. Stavenhagen' lacks
+Dr. Tilimanns,Dr. Tillmanns,1,tail_rule,edit distance 1; 'Tilimanns' is not a member in those terms and the name carries no office 'Dr. Tillmanns' lacks
+Dr. Walgel,Dr. Waigel,1,tail_rule,edit distance 1; 'Walgel' is not a member in those terms and the name carries no office 'Dr. Waigel' lacks
+Dr. Warrikof,Dr. Warrikoff,1,tail_rule,edit distance 1; 'Warrikof' is not a member in those terms and the name carries no office 'Dr. Warrikoff' lacks
+Dr. Welihausen,Dr. Wellhausen,1,tail_rule,edit distance 1; 'Welihausen' is not a member in those terms and the name carries no office 'Dr. Wellhausen' lacks
+Dr. Zeitei,Dr. Zeitel,1,tail_rule,edit distance 1; 'Zeitei' is not a member in those terms and the name carries no office 'Dr. Zeitel' lacks
+Dr. Zeitet,Dr. Zeitel,1,tail_rule,edit distance 1; 'Zeitet' is not a member in those terms and the name carries no office 'Dr. Zeitel' lacks
+Dr. von Birsmarck,Dr. von Bismarck,1,tail_rule,edit distance 1; 'Birsmarck' is not a member in those terms and the name carries no office 'Dr. von Bismarck' lacks
+Dr. von Büllow,Dr. von Bülow,1,tail_rule,edit distance 1; 'Büllow' is not a member in those terms and the name carries no office 'Dr. von Bülow' lacks
+Drück,Brück,1,tail_rule,edit distance 1; 'Drück' is not a member in those terms and the name carries no office 'Brück' lacks
+Duwe,Duve,1,tail_rule,edit distance 1; 'Duwe' is not a member in those terms and the name carries no office 'Duve' lacks
+Enak Ferleman,Enak Ferlemann,1,tail_rule,edit distance 1; 'Ferleman' is not a member in those terms and the name carries no office 'Enak Ferlemann' lacks
+Erandt,Brandt,1,tail_rule,edit distance 1; 'Erandt' is not a member in those terms and the name carries no office 'Brandt' lacks
+Erhardt,Erhard,1,tail_rule,edit distance 1; 'Erhardt' is not a member in those terms and the name carries no office 'Erhard' lacks
+Ernst Walthemathe,Ernst Waltemathe,1,tail_rule,edit distance 1; 'Walthemathe' is not a member in those terms and the name carries no office 'Ernst Waltemathe' lacks
+Ert,Ertl,1,tail_rule,edit distance 1; 'Ert' is not a member in those terms and the name carries no office 'Ertl' lacks
+Euer,Euler,1,tail_rule,edit distance 1; 'Euer' is not a member in those terms and the name carries no office 'Euler' lacks
+Feiter,Peiter,1,tail_rule,edit distance 1; 'Feiter' is not a member in those terms and the name carries no office 'Peiter' lacks
+Fichner,Eichner,1,tail_rule,edit distance 1; 'Fichner' is not a member in those terms and the name carries no office 'Eichner' lacks
+Flsch,Fisch,1,tail_rule,edit distance 1; 'Flsch' is not a member in those terms and the name carries no office 'Fisch' lacks
+Franz Obermaier,Franz Obermeier,1,tail_rule,edit distance 1; 'Obermaier' is not a member in those terms and the name carries no office 'Franz Obermeier' lacks
+Frdudenberg,Freudenberg,1,tail_rule,edit distance 1; 'Frdudenberg' is not a member in those terms and the name carries no office 'Freudenberg' lacks
+Ganzel,Gansel,1,tail_rule,edit distance 1; 'Ganzel' is not a member in those terms and the name carries no office 'Gansel' lacks
+Georg Janorsky,Georg Janovsky,1,tail_rule,edit distance 1; 'Janorsky' is not a member in those terms and the name carries no office 'Georg Janovsky' lacks
+Gerda Hasselfeld,Gerda Hasselfeldt,1,tail_rule,edit distance 1; 'Hasselfeld' is not a member in those terms and the name carries no office 'Gerda Hasselfeldt' lacks
+Gert Wiliner,Gert Willner,1,tail_rule,edit distance 1; 'Wiliner' is not a member in those terms and the name carries no office 'Gert Willner' lacks
+Gescheidle,Gscheidle,1,tail_rule,edit distance 1; 'Gescheidle' is not a member in those terms and the name carries no office 'Gscheidle' lacks
+Gnädiger,Gnädinger,1,tail_rule,edit distance 1; 'Gnädiger' is not a member in those terms and the name carries no office 'Gnädinger' lacks
+Graf von Spretl,Graf von Spreti,1,tail_rule,edit distance 1; 'Spretl' is not a member in those terms and the name carries no office 'Graf von Spreti' lacks
+Günther Bredehorm,Günther Bredehorn,1,tail_rule,edit distance 1; 'Bredehorm' is not a member in those terms and the name carries no office 'Günther Bredehorn' lacks
+Halmeier,Halfmeier,1,tail_rule,edit distance 1; 'Halmeier' is not a member in those terms and the name carries no office 'Halfmeier' lacks
+Hasse,Haase,1,tail_rule,edit distance 1; 'Hasse' is not a member in those terms and the name carries no office 'Haase' lacks
+Hassler,Haasler,1,tail_rule,edit distance 1; 'Hassler' is not a member in those terms and the name carries no office 'Haasler' lacks
+Heberholz,Herberholz,1,tail_rule,edit distance 1; 'Heberholz' is not a member in those terms and the name carries no office 'Herberholz' lacks
+Heide Mattischek,Heide Mattischeck,1,tail_rule,edit distance 1; 'Mattischek' is not a member in those terms and the name carries no office 'Heide Mattischeck' lacks
+Hffie,Hoffie,1,tail_rule,edit distance 1; 'Hffie' is not a member in those terms and the name carries no office 'Hoffie' lacks
+Horst Kubatsrhka,Horst Kubatschka,1,tail_rule,edit distance 1; 'Kubatsrhka' is not a member in those terms and the name carries no office 'Horst Kubatschka' lacks
+Hostmeier,Horstmeier,1,tail_rule,edit distance 1; 'Hostmeier' is not a member in those terms and the name carries no office 'Horstmeier' lacks
+Höchel,Höcherl,1,tail_rule,edit distance 1; 'Höchel' is not a member in those terms and the name carries no office 'Höcherl' lacks
+Höne,Höhne,1,tail_rule,edit distance 1; 'Höne' is not a member in those terms and the name carries no office 'Höhne' lacks
+Ingrid Matthäus-Maler,Ingrid Matthäus-Maier,1,tail_rule,edit distance 1; 'Matthäus-Maler' is not a member in those terms and the name carries no office 'Ingrid Matthäus-Maier' lacks
+Iris Gleike,Iris Gleicke,1,tail_rule,edit distance 1; 'Gleike' is not a member in those terms and the name carries no office 'Iris Gleicke' lacks
+Irmingard Schewe-Geigk,Irmingard Schewe-Gerigk,1,tail_rule,edit distance 1; 'Schewe-Geigk' is not a member in those terms and the name carries no office 'Irmingard Schewe-Gerigk' lacks
+Jänger,Jäger,1,tail_rule,edit distance 1; 'Jänger' is not a member in those terms and the name carries no office 'Jäger' lacks
+Jürgen Koeppelin,Jürgen Koppelin,1,tail_rule,edit distance 1; 'Koeppelin' is not a member in those terms and the name carries no office 'Jürgen Koppelin' lacks
+Kafka,Kaffka,1,tail_rule,edit distance 1; 'Kafka' is not a member in those terms and the name carries no office 'Kaffka' lacks
+Katrin Göring-Eckart,Katrin Göring-Eckardt,1,tail_rule,edit distance 1; 'Göring-Eckart' is not a member in those terms and the name carries no office 'Katrin Göring-Eckardt' lacks
+Kirs,Kirst,1,tail_rule,edit distance 1; 'Kirs' is not a member in those terms and the name carries no office 'Kirst' lacks
+Konrad Gildes,Konrad Gilges,1,tail_rule,edit distance 1; 'Gildes' is not a member in those terms and the name carries no office 'Konrad Gilges' lacks
+Kreitmayer,Kreitmeyer,1,tail_rule,edit distance 1; 'Kreitmayer' is not a member in those terms and the name carries no office 'Kreitmeyer' lacks
+Kreitmever,Kreitmeyer,1,tail_rule,edit distance 1; 'Kreitmever' is not a member in those terms and the name carries no office 'Kreitmeyer' lacks
+Kuhlweln,Kuhlwein,1,tail_rule,edit distance 1; 'Kuhlweln' is not a member in those terms and the name carries no office 'Kuhlwein' lacks
+Leritz,Loritz,1,tail_rule,edit distance 1; 'Leritz' is not a member in those terms and the name carries no office 'Loritz' lacks
+Leuert,Leukert,1,tail_rule,edit distance 1; 'Leuert' is not a member in those terms and the name carries no office 'Leukert' lacks
+Lorits,Loritz,1,tail_rule,edit distance 1; 'Lorits' is not a member in those terms and the name carries no office 'Loritz' lacks
+Ludewlg,Ludewig,1,tail_rule,edit distance 1; 'Ludewlg' is not a member in those terms and the name carries no office 'Ludewig' lacks
+Lugemann,Logemann,1,tail_rule,edit distance 1; 'Lugemann' is not a member in those terms and the name carries no office 'Logemann' lacks
+Maionica,Majonica,1,tail_rule,edit distance 1; 'Maionica' is not a member in those terms and the name carries no office 'Majonica' lacks
+Mari,Marx,1,tail_rule,edit distance 1; 'Mari' is not a member in those terms and the name carries no office 'Marx' lacks
+Mechthild Dyckmanns,Mechthild Dyckmans,1,tail_rule,edit distance 1; 'Dyckmanns' is not a member in those terms and the name carries no office 'Mechthild Dyckmans' lacks
+Meifike,Meinike,1,tail_rule,edit distance 1; 'Meifike' is not a member in those terms and the name carries no office 'Meinike' lacks
+Meinicke,Meinecke,1,tail_rule,edit distance 1; 'Meinicke' is not a member in those terms and the name carries no office 'Meinecke' lacks
+Meinighaus,Meininghaus,1,tail_rule,edit distance 1; 'Meinighaus' is not a member in those terms and the name carries no office 'Meininghaus' lacks
+Michael Hennich,Michael Hennrich,1,tail_rule,edit distance 1; 'Hennich' is not a member in those terms and the name carries no office 'Michael Hennrich' lacks
+Morgenfhaler,Morgenthaler,1,tail_rule,edit distance 1; 'Morgenfhaler' is not a member in those terms and the name carries no office 'Morgenthaler' lacks
+Mtschnick,Mischnick,1,tail_rule,edit distance 1; 'Mtschnick' is not a member in those terms and the name carries no office 'Mischnick' lacks
+Möllmann,Möllemann,1,tail_rule,edit distance 1; 'Möllmann' is not a member in those terms and the name carries no office 'Möllemann' lacks
+Neumannn,Neumann,1,tail_rule,edit distance 1; 'Neumannn' is not a member in those terms and the name carries no office 'Neumann' lacks
+Oostergetolo,Oostergetelo,1,tail_rule,edit distance 1; 'Oostergetolo' is not a member in those terms and the name carries no office 'Oostergetelo' lacks
+Peter Harry Cartensen,Peter Harry Carstensen,1,tail_rule,edit distance 1; 'Cartensen' is not a member in those terms and the name carries no office 'Peter Harry Carstensen' lacks
+Pfeiler,Pfeifer,1,tail_rule,edit distance 1; 'Pfeiler' is not a member in those terms and the name carries no office 'Pfeifer' lacks
+Purbs,Purps,1,tail_rule,edit distance 1; 'Purbs' is not a member in those terms and the name carries no office 'Purps' lacks
+Raifert,Raffert,1,tail_rule,edit distance 1; 'Raifert' is not a member in those terms and the name carries no office 'Raffert' lacks
+Reddeman,Reddemann,1,tail_rule,edit distance 1; 'Reddeman' is not a member in those terms and the name carries no office 'Reddemann' lacks
+Sabine Leutheusse-Schnarrenberger,Sabine Leutheusser-Schnarrenberger,1,tail_rule,edit distance 1; 'Leutheusse-Schnarrenberger' is not a member in those terms and the name carries no office 'Sabine Leutheusser-Schnarrenberger' lacks
+Schiaga,Schlaga,1,tail_rule,edit distance 1; 'Schiaga' is not a member in those terms and the name carries no office 'Schlaga' lacks
+Schuttier,Schüttler,1,tail_rule,edit distance 2; 'Schuttier' is not a member in those terms and the name carries no office 'Schüttler' lacks
+Sehmücker,Schmücker,1,tail_rule,edit distance 1; 'Sehmücker' is not a member in those terms and the name carries no office 'Schmücker' lacks
+Siegterschmidt,Sieglerschmidt,1,tail_rule,edit distance 1; 'Siegterschmidt' is not a member in those terms and the name carries no office 'Sieglerschmidt' lacks
+Slelaff,Sielaff,1,tail_rule,edit distance 1; 'Slelaff' is not a member in those terms and the name carries no office 'Sielaff' lacks
+Straßmeier,Straßmeir,1,tail_rule,edit distance 1; 'Straßmeier' is not a member in those terms and the name carries no office 'Straßmeir' lacks
+Stromayr,Strohmayr,1,tail_rule,edit distance 1; 'Stromayr' is not a member in those terms and the name carries no office 'Strohmayr' lacks
+Stuckten,Stücklen,1,tail_rule,edit distance 2; 'Stuckten' is not a member in those terms and the name carries no office 'Stücklen' lacks
+Stücken,Stücklen,1,tail_rule,edit distance 1; 'Stücken' is not a member in those terms and the name carries no office 'Stücklen' lacks
+Stückten,Stücklen,1,tail_rule,edit distance 1; 'Stückten' is not a member in those terms and the name carries no office 'Stücklen' lacks
+Susanne Rahard-Vahldieck,Susanne Rahardt-Vahldieck,1,tail_rule,edit distance 1; 'Rahard-Vahldieck' is not a member in those terms and the name carries no office 'Susanne Rahardt-Vahldieck' lacks
+Tababen,Tobaben,1,tail_rule,edit distance 1; 'Tababen' is not a member in those terms and the name carries no office 'Tobaben' lacks
+Toboben,Tobaben,1,tail_rule,edit distance 1; 'Toboben' is not a member in those terms and the name carries no office 'Tobaben' lacks
+Toetemyer,Toetemeyer,1,tail_rule,edit distance 1; 'Toetemyer' is not a member in those terms and the name carries no office 'Toetemeyer' lacks
+Totemeyer,Toetemeyer,1,tail_rule,edit distance 1; 'Totemeyer' is not a member in those terms and the name carries no office 'Toetemeyer' lacks
+Ulla Jelpe,Ulla Jelpke,1,tail_rule,edit distance 1; 'Jelpe' is not a member in those terms and the name carries no office 'Ulla Jelpke' lacks
+Ursula Seiler-Aibring,Ursula Seiler-Albring,1,tail_rule,edit distance 1; 'Seiler-Aibring' is not a member in those terms and the name carries no office 'Ursula Seiler-Albring' lacks
+Wahlrabe,Wohlrabe,1,tail_rule,edit distance 1; 'Wahlrabe' is not a member in those terms and the name carries no office 'Wohlrabe' lacks
+Waikhoff,Walkhoff,1,tail_rule,edit distance 1; 'Waikhoff' is not a member in those terms and the name carries no office 'Walkhoff' lacks
+Wehger,Wehner,1,tail_rule,edit distance 1; 'Wehger' is not a member in those terms and the name carries no office 'Wehner' lacks
+Weigi,Weigl,1,tail_rule,edit distance 1; 'Weigi' is not a member in those terms and the name carries no office 'Weigl' lacks
+Weiskirchen,Weisskirchen,1,tail_rule,edit distance 1; 'Weiskirchen' is not a member in those terms and the name carries no office 'Weisskirchen' lacks
+Weislau,Welslau,1,tail_rule,edit distance 1; 'Weislau' is not a member in those terms and the name carries no office 'Welslau' lacks
+Wener,Weber,1,tail_rule,edit distance 1; 'Wener' is not a member in those terms and the name carries no office 'Weber' lacks
+Winkeiheide,Winkelheide,1,tail_rule,edit distance 1; 'Winkeiheide' is not a member in those terms and the name carries no office 'Winkelheide' lacks
+Wlschnewski,Wischnewski,1,tail_rule,edit distance 1; 'Wlschnewski' is not a member in those terms and the name carries no office 'Wischnewski' lacks
+Wohlrahe,Wohlrabe,1,tail_rule,edit distance 1; 'Wohlrahe' is not a member in those terms and the name carries no office 'Wohlrabe' lacks
+Wohnrabe,Wohlrabe,1,tail_rule,edit distance 1; 'Wohnrabe' is not a member in those terms and the name carries no office 'Wohlrabe' lacks
+Wolfgang Gröbel,Wolfgang Gröbl,1,tail_rule,edit distance 1; 'Gröbel' is not a member in those terms and the name carries no office 'Wolfgang Gröbl' lacks
+Wolfgang Lader,Wolfgang Lüder,1,tail_rule,edit distance 1; 'Lader' is not a member in those terms and the name carries no office 'Wolfgang Lüder' lacks
+Zogimann,Zoglmann,1,tail_rule,edit distance 1; 'Zogimann' is not a member in those terms and the name carries no office 'Zoglmann' lacks
+Zülke,Zühlke,1,tail_rule,edit distance 1; 'Zülke' is not a member in those terms and the name carries no office 'Zühlke' lacks
+Filers,Eilers,1,tail_rule,edit distance 1; 'Filers' is not a member in those terms and the name carries no office 'Eilers' lacks
+Frau Meermami,Frau Meermann,1,tail_rule,edit distance 2; 'Meermami' is not a member in those terms and the name carries no office 'Frau Meermann' lacks
+Klaus-Jürgen Wamick,Klaus-Jürgen Warnick,1,tail_rule,edit distance 2; 'Wamick' is not a member in those terms and the name carries no office 'Klaus-Jürgen Warnick' lacks
+Lahnstln,Lahnstein,1,tail_rule,edit distance 2; 'Lahnstln' is not a member in those terms and the name carries no office 'Lahnstein' lacks
+Frau Bever,Frau Beyer,1,tail_rule,edit distance 1; 'Bever' is not a member in those terms and the name carries no office 'Frau Beyer' lacks
+Frau Buhlmahn,Frau Bulmahn,1,tail_rule,edit distance 1; 'Buhlmahn' is not a member in those terms and the name carries no office 'Frau Bulmahn' lacks
+Frau Dr. Brökeischen,Frau Dr. Brökelschen,1,tail_rule,edit distance 1; 'Brökeischen' is not a member in those terms and the name carries no office 'Frau Dr. Brökelschen' lacks
+Frau Dr. IIk,Frau Dr. Ilk,1,tail_rule,edit distance 1; 'IIk' is not a member in those terms and the name carries no office 'Frau Dr. Ilk' lacks
+Frau Eiters,Frau Eilers,1,tail_rule,edit distance 1; 'Eiters' is not a member in those terms and the name carries no office 'Frau Eilers' lacks
+Frau Ellers,Frau Eilers,1,tail_rule,edit distance 1; 'Ellers' is not a member in those terms and the name carries no office 'Frau Eilers' lacks
+Frau Kailinke,Frau Kalinke,1,tail_rule,edit distance 1; 'Kailinke' is not a member in those terms and the name carries no office 'Frau Kalinke' lacks
+Frau Keiihack,Frau Keilhack,1,tail_rule,edit distance 1; 'Keiihack' is not a member in those terms and the name carries no office 'Frau Keilhack' lacks
+Frau Klinke,Frau Kalinke,1,tail_rule,edit distance 1; 'Klinke' is not a member in those terms and the name carries no office 'Frau Kalinke' lacks
+Frau Meertann,Frau Meermann,1,tail_rule,edit distance 1; 'Meertann' is not a member in those terms and the name carries no office 'Frau Meermann' lacks
+Frau Oesterle-Schwein,Frau Oesterle-Schwerin,1,tail_rule,edit distance 1; 'Oesterle-Schwein' is not a member in those terms and the name carries no office 'Frau Oesterle-Schwerin' lacks
+Frau Schwanzenbach,Frau Schanzenbach,1,tail_rule,edit distance 1; 'Schwanzenbach' is not a member in those terms and the name carries no office 'Frau Schanzenbach' lacks
+Frau Seller-Albring,Frau Seiler-Albring,1,tail_rule,edit distance 1; 'Seller-Albring' is not a member in those terms and the name carries no office 'Frau Seiler-Albring' lacks
+Frau Simonie,Frau Simonis,1,tail_rule,edit distance 1; 'Simonie' is not a member in those terms and the name carries no office 'Frau Simonis' lacks
+Frau Weiter,Frau Welter,1,tail_rule,edit distance 1; 'Weiter' is not a member in those terms and the name carries no office 'Frau Welter' lacks
+Frau Weyei,Frau Weyel,1,tail_rule,edit distance 1; 'Weyei' is not a member in those terms and the name carries no office 'Frau Weyel' lacks
+Frau Zeltler,Frau Zeitler,1,tail_rule,edit distance 1; 'Zeltler' is not a member in those terms and the name carries no office 'Frau Zeitler' lacks
+Herr Abgeordneter Scharrenbrolch,Herr Abgeordneter Scharrenbroich,1,tail_rule,edit distance 1; 'Scharrenbrolch' is not a member in those terms and the name carries no office 'Herr Abgeordneter Scharrenbroich' lacks
+Mölimann,Möllemann,1,tail_rule,edit distance 2; 'Mölimann' is not a member in those terms and the name carries no office 'Möllemann' lacks
+Oiîergeld,Offergeld,1,tail_rule,edit distance 2; 'Oiîergeld' is not a member in those terms and the name carries no office 'Offergeld' lacks
+Pawelcyzk,Pawelczyk,1,tail_rule,edit distance 2; 'Pawelcyzk' is not a member in those terms and the name carries no office 'Pawelczyk' lacks
+Pawelzcyk,Pawelczyk,1,tail_rule,edit distance 2; 'Pawelzcyk' is not a member in those terms and the name carries no office 'Pawelczyk' lacks
+Penksy,Pensky,1,tail_rule,edit distance 2; 'Penksy' is not a member in those terms and the name carries no office 'Pensky' lacks
+Pieifermann,Pfeffermann,1,tail_rule,edit distance 2; 'Pieifermann' is not a member in those terms and the name carries no office 'Pfeffermann' lacks
+Rallen,Faller,1,tail_rule,edit distance 2; 'Rallen' is not a member in those terms and the name carries no office 'Faller' lacks
+Spitzmliller,Spitzmüller,1,tail_rule,edit distance 2; 'Spitzmliller' is not a member in those terms and the name carries no office 'Spitzmüller' lacks
+Stiicklen,Stücklen,1,tail_rule,edit distance 2; 'Stiicklen' is not a member in those terms and the name carries no office 'Stücklen' lacks
+Straußmeier,Straßmeir,1,tail_rule,edit distance 2; 'Straußmeier' is not a member in those terms and the name carries no office 'Straßmeir' lacks
+Stückeln,Stücklen,1,tail_rule,edit distance 2; 'Stückeln' is not a member in those terms and the name carries no office 'Stücklen' lacks
+Walthemate,Waltemathe,1,tail_rule,edit distance 2; 'Walthemate' is not a member in those terms and the name carries no office 'Waltemathe' lacks
+Dr. Müllet,Dr. Müller,1,tail_rule,edit distance 1; 'Müllet' is not a member in those terms and the name carries no office 'Dr. Müller' lacks
+Ehrbahr,Ehrbar,1,tail_rule,edit distance 1; 'Ehrbahr' is not a member in those terms and the name carries no office 'Ehrbar' lacks
+Achim Großmanmn,Achim Großmann,1,tail_rule,edit distance 1; 'Großmanmn' is not a member in those terms and the name carries no office 'Achim Großmann' lacks
+Altmaler,Altmaier,1,tail_rule,edit distance 1; 'Altmaler' is not a member in those terms and the name carries no office 'Altmaier' lacks
+Altmeier,Altmaier,1,tail_rule,edit distance 1; 'Altmeier' is not a member in those terms and the name carries no office 'Altmaier' lacks
+Andreas Mattfeld,Andreas Mattfeldt,1,tail_rule,edit distance 1; 'Mattfeld' is not a member in those terms and the name carries no office 'Andreas Mattfeldt' lacks
+Arne Börsen,Arne Börnsen,1,tail_rule,edit distance 1; 'Börsen' is not a member in those terms and the name carries no office 'Arne Börnsen' lacks
+Bemrath,Bernrath,1,tail_rule,edit distance 2; 'Bemrath' is not a member in those terms and the name carries no office 'Bernrath' lacks
+Blndlg,Bindig,1,tail_rule,edit distance 2; 'Blndlg' is not a member in those terms and the name carries no office 'Bindig' lacks
+Bömsen,Börnsen,1,tail_rule,edit distance 2; 'Bömsen' is not a member in those terms and the name carries no office 'Börnsen' lacks
+D. Dr. Gersteneier,D. Dr. Gerstenmaier,1,tail_rule,edit distance 2; 'Gersteneier' is not a member in those terms and the name carries no office 'D. Dr. Gerstenmaier' lacks
+D. Dr. Gerstenuraier,D. Dr. Gerstenmaier,1,tail_rule,edit distance 2; 'Gerstenuraier' is not a member in those terms and the name carries no office 'D. Dr. Gerstenmaier' lacks
+D. Dr. Gertsenmaier,D. Dr. Gerstenmaier,1,tail_rule,edit distance 2; 'Gertsenmaier' is not a member in those terms and the name carries no office 'D. Dr. Gerstenmaier' lacks
+Dichgaims,Dichgans,1,tail_rule,edit distance 2; 'Dichgaims' is not a member in those terms and the name carries no office 'Dichgans' lacks
+Dr. Cortierer,Dr. Corterier,1,tail_rule,edit distance 2; 'Cortierer' is not a member in those terms and the name carries no office 'Dr. Corterier' lacks
+Dr. Dahlgriin,Dr. Dahlgrün,1,tail_rule,edit distance 2; 'Dahlgriin' is not a member in those terms and the name carries no office 'Dr. Dahlgrün' lacks
+Dr. Dahlgrtin,Dr. Dahlgrün,1,tail_rule,edit distance 2; 'Dahlgrtin' is not a member in those terms and the name carries no office 'Dr. Dahlgrün' lacks
+Dr. Dr. Oberkinder,Dr. Dr. Oberländer,1,tail_rule,edit distance 2; 'Oberkinder' is not a member in those terms and the name carries no office 'Dr. Dr. Oberländer' lacks
+Dr. Harnacher,Dr. Hamacher,1,tail_rule,edit distance 2; 'Harnacher' is not a member in those terms and the name carries no office 'Dr. Hamacher' lacks
+Dr. Hasentann,Dr. Hasemann,1,tail_rule,edit distance 2; 'Hasentann' is not a member in those terms and the name carries no office 'Dr. Hasemann' lacks
+Dr. Homhues,Dr. Hornhues,1,tail_rule,edit distance 2; 'Homhues' is not a member in those terms and the name carries no office 'Dr. Hornhues' lacks
+Dr. Jennigner,Dr. Jenninger,1,tail_rule,edit distance 2; 'Jennigner' is not a member in those terms and the name carries no office 'Dr. Jenninger' lacks
+Dr. Karl-Heinz Klejdzinksi,Dr. Karl-Heinz Klejdzinski,1,tail_rule,edit distance 2; 'Klejdzinksi' is not a member in those terms and the name carries no office 'Dr. Karl-Heinz Klejdzinski' lacks
+Frau Schanzendach,Frau Schanzenbach,1,tail_rule,edit distance 1; 'Schanzendach' is not a member in those terms and the name carries no office 'Frau Schanzenbach' lacks
+Dr. Monomer,Dr. Mommer,1,tail_rule,edit distance 2; 'Monomer' is not a member in those terms and the name carries no office 'Dr. Mommer' lacks
+Dr. Schmier,Dr. Schäfer,1,tail_rule,edit distance 2; 'Schmier' is not a member in those terms and the name carries no office 'Dr. Schäfer' lacks
+Dr. Schmitt-Vockenhauseri,Dr. Schmitt-Vockenhausen,1,tail_rule,edit distance 2; 'Schmitt-Vockenhauseri' is not a member in those terms and the name carries no office 'Dr. Schmitt-Vockenhausen' lacks
+Dr. Schmitt-Vodienhausen,Dr. Schmitt-Vockenhausen,1,tail_rule,edit distance 2; 'Schmitt-Vodienhausen' is not a member in those terms and the name carries no office 'Dr. Schmitt-Vockenhausen' lacks
+Dr. Schnalder,Dr. Schneider,1,tail_rule,edit distance 2; 'Schnalder' is not a member in those terms and the name carries no office 'Dr. Schneider' lacks
+Dr. Sehtäfer,Dr. Schäfer,1,tail_rule,edit distance 2; 'Sehtäfer' is not a member in those terms and the name carries no office 'Dr. Schäfer' lacks
+Dr. Wallmarin,Dr. Wallmann,1,tail_rule,edit distance 2; 'Wallmarin' is not a member in those terms and the name carries no office 'Dr. Wallmann' lacks
+Dr. von Busmark,Dr. von Bismarck,1,tail_rule,edit distance 2; 'Busmark' is not a member in those terms and the name carries no office 'Dr. von Bismarck' lacks
+Engelholm,Engholm,1,tail_rule,edit distance 2; 'Engelholm' is not a member in those terms and the name carries no office 'Engholm' lacks
+Harnacher,Hamacher,1,tail_rule,edit distance 2; 'Harnacher' is not a member in those terms and the name carries no office 'Hamacher' lacks
+Hersmdorf,Hermsdorf,1,tail_rule,edit distance 2; 'Hersmdorf' is not a member in those terms and the name carries no office 'Hermsdorf' lacks
+Kaifra,Kaffka,1,tail_rule,edit distance 2; 'Kaifra' is not a member in those terms and the name carries no office 'Kaffka' lacks
+Behrend,Behrendt,1,tail_rule,edit distance 1; 'Behrend' is not a member in those terms and the name carries no office 'Behrendt' lacks
+Berendt,Behrendt,1,tail_rule,edit distance 1; 'Berendt' is not a member in those terms and the name carries no office 'Behrendt' lacks
+Bernd Schmidtbauer,Bernd Schmidbauer,1,tail_rule,edit distance 1; 'Schmidtbauer' is not a member in those terms and the name carries no office 'Bernd Schmidbauer' lacks
+Bernhard Jadoda,Bernhard Jagoda,1,tail_rule,edit distance 1; 'Jadoda' is not a member in those terms and the name carries no office 'Bernhard Jagoda' lacks
+Birgit Hamburger,Birgit Homburger,1,tail_rule,edit distance 1; 'Hamburger' is not a member in those terms and the name carries no office 'Birgit Homburger' lacks
+Condradi,Conradi,1,tail_rule,edit distance 1; 'Condradi' is not a member in those terms and the name carries no office 'Conradi' lacks
+Cramar,Cramer,1,tail_rule,edit distance 1; 'Cramar' is not a member in those terms and the name carries no office 'Cramer' lacks
+Dr. Heidi Knake-Wemer,Dr. Heidi Knake-Werner,1,tail_rule,edit distance 2; 'Knake-Wemer' is not a member in those terms and the name carries no office 'Dr. Heidi Knake-Werner' lacks
+Peter Patema,Peter Paterna,1,tail_rule,edit distance 2; 'Patema' is not a member in those terms and the name carries no office 'Peter Paterna' lacks
+Sabine Leutheusser-Schnarrenberg,Sabine Leutheusser-Schnarrenberger,1,tail_rule,edit distance 2; 'Leutheusser-Schnarrenberg' is not a member in those terms and the name carries no office 'Sabine Leutheusser-Schnarrenberger' lacks
+Dirr,Dürr,1,tail_rule,edit distance 1; 'Dirr' is not a member in those terms and the name carries no office 'Dürr' lacks
+Dr. Abeleln,Dr. Abelein,1,tail_rule,edit distance 1; 'Abeleln' is not a member in those terms and the name carries no office 'Dr. Abelein' lacks
+Frau Dr. Wisnieswki,Frau Dr. Wisniewski,1,tail_rule,edit distance 2; 'Wisnieswki' is not a member in those terms and the name carries no office 'Frau Dr. Wisniewski' lacks
+Frau Matthäuser-Maier,Frau Matthäus-Maier,1,tail_rule,edit distance 2; 'Matthäuser-Maier' is not a member in those terms and the name carries no office 'Frau Matthäus-Maier' lacks
+Dr. Wittmannn,Dr. Wittmann,1,tail_rule,edit distance 1; 'Wittmannn' is not a member in those terms and the name carries no office 'Dr. Wittmann' lacks
+Dr. Schnelder,Dr. Schneider,1,tail_rule,edit distance 1; 'Schnelder' is not a member in those terms and the name carries no office 'Dr. Schneider' lacks
+Klelnert,Kleinert,1,tail_rule,edit distance 1; 'Klelnert' is not a member in those terms and the name carries no office 'Kleinert' lacks
+Müllier,Müller,1,tail_rule,edit distance 1; 'Müllier' is not a member in those terms and the name carries no office 'Müller' lacks
+Reiman,Reimann,1,tail_rule,edit distance 1; 'Reiman' is not a member in those terms and the name carries no office 'Reimann' lacks
+Wittman,Wittmann,1,tail_rule,edit distance 1; 'Wittman' is not a member in those terms and the name carries no office 'Wittmann' lacks
+Sevim Dagdelan,Sevim Dağdelen,1,tail_rule,edit distance 2; 'Dagdelan' is not a member in those terms and the name carries no office 'Sevim Dağdelen' lacks
+Dr. Aithammer,Dr. Althammer,1,tail_rule,edit distance 1; 'Aithammer' is not a member in those terms and the name carries no office 'Dr. Althammer' lacks
+Dr. Allhammer,Dr. Althammer,1,tail_rule,edit distance 1; 'Allhammer' is not a member in those terms and the name carries no office 'Dr. Althammer' lacks
+Dr. Burbacher,Dr. Burgbacher,1,tail_rule,edit distance 1; 'Burbacher' is not a member in those terms and the name carries no office 'Dr. Burgbacher' lacks
+Dr. Börsch,Dr. Bärsch,1,tail_rule,edit distance 1; 'Börsch' is not a member in those terms and the name carries no office 'Dr. Bärsch' lacks
+Dr. Christine Lycyga,Dr. Christine Lucyga,1,tail_rule,edit distance 1; 'Lycyga' is not a member in those terms and the name carries no office 'Dr. Christine Lucyga' lacks
+Dr. Dahigrün,Dr. Dahlgrün,1,tail_rule,edit distance 1; 'Dahigrün' is not a member in those terms and the name carries no office 'Dr. Dahlgrün' lacks
+Dr. Eizel,Dr. Etzel,1,tail_rule,edit distance 1; 'Eizel' is not a member in those terms and the name carries no office 'Dr. Etzel' lacks
+Dr. Elbrächer,Dr. Elbrächter,1,tail_rule,edit distance 1; 'Elbrächer' is not a member in those terms and the name carries no office 'Dr. Elbrächter' lacks
+Dr. Emmerlilch,Dr. Emmerlich,1,tail_rule,edit distance 1; 'Emmerlilch' is not a member in those terms and the name carries no office 'Dr. Emmerlich' lacks
+Dr. Kilesing,Dr. Kliesing,1,tail_rule,edit distance 2; 'Kilesing' is not a member in those terms and the name carries no office 'Dr. Kliesing' lacks
+Christa Nickel,Christa Nickels,2,adjudicated_with_evidence,"dropped final s; the role 'Parl. Staatssekretärin beim Bundesminister für Gesundheit' is Christa Nickels's own office, so the role difference is sparse records on the target side, not a different person"
+Nicklas,Niklas,1,adjudicated_with_evidence,doubled c; the role 'Bundesminister für Landwirtschaft und Ernährung' is Wilhelm Niklas's own office in WP1
+D. Dr. Gerstenmeier,D. Dr. Gerstenmaier,1,adjudicated_with_evidence,ei/ai swap in Eugen Gerstenmaier's surname; the presiding role on the one speech does not make it a second person
+Balling,Bölling,2,adjudicated_with_evidence,"role 'Staatssekretär, Chef des Presse- und Informationsamtes der Bundesregierung' is Klaus Bölling's; the workbook proposed Amling, who is unrelated"
+Böiling,Bölling,1,adjudicated_with_evidence,"ö read as öi; same Presse- und Informationsamt role as Bölling; the workbook proposed Bühling, who is unrelated"
+# Grainer -> Rainer (1): carries 'Parl. Staatssekretär beim Bundesminister für Wirtschaft'. Plausibly Grüner, not Rainer - left for a human.
+# Maiden -> Maier (1): carries role Vizepräsident, which Maier never does. Target uncertain - left for a human.
