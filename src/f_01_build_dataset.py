@@ -1406,7 +1406,53 @@ def main() -> None:
         print(f"  NOTE: name_corrections.csv not found at {name_corrections_csv} "
               f"— skipping name canonicalisation.", flush=True)
 
-    # ── 2f. Canonicalise role strings ─────────────────────────────────────────
+    # ── 2f. Recover an office discarded from the attribution ──────────────────
+    # b_02's RE_PARTY_STAGE_DIRECTION is a discard filter. It began life
+    # matching genuine stage directions ("vom Platz aus sprechend") and has
+    # since been extended with office titles so they are not mis-filed as a
+    # location or a party — which is right, an office is neither. But
+    # parse_speaker's Pattern B returns role=None unconditionally, so once a
+    # qualifier is recognised as an office there is nowhere to put it and the
+    # protocol's own words are dropped:
+    #
+    #     Jürgen Trittin (Bundesminister für Umwelt, Naturschutz und
+    #     Reaktorsicherheit)   ->   role=None, party=None, location=None
+    #
+    # speaker_raw is carried through to the dataset, so the office can be read
+    # back here. The root fix belongs in b_02 — have _classify_qualifiers
+    # return a role as well — but that costs a multi-hour re-run for 24
+    # speeches, so this recovers them on every build in the meantime.
+    _RE_OFFICE_QUAL = re.compile(
+        r"^(?:(?:Parl(?:amentarisch(?:er|e|es))?\.?\s*)?Staatssekretär(?:in)?"
+        r"|Bundesminister(?:in)?|Staatsminister(?:in)?|Bundeskanzler(?:in)?"
+        r"|Minister(?:in)?\s+des\s+Landes|Senator(?:in)?\s+des\s+Landes"
+        r"|Ministerpräsident(?:in)?|Schriftführer(?:in)?"
+        r"|Regierende[rs]?\s+Bürgermeister(?:in)?)\b")
+    # "Bun- desministerin" is a line break inside a word; "Bau- und Wohnungs-
+    # wesen" is a suspended hyphen and must survive.
+    _RE_BROKEN_WORD = re.compile(r"(?<=[a-zäöüß])-\s+(?!und\b|oder\b|bzw\b|sowie\b)(?=[a-zäöüß])")
+    _RE_PAREN = re.compile(r"\(([^)]+)\)")
+
+    if "speaker_raw" in speeches_df.columns:
+        need = speeches_df["role"].isna() & speeches_df["speaker_raw"].notna()
+        recovered = {}
+        for idx, raw in speeches_df.loc[need, "speaker_raw"].items():
+            for q in _RE_PAREN.findall(str(raw)):
+                q = _RE_BROKEN_WORD.sub("", " ".join(q.split()))
+                if _RE_OFFICE_QUAL.match(q):
+                    recovered[idx] = q
+                    break
+        if recovered:
+            speeches_df.loc[list(recovered), "role"] = pd.Series(recovered)
+            if verbose:
+                print(f"  Recovered an office for {len(recovered):,} speeches from "
+                      f"the raw attribution ({len(set(recovered.values()))} distinct).",
+                      flush=True)
+        elif verbose:
+            print("  Office recovery: no discarded office found in any "
+                  "unattributed speech.", flush=True)
+
+    # ── 2g. Canonicalise role strings ─────────────────────────────────────────
     # Maps spelling variants of one office onto a single role string, from
     # docs/role_corrections.csv (role_original,role_canonical).
     #
@@ -1471,7 +1517,7 @@ def main() -> None:
         print(f"  NOTE: role_corrections.csv not found at {role_corrections_csv} "
               f"— skipping role canonicalisation.", flush=True)
 
-    # ── 2g. Recover party labels parked in `location` ─────────────────────────
+    # ── 2h. Recover party labels parked in `location` ─────────────────────────
     # b_02's _classify_qualifiers sends a parenthetical to `party` only when it
     # matches the vocabulary loaded from docs/political-parties-past-75-years.csv.
     # Anything unrecognised falls through to `location`, because the first
