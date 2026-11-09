@@ -20,6 +20,100 @@ from utils import append_log
 _TXT_PAGE_SEP = "\n\n--- Page Break ---\n\n"
 
 
+# Duplicated pages
+#
+# A few source PDFs contain pages more than once, and one — WP07 session 145 —
+# contains the entire protocol twice: 57 page blocks whose second half repeats
+# the first from block 28, inflating the session from ~224 speeches to 447.
+#
+# Two rules, both applied before anything else, while page breaks still exist:
+#
+#   1. a whole-document repeat, detected as a period in the page sequence.
+#      The two copies are separate scans, so they differ in OCR detail and in
+#      the dot leaders of the table of contents; comparison is therefore on
+#      letters only, and a period is accepted only when nearly every
+#      comparable pair agrees.
+#   2. an isolated page identical to an earlier one.
+#
+# Rule 1 runs first because a doubled document also satisfies rule 2 for part
+# of its length, and truncating is cleaner than removing pages piecemeal.
+# Digits are KEPT. An early version stripped them, on the theory that page
+# numbers and dot leaders are noise. In WP10 session 194 that silently made
+# 100 distinct namentliche Abstimmungen identical: each roll call lists the
+# same ~459 members and differs only in its page number, its "lfd. Nr." and
+# its Drucksache number. The digits are the content.
+_RE_LETTERS_ONLY = re.compile(r"[^0-9a-zäöüß]+")
+_DUP_PAGE_MIN_CHARS = 200     # ignore near-empty pages; they repeat legitimately
+_DUP_PERIOD_MIN_RATIO = 0.90  # of comparable page pairs that must agree
+_DUP_HEAD_CHARS = 400         # prefix length used to recognise "the same page"
+_DUP_MIN_DISTINCT_CHARS = 12  # a page of real prose uses most of the alphabet
+
+
+def _page_key(page: str) -> str | None:
+    """Letters-only fingerprint of a page, or None if it carries too little text.
+
+    CID artefacts are stripped first. In the WP14 proprietary-font sessions a
+    page can open with thousands of "(cid:NNN)" sequences, which collapse to
+    "cidcidcid…" and make every page in the file look alike — a fingerprint
+    that would have declared a 57-page session a four-fold repeat and deleted
+    1.5 MB of real debate. The diversity guard is the second line of defence
+    against any other filler that survives: real German prose uses most of the
+    alphabet, repeated filler does not.
+    """
+    s = _RE_LETTERS_ONLY.sub("", RE_CID.sub("", page).lower())
+    if len(s) < _DUP_PAGE_MIN_CHARS or len(set(s)) < _DUP_MIN_DISTINCT_CHARS:
+        return None
+    return s
+
+
+def _page_head(key: str | None) -> str | None:
+    """Prefix of a page key.
+
+    Period detection and page removal need different strictness. The two
+    copies of a doubled document are separate scans: they agree on the page
+    they represent but drift character by character, so requiring the whole
+    page to match hides the repeat. A prefix is enough to say "this is the
+    same page again". Removing a page, by contrast, should demand the whole
+    text match, so rule 2 keeps the full key.
+    """
+    return key[:_DUP_HEAD_CHARS] if key else None
+
+
+def drop_duplicate_pages(text: str) -> str:
+    """Remove pages the source document repeats."""
+    if "--- Page Break ---" not in text:
+        return text
+    pages = text.split("--- Page Break ---")
+    keys = [_page_key(p) for p in pages]
+    n = len(pages)
+
+    # 1. whole-document repeat
+    heads = [_page_head(k) for k in keys]
+    best_d, best_ratio = 0, 0.0
+    for d in range(max(3, n // 4), n):
+        pairs = [(heads[i], heads[i + d]) for i in range(n - d)
+                 if heads[i] and heads[i + d]]
+        if len(pairs) < 3:
+            continue
+        ratio = sum(a == b for a, b in pairs) / len(pairs)
+        if ratio > best_ratio:
+            best_d, best_ratio = d, ratio
+    if best_ratio >= _DUP_PERIOD_MIN_RATIO:
+        pages = pages[:best_d]
+        keys = keys[:best_d]
+
+    # 2. isolated repeated pages
+    seen: set[str] = set()
+    kept = []
+    for page, key in zip(pages, keys):
+        if key is not None:
+            if key in seen:
+                continue
+            seen.add(key)
+        kept.append(page)
+    return "--- Page Break ---".join(kept)
+
+
 
 # Matches a line that contains ONLY a single column marker "(A)", "(B)", "(C)",
 # or "(D)" (with optional leading/trailing horizontal whitespace).  This is
@@ -631,7 +725,8 @@ def rejoin_wrapped_qualifiers(text: str) -> str:
 # Full cleaning pipeline
 
 PIPELINE = [
-    ("fix_column_order",         fix_column_order),       # step 0 — before page-break removal so pages are still individually addressable; before margin-marker removal so (A)-(D) are still present
+    ("drop_duplicate_pages",     drop_duplicate_pages),   # step 0 — first: a doubled document must go before anything reorders or rewrites its pages
+    ("fix_column_order",         fix_column_order),       # before page-break removal so pages are still individually addressable; before margin-marker removal so (A)-(D) are still present
     ("remove_page_breaks",       remove_page_breaks),
     ("remove_cid_artefacts",     remove_cid_artefacts),   # before headers: some headers have (cid:9) between page-no and "Deutscher"
     ("remove_headers",           remove_headers),
