@@ -478,24 +478,92 @@ def remove_page_numbers(text: str) -> str:
     return RE_PAGE_NUMBER.sub("", text)
 
 
+# A contents line carries dot leaders, or a page-and-column reference such as
+# "13201 C", or both.  Running prose carries neither.
+_RE_TOC_DOTS = re.compile(r"\.\s*\.\s*\.|…")
+_RE_TOC_PAGEREF = re.compile(r"\b\d{3,5}\s*[A-D]\b")
+# Two consecutive lower-case words of real length: the signature of a sentence
+# rather than a list of names and document numbers.
+_RE_TOC_PROSE = re.compile(r"[a-zäöüß]{4,}\s+[a-zäöüß]{4,}")
+_TOC_KEEP_MIN_CHARS = 400     # a kept block must hold this much prose
+_TOC_KEEP_MIN_LINELEN = 40    # …in lines this long on average
+# A speaker attribution standing on its own: "Name, Rolle:" or "Name (Partei):",
+# optionally with the speech beginning on the same line.
+_RE_TOC_ATTRIBUTION = re.compile(
+    r"^[^:\n]{6,90}?(?:,[^:\n]{3,80}|\([^)\n]{1,40}\))\s*:(?:\s|$)")
+
+
+def _is_contents_line(line: str) -> bool:
+    return bool(_RE_TOC_DOTS.search(line) or _RE_TOC_PAGEREF.search(line))
+
+
 def remove_toc(text: str) -> str:
-    """Remove the ToC and session cover preamble by discarding everything before the first anchor.
+    """Remove the ToC and cover preamble, keeping any real debate caught in it.
 
-    Two-pass: strong anchor ("Beginn: HH.MM Uhr" / "Die Sitzung wird eröffnet"),
-    then fallback speaker anchor (first presidential speaker-colon line after blank line).
-    Returns text unchanged if no anchor is found.
+    The anchor ("Beginn: HH.MM Uhr", or the first presiding-officer line) marks
+    where the sitting opens.  This used to return everything from the anchor
+    onwards and discard the prefix wholesale — which is sound only while nothing
+    before the anchor is speech.
+
+    It often is.  When extraction interleaves the cover page with the first
+    debate page, real text lands ahead of the opening marker, and discarding the
+    prefix deleted it:
+
+        Dr. Carsten Linnemann, Bundesminister für Gesundheit: …   char 32,151
+        Beginn: 09:00 Uhr                                         char 32,693
+
+    That cost the opening speaker of 18 of 105 WP21 sittings — mostly the
+    minister introducing the bill — and in six sittings the anchor was found so
+    late that most of the document went with it.  WP03 session 073 was left with
+    one speech where the term's median is 114.
+
+    So the prefix is now filtered rather than dropped.  A block is kept when,
+    after removing contents lines, it still holds a substantial run of prose in
+    long lines.  A Fragestunde or Anlagen index fails that test: its entries are
+    short, and dense with names, document numbers and page references.
+
+    Kept blocks stay where they are, ahead of the anchor.  Their position is
+    wrong — the speech belongs after the sitting opens — but preserving the text
+    with imperfect ordering is plainly better than deleting it, and b_02 reads
+    attributions, not order.
     """
-    # Pass 1: strong anchor
-    anchor = RE_ANCHOR_STRONG.search(text)
-
-    # Pass 2: fallback speaker anchor
-    if anchor is None:
-        anchor = RE_ANCHOR_SPEAKER.search(text)
-
+    anchor = RE_ANCHOR_STRONG.search(text) or RE_ANCHOR_SPEAKER.search(text)
     if anchor is None:
         return text  # no anchor found — play it safe
 
-    return text[anchor.start():]
+    prefix, rest = text[:anchor.start()], text[anchor.start():]
+    blocks = prefix.split("\n\n")
+
+    def is_speech(block: str) -> bool:
+        lines = [ln for ln in block.splitlines() if ln.strip()]
+        if not lines:
+            return False
+        contents = [ln for ln in lines if _is_contents_line(ln)]
+        if len(contents) * 2 >= len(lines):
+            return False                  # majority contents lines → front matter
+        prose_lines = [ln for ln in lines if not _is_contents_line(ln)]
+        prose = " ".join(prose_lines)
+        if len(prose) < _TOC_KEEP_MIN_CHARS:
+            return False
+        if sum(len(ln) for ln in prose_lines) / len(prose_lines) < _TOC_KEEP_MIN_LINELEN:
+            return False                  # short lines → a list, not a speech
+        return bool(_RE_TOC_PROSE.search(prose))
+
+    keep = [is_speech(bl) for bl in blocks]
+
+    # An attribution often stands alone, separated from the speech it
+    # introduces by a blank line, so it fails the prose test on its own and
+    # would be dropped while the speech survives — leaving the speech with no
+    # speaker. Keep such a line when the block after it is kept.
+    for i, bl in enumerate(blocks[:-1]):
+        if keep[i] or not keep[i + 1]:
+            continue
+        stripped = bl.strip()
+        if len(stripped) <= 120 and _RE_TOC_ATTRIBUTION.match(stripped):
+            keep[i] = True
+
+    out = [bl for bl, k in zip(blocks, keep) if k]
+    return ("\n\n".join(out) + "\n\n" + rest) if out else rest
 
 
 def remove_footnotes(text: str) -> str:
