@@ -409,5 +409,5 @@ Nicklas,Niklas,1,adjudicated_with_evidence,doubled c; the role 'Bundesminister f
 D. Dr. Gerstenmeier,D. Dr. Gerstenmaier,1,adjudicated_with_evidence,ei/ai swap in Eugen Gerstenmaier's surname; the presiding role on the one speech does not make it a second person
 Balling,Bölling,2,adjudicated_with_evidence,"role 'Staatssekretär, Chef des Presse- und Informationsamtes der Bundesregierung' is Klaus Bölling's; the workbook proposed Amling, who is unrelated"
 Böiling,Bölling,1,adjudicated_with_evidence,"ö read as öi; same Presse- und Informationsamt role as Bölling; the workbook proposed Bühling, who is unrelated"
-# Grainer -> Rainer (1): carries 'Parl. Staatssekretär beim Bundesminister für Wirtschaft'. Plausibly Grüner, not Rainer - left for a human.
-# Maiden -> Maier (1): carries role Vizepräsident, which Maier never does. Target uncertain - left for a human.
+Grainer,Grüner,1,adjudicated_with_evidence,"the same sitting (WP07 Session011) has Grüner carrying the identical role 'Parl. Staatssekretär beim Bundesminister für Wirtschaft'; the workbook proposed Rainer"
+Maiden,Stücklen,1,adjudicated_with_evidence,"WP08 Session032: the attribution sits inside an unbroken run of 'Vizepräsident Stücklen:' - four before and four after - and the artefact is already in the printed protocol, not introduced by extraction; the workbook proposed Maier"
