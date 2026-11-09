@@ -1,0 +1,116 @@
+location_value,party,location_keep,notes
+FU,FU,,parliamentary group absent from the party vocabulary
+BSW,BSW,,parliamentary group absent from the party vocabulary
+NR,NR,,parliamentary group absent from the party vocabulary
+FVP,FVP,,parliamentary group absent from the party vocabulary
+DA,DA,,parliamentary group absent from the party vocabulary
+BHE-DG,BHE-DG,,parliamentary group absent from the party vocabulary
+BHE,BHE,,parliamentary group absent from the party vocabulary
+SRP,SRP,,parliamentary group absent from the party vocabulary
+DPB,DPB,,parliamentary group absent from the party vocabulary
+EHE-DG,BHE-DG,,B read as E
+BHE- DG,BHE-DG,,stray space
+DP [FVP],DP/FVP,,DP group carrying FVP members
+DP[FVP],DP/FVP,,DP group carrying FVP members
+DP/ DPB,DP/DPB,,stray space
+DP/DPB,DP/DPB,,joint DP/DPB group
+GB-BHE,GB/BHE,,hyphen for slash
+GH/BHE,GB/BHE,,OCR variant of GB/BHE
+BG/BHE,GB/BHE,,OCR variant of GB/BHE
+GB/BHF,GB/BHE,,OCR variant of GB/BHE
+2,Z,,Z read as 2; Dr. Reismann has 128 further speeches recorded as Zentrum
+W AV,WAV,,stray space
+COU,CDU,,D read as O
+KPD.,KPD,,trailing stop
+GRÜNE.,GRÜNE,,OCR variant
+CRÜNE,GRÜNE,,OCR variant
+GRüNE,GRÜNE,,OCR variant
+DIE LINKE.,DIE LINKE,,casing or trailing stop
+Die LINKE,DIE LINKE,,casing or trailing stop
+SPD.,SPD,,OCR variant or stray prefix
+SPD',SPD,,OCR variant or stray prefix
+;SPD,SPD,,OCR variant or stray prefix
+alle SPD,SPD,,OCR variant or stray prefix
+SPE,SPD,,OCR variant or stray prefix
+SPT,SPD,,OCR variant or stray prefix
+FDP.,FDP,,OCR variant of FDP
+Das F.DP,FDP,,OCR variant of FDP
+FOP,FDP,,OCR variant of FDP
+FLP,FDP,,OCR variant of FDP
+EDP,FDP,,OCR variant of FDP
+F. D. P.,F.D.P.,,spacing or punctuation; WP10-14 spelling
+F. D.P.,F.D.P.,,spacing or punctuation; WP10-14 spelling
+"F.D.P,",F.D.P.,,spacing or punctuation; WP10-14 spelling
+F.D.P:,F.D.P.,,spacing or punctuation; WP10-14 spelling
+CDU-CSU,CDU/CSU,,OCR variant of CDU/CSU
+CD U/CSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CS U,CDU/CSU,,OCR variant of CDU/CSU
+CDUICSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CS,CDU/CSU,,OCR variant of CDU/CSU
+CDU' CSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/ /CSU,CDU/CSU,,OCR variant of CDU/CSU
+"CDU , CSU",CDU/CSU,,OCR variant of CDU/CSU
+CDU//CSU,CDU/CSU,,OCR variant of CDU/CSU
+CMU/CSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CCSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CSÙ,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CsU,CDU/CSU,,OCR variant of CDU/CSU
+CDUiCSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CCU,CDU/CSU,,OCR variant of CDU/CSU
+CUD/CSU,CDU/CSU,,OCR variant of CDU/CSU
+"CDU, /CSU",CDU/CSU,,OCR variant of CDU/CSU
+DU CSU,CDU/CSU,,OCR variant of CDU/CSU
+"CDU ""CSU",CDU/CSU,,OCR variant of CDU/CSU
+CDU. /CSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU /CSU 1,CDU/CSU,,OCR variant of CDU/CSU
+CDTJ/CSU,CDU/CSU,,OCR variant of CDU/CSU
+"CDU,/CSU",CDU/CSU,,OCR variant of CDU/CSU
+-CDU/CSU,CDU/CSU,,OCR variant of CDU/CSU
+"CDU,'CSU",CDU/CSU,,OCR variant of CDU/CSU
+CDU/SCU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CSU.,CDU/CSU,,OCR variant of CDU/CSU
+CDU CDU/CSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CU,CDU/CSU,,OCR variant of CDU/CSU
+CDSU/CSU,CDU/CSU,,OCR variant of CDU/CSU
+CDU/C$U,CDU/CSU,,OCR variant of CDU/CSU
+CDU/S,CDU/CSU,,OCR variant of CDU/CSU
+CDU/CSU/,CDU/CSU,,OCR variant of CDU/CSU
+Hamburg (SPD,SPD,Hamburg,unclosed bracket fused place and party
+Kempten (FDP,FDP,Kempten,unclosed bracket fused place and party
+Köln (SPD,SPD,Köln,unclosed bracket fused place and party
+Worms (SPD,SPD,Worms,unclosed bracket fused place and party
+Berlin (SPD,SPD,Berlin,unclosed bracket fused place and party
+Kassel (SPD,SPD,Kassel,unclosed bracket fused place and party
+Marburg (SPD,SPD,Marburg,unclosed bracket fused place and party
+Lippstadt (SPD,SPD,Lippstadt,unclosed bracket fused place and party
+Düsseldorf (KPD,KPD,Düsseldorf,unclosed bracket fused place and party
+Kassel (CDU/CSU,CDU/CSU,Kassel,unclosed bracket fused place and party
+Bad Schwalbach (CDU/CSU,CDU/CSU,Bad Schwalbach,unclosed bracket fused place and party
+Berlin (CDU/CSU,CDU/CSU,Berlin,unclosed bracket fused place and party
+Osnabrück (CDU/CSU,CDU/CSU,Osnabrück,unclosed bracket fused place and party
+Hamburg} (SPD,SPD,Hamburg,unclosed bracket fused place and party
+Hof} (SPD,SPD,Hof,unclosed bracket fused place and party
+Bremen (GRÜNE,GRÜNE,Bremen,unclosed bracket fused place and party
+Gau-Bischofsheim (FDP,FDP,Gau-Bischofsheim,unclosed bracket fused place and party
+Recklinghausen (CDU(/CSU,CDU/CSU,Recklinghausen,unclosed bracket fused place and party
+Berlin (Bündnis 90/GRÜNE,BÜNDNIS 90/GRÜNE,Berlin,unclosed bracket fused place and party
+B,,,"surviving (B) column/margin marker, not a place or party"
+D,,,"surviving (D) column/margin marker, not a place or party"
+#
+# Deliberately NOT mapped:
+#   FDP-Gast, SPD-Gast, FU-Gast, Gast FDP, Gast-FDP, FDP- Gast, Gast CDU/CSU,
+#   Gast DRP, DRP-Hosp., DRP- Hosp., CDU-Hosp., FDP, Hosp., Unabhängig, Gast
+#     - a Gast or Hospitant is affiliated with a group without being a member.
+#       Writing them into `party` would silently promote them. The marker stays
+#       in `location`.
+#   MP, M P, SP, DF, NS, KP, DBP, NDP, SDD - too short to attribute with
+#       confidence; could be OCR of several different labels.
+#   'Detlev von Larcher [SPD', 'von Abg. Dr. Norbert Blüm (CDU/CSU',
+#   'Dr. Heinrich L. Kolb (FDP', 'Klaus Barthel (SPD',
+#   'Dr. Thea Dückert [BÜNDNIS 90/DIE GRÜNEN'
+#     - interjection text that leaked into the attribution. The speaker on
+#       those rows is itself suspect, so filling in a party would dress up a
+#       bad record rather than fix it.
+#   'BÜNDNIS 90/DIE GRÜ-<name> (BÜNDNIS 90/DIE GRÜ-NEN' and friends
+#     - column-interleave wreckage from b_02, same family the 40-char cap in
+#       b_01 now refuses to join. Needs fixing upstream, not papering over.

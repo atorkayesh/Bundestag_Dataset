@@ -1201,6 +1201,11 @@ def main() -> None:
                          "variants of one office onto a single role string "
                          "(columns: role_original,role_canonical). "
                          "Default: auto-resolved from project root.")
+    ap.add_argument("--location-party-csv", default=None, metavar="PATH",
+                    help="Path to docs/location_is_party.csv, recovering party "
+                         "labels that b_02 filed under location "
+                         "(columns: location_value,party[,location_keep]). "
+                         "Default: auto-resolved from project root.")
     ap.add_argument("--stammdaten", default=None, metavar="PATH",
                     help="Path to MdB-Stammdaten.xml for WP/party/role disambiguation. "
                          "Default: docs/MdB-Stammdaten.xml (relative to project root). "
@@ -1249,6 +1254,12 @@ def main() -> None:
         role_corrections_csv = Path(args.role_corrections_csv)
     else:
         role_corrections_csv = Path(__file__).parent.parent / "docs" / "role_corrections.csv"
+
+    # Resolve location/party recovery CSV (optional; silently skipped if absent).
+    if args.location_party_csv:
+        location_party_csv = Path(args.location_party_csv)
+    else:
+        location_party_csv = Path(__file__).parent.parent / "docs" / "location_is_party.csv"
 
     # ── input validation ───────────────────────────────────────────────────────
     for p, label in [
@@ -1459,6 +1470,63 @@ def main() -> None:
     elif verbose:
         print(f"  NOTE: role_corrections.csv not found at {role_corrections_csv} "
               f"— skipping role canonicalisation.", flush=True)
+
+    # ── 2g. Recover party labels parked in `location` ─────────────────────────
+    # b_02's _classify_qualifiers sends a parenthetical to `party` only when it
+    # matches the vocabulary loaded from docs/political-parties-past-75-years.csv.
+    # Anything unrecognised falls through to `location`, because the first
+    # ambiguous qualifier in "Schmidt (Hitzhofen) (GRÜNE)" really is a place.
+    # So every group missing from that CSV ended up filed as a location with a
+    # null party — 236 BSW speeches in WP20, 260 Föderalistische Union in WP01,
+    # Nationale Rechte, FVP, DA, BHE-DG, SRP — plus OCR manglings of labels that
+    # ARE in the vocabulary ("CDU/CS U", "F.D.P:", and "(2)" for Zentrum).
+    #
+    # The missing groups have been added to the parties CSV, which fixes b_02
+    # for anything parsed from now on. This step repairs the records already
+    # built, without a full b_02 re-run.
+    #
+    # An empty `party` in the mapping means the value is neither: "(B)" and
+    # "(D)" are column markers that survived cleaning, so the location is
+    # cleared and the party left null.
+    if location_party_csv.exists():
+        lp = pd.read_csv(location_party_csv, dtype=str, comment="#")
+        missing = {"location_value", "party"} - set(lp.columns)
+        if missing:
+            print(f"  WARNING: {location_party_csv.name} is missing column(s) "
+                  f"{', '.join(sorted(missing))} — skipping location/party recovery.",
+                  flush=True)
+        else:
+            lp = lp.dropna(subset=["location_value"])
+            lp["location_value"] = lp["location_value"].str.strip()
+            lp = lp.drop_duplicates("location_value", keep="first")
+            to_party = dict(zip(lp["location_value"], lp["party"].fillna("")))
+            to_keep = dict(zip(lp["location_value"],
+                               lp.get("location_keep", pd.Series(dtype=str)).fillna("")
+                               if "location_keep" in lp.columns
+                               else [""] * len(lp)))
+
+            # Only ever fill a party that is missing; never overwrite one b_02
+            # resolved itself.
+            eligible = speeches_df["party"].isna() & speeches_df["location"].isin(to_party)
+            n_elig = int(eligible.sum())
+            if n_elig:
+                locs = speeches_df.loc[eligible, "location"]
+                new_party = locs.map(lambda v: to_party.get(v) or None)
+                new_loc = locs.map(lambda v: to_keep.get(v) or None)
+                n_party = int(new_party.notna().sum())
+                speeches_df.loc[eligible, "party"] = new_party
+                speeches_df.loc[eligible, "location"] = new_loc
+                if verbose:
+                    print(f"  Recovered a party for {n_party:,} speeches from the "
+                          f"location field, and cleared {n_elig - n_party:,} "
+                          f"non-place marker(s).", flush=True)
+            elif verbose:
+                print(f"  Location/party recovery: nothing in "
+                      f"{location_party_csv.name} matches an unattributed speech.",
+                      flush=True)
+    elif verbose:
+        print(f"  NOTE: location_is_party.csv not found at {location_party_csv} "
+              f"— skipping location/party recovery.", flush=True)
 
     # ── 3. Join gender ─────────────────────────────────────────────────────────
     if verbose:

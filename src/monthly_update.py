@@ -311,6 +311,7 @@ def main() -> None:
         "--manual-gender-csv", str(docs / "manual_gender_overrides.csv"),
         "--name-corrections-csv", str(docs / "name_corrections.csv"),
         "--role-corrections-csv", str(docs / "role_corrections.csv"),
+        "--location-party-csv", str(docs / "location_is_party.csv"),
         "--stammdaten", str(docs / "MdB-Stammdaten.xml"),
         "--output-dir", str(dataset),
         "--version", version_label,
