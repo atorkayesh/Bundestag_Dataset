@@ -34,9 +34,15 @@ RE_SUB = re.compile(r"\bAnlage\s+\d{1,3}\b")
 # The hyphen is NOT in the inner class — with it, "Hamm-Brücher" consumed the
 # hyphen and stopped, yielding "Hamm-".
 _NAME = (r"(?:Dr\.\s*|Prof\.\s*|h\.\s*c\.\s*|Frau\s+|von\s+|van\s+|de\s+)*"
-         r"[A-ZÄÖÜ][a-zäöüß'’.]+"
-         r"(?:[ -](?:von|van|de|zu)\s*)?"
-         r"(?:[ -][A-ZÄÖÜ][a-zäöüß'’.]+){0,3}")
+         # [^\W\d_A-ZÄÖÜ] is "any letter that is not upper case", which keeps
+         # Dağdelen and Hamm-Brücher intact; an explicit [a-zäöüß] class cut
+         # "Sevim Dağdelen" to "Sevim Da".
+         r"[A-ZÄÖÜ][^\W\d_A-ZÄÖÜ]+"
+         # A nobiliary particle only counts between two name parts. Without the
+         # lookahead this swallowed the preposition in "Erklärung des
+         # Abgeordneten Dr. Atzenroth zu § 10", giving "Dr. Atzenroth zu".
+         r"(?:[ -](?:von|van|de|zu)(?=\s+[A-ZÄÖÜ])(?!\s+Protokoll\b))?"
+         r"(?:[ -][A-ZÄÖÜ][^\W\d_A-ZÄÖÜ]+){0,3}")
 
 # "Antwort des Parl. Staatssekretärs Würzbach auf die Fragen des Abgeordneten …"
 # Feminine forms are explicit: an earlier version matched only the masculine
