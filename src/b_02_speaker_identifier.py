@@ -1490,6 +1490,21 @@ RE_SESSION_ID = re.compile(r"(WP\d+_Session\d+)")
 
 # Qualifier classifier
 
+# RE_PARTY_STAGE_DIRECTION began as a filter for genuine stage directions
+# ("vom Platz aus sprechend") and was extended over time with office titles so
+# they would not be mis-filed as a location or a party. That much is right: an
+# office is neither. But the office was then discarded, because the classifier
+# had nowhere to put it — parse_speaker's Pattern B returned role=None
+# unconditionally — so "Jürgen Trittin (Bundesminister für Umwelt …)" lost its
+# office entirely. It is now returned as a role.
+_RE_OFFICE_QUAL = re.compile(
+    r"^(?:(?:Parl(?:amentarisch(?:er|e|es))?\.?\s*)?Staatssekret\u00e4r(?:in)?"
+    r"|Bundesminister(?:in)?|Staatsminister(?:in)?|Bundeskanzler(?:in)?"
+    r"|Minister(?:in)?\s+des\s+Landes|Senator(?:in)?\s+des\s+Landes"
+    r"|Ministerpr\u00e4sident(?:in)?|Schriftf\u00fchrer(?:in)?"
+    r"|Regierende[rs]?\s+B\u00fcrgermeister(?:in)?)\b")
+
+
 def _classify_qualifiers(qualifiers: list, party_first: bool = False) -> tuple:
     """
     Classify parenthetical qualifier strings into (party, location).
@@ -1515,6 +1530,7 @@ def _classify_qualifiers(qualifiers: list, party_first: bool = False) -> tuple:
     """
     party = None
     location = None
+    role = None
     for q in qualifiers:
         q = q.strip().lstrip("('")  # leading ( or ' are OCR bracket artefacts
         q = q.replace('­', '-')  # soft hyphen → regular hyphen for dehyphen patterns
@@ -1527,6 +1543,10 @@ def _classify_qualifiers(qualifiers: list, party_first: bool = False) -> tuple:
             continue  # broken Drucksache OCR variants: "Druck- sache", "Dr ucksache"
         if RE_BEIFALL.search(q) or re.search(r'\bbeifall\b|\bbegr', q, re.IGNORECASE):
             continue  # applause annotation (encoding-tolerant check)
+        if _RE_OFFICE_QUAL.match(q):
+            if role is None:
+                role = q      # an office, not a place and not a party
+            continue
         if RE_PARTY_STAGE_DIRECTION.match(q):
             continue  # "vom Platz aus sprechend", "auf den Abg. X zeigend"
         if re.search(r'[Dd]olmet|[Gg]ebärden', q, re.IGNORECASE):
@@ -1555,7 +1575,7 @@ def _classify_qualifiers(qualifiers: list, party_first: bool = False) -> tuple:
                     location = q  # first ambiguous → location (e.g. city)
                 else:
                     party = q     # second ambiguous → party
-    return party, location
+    return party, location, role
 
 
 # Speaker name corrections — OCR / font-encoding errors in WP01–WP03
@@ -1918,7 +1938,7 @@ def parse_speaker(raw: str) -> dict:
         name_part = _ws(m.group(1))
         qualifiers = RE_PAREN_QUALIFIER.findall(m.group(2))
         role_part = _ws(m.group(3))
-        party, location = _classify_qualifiers(qualifiers, party_first=True)
+        party, location, _qrole = _classify_qualifiers(qualifiers, party_first=True)
         return {
             "name": name_part,
             "role": role_part,
@@ -1974,7 +1994,7 @@ def parse_speaker(raw: str) -> dict:
     if paren_pos != -1:
         base_name = _ws(text[:paren_pos])
         qualifiers = RE_PAREN_QUALIFIER.findall(text[paren_pos:])
-        party, location = _classify_qualifiers(qualifiers)
+        party, location, qrole = _classify_qualifiers(qualifiers)
 
         # Check if base_name starts with a state-level role prefix
         # e.g. "Ministerpräsident Oskar Lafontaine" or "Regierender Bürgermeister Diepgen"
@@ -1989,7 +2009,7 @@ def parse_speaker(raw: str) -> dict:
 
         return {
             "name": base_name,
-            "role": None,
+            "role": qrole,
             "party": party,
             "location": location,
         }
