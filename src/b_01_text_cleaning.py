@@ -790,6 +790,70 @@ def rejoin_wrapped_qualifiers(text: str) -> str:
     return _RE_WRAPPED_QUALIFIER.sub(_sub, text)
 
 
+
+# Words split by a stray space
+#
+# Extraction in some terms detaches a short letter group from the middle of a
+# word: "Wi rt schaft", "Frankfu rt", "Lamme rt", "Nords tr and". 50,106
+# occurrences, concentrated in WP11-13 and WP17. It damages names, roles and
+# locations alike, which is why it is mended here rather than in each of them.
+#
+# The fragment does not always belong to both neighbours. "Wi rt schaft" is one
+# word, but "Wo rt hat" is two — the fragment closes "Wort" and "hat" stands on
+# its own. Joining all three gives "worthat", which an earlier probe found
+# 1,140 times. Only a vocabulary separates the cases, so the corpus supplies
+# one: docs/corpus_vocab.txt.gz, 137,808 words seen 20 times or more, counted
+# from the files that are NOT heavily split so the damage cannot teach the
+# vocabulary its own mistakes.
+_RE_SPLIT_WORD = re.compile(
+    r"(?<![\w-])([A-ZÄÖÜa-zäöüß]{2,})[ \t]+"
+    r"(rt|ri|ch|li|ti|rn|tr|ck|te|st|rm|ta|tt|nd|rg|rk|ng|ff|sch)[ \t]+"
+    r"([a-zäöüß]+)(?![\w-])")
+
+_VOCAB: frozenset = frozenset()
+
+
+def _load_vocab(path=None) -> frozenset:
+    """Load the corpus word list; an empty set disables the repair."""
+    import gzip
+    p = Path(path) if path else (Path(__file__).parent.parent / "docs"
+                                 / "corpus_vocab.txt.gz")
+    if not p.exists():
+        return frozenset()
+    with gzip.open(p, "rt", encoding="utf-8") as fh:
+        return frozenset(w.strip() for w in fh if w.strip())
+
+
+def rejoin_split_words(text: str) -> str:
+    """Mend a word broken by a stray space, where the corpus knows the result."""
+    global _VOCAB
+    if not _VOCAB:
+        _VOCAB = _load_vocab()
+    if not _VOCAB:
+        return text
+
+    def _sub(m: re.Match) -> str:
+        a, frag, b = m.group(1), m.group(2), m.group(3)
+        whole = (a + frag + b).lower()
+        if whole in _VOCAB:
+            return a + frag + b
+        # the fragment may close the left word while the right one stands alone
+        if (a + frag).lower() in _VOCAB and b.lower() in _VOCAB:
+            return a + frag + " " + b
+        # …or open the right word, with the left already complete. The length
+        # floor is for triple splits: "sehr ri ch tig" matches left to right as
+        # "sehr ri ch", and "rich" is in the vocabulary, so without it the text
+        # becomes "sehr rich tig" instead of "sehr richtig". Four-letter
+        # right-joins are rare and four-letter false ones are not; the left
+        # branch needs no such floor because "wort" is its commonest result.
+        if (len(frag) + len(b) >= 5
+                and (frag + b).lower() in _VOCAB and a.lower() in _VOCAB):
+            return a + " " + frag + b
+        return m.group(0)
+
+    return _RE_SPLIT_WORD.sub(_sub, text)
+
+
 # Full cleaning pipeline
 
 PIPELINE = [
@@ -806,6 +870,7 @@ PIPELINE = [
     ("remove_backm_references",  remove_backm_references),
     ("normalise_whitespace",     normalise_whitespace),   # strip trailing spaces BEFORE hyphen-join so blank lines with spaces don't hide patterns
     ("rejoin_hyphens",           rejoin_hyphens),
+    ("rejoin_split_words",       rejoin_split_words),    # after hyphen rejoining: both mend words, and this one needs whitespace already normalised
     ("fix_column_interleave",    fix_column_interleave),  # must run AFTER normalise_whitespace (needs clean \n\n separators) and rejoin_hyphens
     ("remove_headers",           remove_headers),         # second pass: catches headers fused mid-line by rejoin_hyphens or moved by fix_column_interleave
     ("rejoin_wrapped_qualifiers", rejoin_wrapped_qualifiers),  # last: operates on the final text b_02 will match against
