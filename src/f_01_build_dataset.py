@@ -1201,6 +1201,10 @@ def main() -> None:
                          "variants of one office onto a single role string "
                          "(columns: role_original,role_canonical). "
                          "Default: auto-resolved from project root.")
+    ap.add_argument("--no-anlagen-split", action="store_true",
+                    help="Leave the Anlagen appendix inside the speech that "
+                         "absorbed it. The split is on by default; this is an "
+                         "escape hatch for reproducing an older build.")
     ap.add_argument("--location-party-csv", default=None, metavar="PATH",
                     help="Path to docs/location_is_party.csv, recovering party "
                          "labels that b_02 filed under location "
@@ -1254,6 +1258,8 @@ def main() -> None:
         role_corrections_csv = Path(args.role_corrections_csv)
     else:
         role_corrections_csv = Path(__file__).parent.parent / "docs" / "role_corrections.csv"
+
+    anlagen_split = not args.no_anlagen_split
 
     # Resolve location/party recovery CSV (optional; silently skipped if absent).
     if args.location_party_csv:
@@ -1346,7 +1352,74 @@ def main() -> None:
         n_reattr = len(speeches_df) - (n_before_kolumn - (n_before_kolumn - len(speeches_df)))
         print(f"  After Kolumnentitel fix: {len(speeches_df):,} speeches.", flush=True)
 
-    # ── 2e. Canonicalise speaker names ────────────────────────────────────────
+    # ── 2e. Split the Anlagen appendix out of the speech that absorbed it ─────
+    # The appendix is printed after the sitting closes and nothing removed it,
+    # so it was swallowed by whichever speech was open — almost always the
+    # chair's closing words. See src/anlagen.py for the shape of the problem.
+    #
+    # Authored sub-blocks become speeches in their own right with
+    # contribution_type "written"; unauthored ones are not published but are
+    # counted per sitting, so the exclusion is visible rather than silent.
+    #
+    # Runs before name canonicalisation and the gender join, so a written
+    # author is corrected and resolved exactly like anyone else.
+    speeches_df["contribution_type"] = "spoken"
+    n_excluded_docs: dict[str, int] = {}
+    if anlagen_split:
+        import anlagen
+
+        has_block = speeches_df["text"].fillna("").str.contains(
+            anlagen.RE_ANLAGEN_START, regex=True)
+        targets = speeches_df.index[has_block]
+        next_seq = (speeches_df.groupby("session_id")["sequence"].max() + 1).to_dict()
+        written_rows, n_written, n_unauth = [], 0, 0
+        for idx in targets:
+            row = speeches_df.loc[idx]
+            head, subs = anlagen.split_anlagen(str(row["text"]))
+            if not subs:
+                continue
+            speeches_df.at[idx, "text"] = head
+            offset = _safe_int(row.get("char_offset", 0)) + len(head)
+            sid = row["session_id"]
+            for sub in subs:
+                if sub["kind"] != "written":
+                    n_excluded_docs[sid] = n_excluded_docs.get(sid, 0) + 1
+                    n_unauth += 1
+                    offset += len(sub["text"])
+                    continue
+                seq = next_seq.get(sid, 1)
+                next_seq[sid] = seq + 1
+                new = {c: row.get(c) for c in speeches_df.columns}
+                new.update({
+                    "speech_id": _make_speech_id(sid, seq),
+                    "sequence": seq,
+                    "name": sub["author"],
+                    "speaker_raw": sub["header"],
+                    "role": None, "party": None, "location": None,
+                    "text": sub["text"], "char_offset": offset,
+                    "contribution_type": "written",
+                })
+                written_rows.append(new)
+                n_written += 1
+                offset += len(sub["text"])
+        if written_rows:
+            speeches_df = pd.concat(
+                [speeches_df, pd.DataFrame(written_rows)], ignore_index=True)
+        if verbose:
+            print(f"  Anlagen: {len(targets):,} sitting(s) carried an absorbed "
+                  f"appendix; split out {n_written:,} written contribution(s) "
+                  f"and set aside {n_unauth:,} unauthored document(s).", flush=True)
+    elif verbose:
+        print("  Anlagen split disabled (--no-anlagen-split).", flush=True)
+
+    # Unauthored appendix documents are not published. Counting them per
+    # sitting keeps that exclusion visible rather than silent. This has to come
+    # after the split, not where sessions_df is built — the counts do not exist
+    # until stage 2e has run.
+    sessions_df["n_documents_excluded"] = (
+        sessions_df["session_id"].map(n_excluded_docs).fillna(0).astype(int))
+
+    # ── 2f. Canonicalise speaker names ────────────────────────────────────────
     # Maps observed spelling variants of the same speaker onto one canonical
     # name, from docs/name_corrections.csv (name_original,name_canonical).
     #
@@ -1406,7 +1479,7 @@ def main() -> None:
         print(f"  NOTE: name_corrections.csv not found at {name_corrections_csv} "
               f"— skipping name canonicalisation.", flush=True)
 
-    # ── 2f. Recover an office discarded from the attribution ──────────────────
+    # ── 2g. Recover an office discarded from the attribution ──────────────────
     # b_02's RE_PARTY_STAGE_DIRECTION is a discard filter. It began life
     # matching genuine stage directions ("vom Platz aus sprechend") and has
     # since been extended with office titles so they are not mis-filed as a
@@ -1452,7 +1525,7 @@ def main() -> None:
             print("  Office recovery: no discarded office found in any "
                   "unattributed speech.", flush=True)
 
-    # ── 2g. Canonicalise role strings ─────────────────────────────────────────
+    # ── 2h. Canonicalise role strings ─────────────────────────────────────────
     # Maps spelling variants of one office onto a single role string, from
     # docs/role_corrections.csv (role_original,role_canonical).
     #
@@ -1517,7 +1590,7 @@ def main() -> None:
         print(f"  NOTE: role_corrections.csv not found at {role_corrections_csv} "
               f"— skipping role canonicalisation.", flush=True)
 
-    # ── 2h. Recover party labels parked in `location` ─────────────────────────
+    # ── 2i. Recover party labels parked in `location` ─────────────────────────
     # b_02's _classify_qualifiers sends a parenthetical to `party` only when it
     # matches the vocabulary loaded from docs/political-parties-past-75-years.csv.
     # Anything unrecognised falls through to `location`, because the first
@@ -1910,6 +1983,7 @@ def main() -> None:
         "wp", "date_iso", "year", "city",
         "name", "name_cleaned", "speaker_raw", "role", "party", "location",
         "gender", "gender_source",
+        "contribution_type",
         "text", "char_offset",
     ]
     if _has_stammdaten_cols and "stammdaten_id" in speeches_df.columns:
