@@ -41,8 +41,19 @@ _NAME = (r"(?:Dr\.\s*|Prof\.\s*|h\.\s*c\.\s*|Frau\s+|von\s+|van\s+|de\s+)*"
          # A nobiliary particle only counts between two name parts. Without the
          # lookahead this swallowed the preposition in "Erklärung des
          # Abgeordneten Dr. Atzenroth zu § 10", giving "Dr. Atzenroth zu".
-         r"(?:[ -](?:von|van|de|zu)(?=\s+[A-ZÄÖÜ])(?!\s+Protokoll\b))?"
+         r"(?:[ -](?:von|van|de|zu)(?=\s+[A-ZÄÖÜ]))?"
          r"(?:[ -][A-ZÄÖÜ][^\W\d_A-ZÄÖÜ]+){0,3}")
+
+# "zu" is a nobiliary particle in "Prinz zu Löwenstein" and "Meyer zu
+# Bentrup", but a preposition in "Erklärung des Abgeordneten Spitzmüller zu
+# Punkt 5 der Tagesordnung". Capitalisation does not separate the two, and an
+# inline negative lookahead proved easy to misplace in the paren nesting — it
+# silently never fired. The trailing preposition is trimmed after capture
+# instead, where it is obvious and directly testable.
+_RE_TRAILING_PREPOSITION = re.compile(
+    r"\s+(?:von|van|de|zu)\s+"
+    r"(?:Protokoll|Punkt|Tagesordnung|Drucksache|Nummer|Ziffer|Artikel|"
+    r"Abstimmung|Beratung|Beginn)\s*$")
 
 # "Antwort des Parl. Staatssekretärs Würzbach auf die Fragen des Abgeordneten …"
 # Feminine forms are explicit: an earlier version matched only the masculine
@@ -119,4 +130,5 @@ def split_anlagen(text: str):
 def _clean(s: str) -> str:
     s = " ".join(s.split())
     s = re.sub(r"\s*\([^)]*\)\s*$", "", s)      # drop a trailing (SPD)
+    s = _RE_TRAILING_PREPOSITION.sub("", s)
     return s.strip(" ,:;")
