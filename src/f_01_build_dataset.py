@@ -1191,7 +1191,12 @@ def main() -> None:
     ap.add_argument("--preprocessed-dir", required=True,
                     help="Path to data/preprocessed/ root")
     ap.add_argument("--gender-csv", required=True,
-                    help="Path to outputs/gender_lookup.csv")
+                    help="Path to data/outputs/gender_lookup.csv, which is "
+                         "where e_01_gender.py writes it (<preprocessed>/../"
+                         "outputs). Passing a plain outputs/gender_lookup.csv "
+                         "reads a DIFFERENT file: that mistake went unnoticed "
+                         "until 2026-11-15, by which point the copy being read "
+                         "was 7 days stale and 27 names short.")
     ap.add_argument("--parties-csv", required=True,
                     help="Path to docs/political-parties-past-75-years.csv")
     ap.add_argument("--excluded-speakers-csv", default=None, metavar="PATH",
