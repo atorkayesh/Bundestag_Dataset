@@ -33,7 +33,11 @@ RE_SUB = re.compile(r"\bAnlage\s+\d{1,3}\b")
 # an earlier version captured "Wrede auf die Schriftliche" as an author name.
 # The hyphen is NOT in the inner class — with it, "Hamm-Brücher" consumed the
 # hyphen and stopped, yielding "Hamm-".
-_NAME = (r"(?:Dr\.\s*|Prof\.\s*|h\.\s*c\.\s*|Frau\s+|von\s+|van\s+|de\s+)*"
+# "Dr.-Ing." is one title, but the hyphen stopped the title group and then the
+# name itself, so "Bundesministers Dr.-Ing. Seebohm" published an author of
+# "Dr" — 84 written contributions, mostly Seebohm in WP04-06. The form occurs
+# 806 times in the corpus, against 666 "Dr. h. c." and 83 "Prof. Dr.".
+_NAME = (r"(?:Dr\.(?:\s*-\s*Ing\.)?\s*|Prof\.\s*|h\.\s*c\.\s*|Frau\s+|von\s+|van\s+|de\s+)*"
          # [^\W\d_A-ZÄÖÜ] is "any letter that is not upper case", which keeps
          # Dağdelen and Hamm-Brücher intact; an explicit [a-zäöüß] class cut
          # "Sevim Dağdelen" to "Sevim Da".
@@ -54,6 +58,103 @@ _RE_TRAILING_PREPOSITION = re.compile(
     r"\s+(?:von|van|de|zu)\s+"
     r"(?:Protokoll|Punkt|Tagesordnung|Drucksache|Nummer|Ziffer|Artikel|"
     r"Abstimmung|Beratung|Beginn)\s*$")
+
+# The name may also run on into the first word of the sentence that follows,
+# when that word is capitalised and so indistinguishable from a further name
+# part: "Erklärung des Abgeordneten Deringer Ich stimme …" gave "Deringer Ich".
+# Only closed-class words are listed — none of them is a German surname, so the
+# trim cannot shorten a genuine name.
+_RE_TRAILING_FUNCTION_WORD = re.compile(
+    r"\s+(?:Ich|In|Im|Zu|Zur|Zum|Der|Die|Das|Dem|Den|Des|Es|Auf|Bei|Mit|Nach|"
+    r"Wie|Wir|Und|Als|Aus|Durch|F[üu]r|Hat|Ist|Sind|Wird|Werden|Kann|Trifft|"
+    r"Welche|Wann|Warum|Was|Wer|Wo|Ein|Eine|Am|An|Um|Bis|Da|Diese|Dieser|"
+    r"Dieses|Sei|Seit|Gegen|[ÜU]ber|Unter|Vor|Von|Wegen)\s*$")
+
+# A first name split mid-word by the extraction, e.g. "Parl. Staatssekretärs
+# Be rnd Wilz". The fragment is of arbitrary length and lower case, so the
+# letter-group rule in b_01 (which mends "Wi rt schaft") cannot see it.
+#
+# A purely structural rule would do real damage: across the corpus it would
+# also join "Jan van Oordt" into "Janvan" (47), "Kohl und Frau X" into
+# "Kohlund" (99), "Graf von Stauffenberg" into "Grafvon" (66) and "Jahn zur
+# Sache" into "Jahnzur" (37). The discriminator is a gazetteer the project
+# already ships: the 926 first names and 3,757 surnames in
+# docs/MdB-Stammdaten.xml. Measured over all 4,652 sittings the rule fires on
+# 942 occurrences in 241 distinct forms, and every one of those forms was
+# checked by eye to be a real name — Adenauer, Genscher, Lambsdorff,
+# Waffenschmidt, Dresbach, Heinrich, Erich, Brigitte — while 19,780 candidate
+# occurrences are rejected, which are the function-word phrases above. A form
+# the gazetteer does not know is left exactly as it was: the rule fails closed,
+# so an unknown name stays visibly broken rather than silently invented.
+#
+# The gazetteer, not the surrounding shape, is what makes this safe. An earlier
+# version also demanded a capitalised word after the break, on the assumption
+# that a split first name is always followed by a surname. That is only true
+# when the FIRST name is the broken one: when the surname breaks, what follows
+# is ordinary lower-case prose — "Dr. A rndt vom 12. Februar", "Georg Ga llus
+# auf die Frage" — and the rule silently skipped every one of them.
+_RE_SPLIT_FIRSTNAME = re.compile(
+    # The office word anchors the repair to the one position where a short
+    # capitalised token followed by a lower-case chunk can only be a broken
+    # name. It sits inside the match rather than in a lookbehind, because
+    # Python requires a fixed-width lookbehind; _sub re-emits it untouched.
+    r"\b(?:Staatssekret[äa]rs?|Staatssekret[äa]rin|Staatsministers?"
+    r"|Staatsministerin|Bundesministers?|Bundesministerin|Bundeskanzlers?"
+    r"|Bundeskanzlerin|Abgeordneten)\s+(?:Dr\.\s*)?"
+    # an intact first name may stand between the office and the break:
+    # "Staatssekretärs Georg Ga llus"
+    r"(?:[A-ZÄÖÜ][^\W\d_A-ZÄÖÜ]{2,}\s+)?"
+    # The head may be a single letter — "Dr. E rich Riedl", "M anfred Carstens".
+    # A genuine initial carries a full stop, which [a-zäöüß]{2,} cannot match.
+    r"(?P<head>[A-ZÄÖÜ][a-zäöüß]{0,3})\s+(?P<tail>[a-zäöüß]{2,})\b")
+
+# the title part of a capture, so _clean can tell a name from a bare honorific
+_RE_TITLE_ONLY = re.compile(
+    r"\b(?:Dr\.(?:\s*-\s*Ing\.)?|Prof\.|h\.\s*c\.|Frau|von|van|de)\b\.?")
+
+_NAME_GAZETTEER: frozenset = frozenset()
+
+
+def _load_name_gazetteer(path=None) -> frozenset:
+    """Known names from the MdB Stammdaten; an empty set disables the repair."""
+    import pathlib
+    import xml.etree.ElementTree as ET
+    p = (pathlib.Path(path) if path else
+         pathlib.Path(__file__).resolve().parent.parent / "docs" / "MdB-Stammdaten.xml")
+    if not p.exists():
+        return frozenset()
+    try:
+        root = ET.parse(p).getroot()
+    except ET.ParseError:
+        return frozenset()
+    names = set()
+    for tag in ("VORNAME", "NACHNAME"):
+        for e in root.iter(tag):
+            if e.text:
+                for part in re.split(r"[\s-]+", e.text.strip()):
+                    if len(part) > 2:
+                        names.add(part.lower())
+    return frozenset(names)
+
+
+def _mend_split_first_name(header: str) -> str:
+    """Rejoin a name broken mid-word, when the gazetteer knows the result."""
+    global _NAME_GAZETTEER
+    if not _NAME_GAZETTEER:
+        _NAME_GAZETTEER = _load_name_gazetteer()
+    if not _NAME_GAZETTEER:
+        return header
+
+    def _sub(m: re.Match) -> str:
+        head, tail = m.group("head"), m.group("tail")
+        if (head + tail).lower() not in _NAME_GAZETTEER:
+            return m.group(0)
+        # splice by offset rather than by string replace: the office prefix can
+        # itself contain the "head tail" text, and replace() would hit it first
+        s, e = m.start("head") - m.start(), m.end("tail") - m.start()
+        return m.group(0)[:s] + head + tail + m.group(0)[e:]
+
+    return _RE_SPLIT_FIRSTNAME.sub(_sub, header)
 
 # "Antwort des Parl. Staatssekretärs Würzbach auf die Fragen des Abgeordneten …"
 # Feminine forms are explicit: an earlier version matched only the masculine
@@ -100,7 +201,7 @@ def split_anlagen(text: str):
     subs = []
     for i in range(len(marks) - 1):
         sub = block[marks[i]:marks[i + 1]]
-        header = " ".join(sub[:260].split())
+        header = _mend_split_first_name(" ".join(sub[:260].split()))
         if RE_UNAUTHORED.search(header):
             subs.append({"kind": "unauthored", "author": None,
                          "header": header, "text": sub})
@@ -131,4 +232,11 @@ def _clean(s: str) -> str:
     s = " ".join(s.split())
     s = re.sub(r"\s*\([^)]*\)\s*$", "", s)      # drop a trailing (SPD)
     s = _RE_TRAILING_PREPOSITION.sub("", s)
+    # Trim a run-on sentence word, but never down to a bare title: if nothing
+    # but "Dr." or "Frau" would survive, the capture was wrong in a way this
+    # cannot repair, and the original is the more honest record.
+    trimmed = _RE_TRAILING_FUNCTION_WORD.sub("", s)
+    if re.search(r"[A-ZÄÖÜ][^\W\d_A-ZÄÖÜ]+",
+                 _RE_TITLE_ONLY.sub("", trimmed)):
+        s = trimmed
     return s.strip(" ,:;")
