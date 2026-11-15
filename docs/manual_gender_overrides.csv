@@ -483,3 +483,5 @@ Erich,Erich,male,first_name,truncated; forename settles gender only
 Ernst,Ernst,male,first_name,truncated; forename settles gender only
 Tobias,Tobias,male,first_name,truncated; forename settles gender only
 Wolfg,Wolfg,male,first_name,source reads 'Wolfg an g Gröbl'; only Wolfgang fits
+Dr. Meyer zu Bentrup,Dr. Meyer zu Bentrup,male,party_wp,"multi-token surname: _parse_name takes the last token, so the lookup key is 'bentrup' and never matches 'Meyer zu Bentrup'. Stammdaten holds one Meyer zu Bentrup (Reinhard, male, WP8-12), covering these WP8-11 rows"
+Christine Aschenberg,Christine Aschenberg,female,first_name,"source drops the '-Dugnus'; the header reads 'der Abgeordneten', which the Anlagen rule deliberately refuses as it is also genitive plural"

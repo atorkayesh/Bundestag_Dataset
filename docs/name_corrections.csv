@@ -443,3 +443,10 @@ Herr Kollege Hubert Hüppe,Hubert Hüppe,1,unresolved_speaker_triage,'Herr Kolle
 Herr Hubert Hubert Hüppe,Hubert Hüppe,1,unresolved_speaker_triage,'Herr' plus a duplicated forename; target incl. WP13
 Herr Kollege Matthias Berninger,Matthias Berninger,1,unresolved_speaker_triage,'Herr Kollege' absorbed; target 283 resolved rows incl. WP13
 Herr Kollege Gerhart Rudolf Baum,Gerhart Rudolf Baum,1,unresolved_speaker_triage,'Herr Kollege' absorbed; target 58 resolved rows incl. WP12
+Dr. Müller- Hermann,Dr. Müller-Hermann,254,unresolved_speaker_triage,"stray space in the hyphenated surname; target has 213 rows over WP4-8, all with a stammdaten_id; Stammdaten: Ernst Müller-Hermann, WP1-8"
+Müller- Hermann,Müller-Hermann,51,unresolved_speaker_triage,"stray space; target has 162 rows over WP1-5, all identified"
+Dr. Müller Hermann,Dr. Müller-Hermann,1,unresolved_speaker_triage,"hyphen lost entirely; same person, WP6"
+Kroll- Schlüter,Kroll-Schlüter,74,unresolved_speaker_triage,"stray space; target has 175 rows over WP7-11, all identified; Stammdaten: Hermann Kroll-Schlüter, WP7-11"
+Kroll Schlüter,Kroll-Schlüter,15,unresolved_speaker_triage,"hyphen lost entirely; same person, WP10-11"
+Graf von Waldburg Zeil,Graf von Waldburg-Zeil,13,unresolved_speaker_triage,"hyphen lost; target has 80 rows over WP9-11, all identified; Stammdaten: Alois Waldburg-Zeil, WP9-13"
+Alois Graf von Waldburg Zeil,Alois Graf von Waldburg-Zeil,8,unresolved_speaker_triage,hyphen lost; target has 85 rows over WP12-13
