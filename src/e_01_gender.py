@@ -141,6 +141,13 @@ def parse_stammdaten(xml_path: Path) -> dict:
             if len(parts) == 3 and all(p.isdigit() for p in parts):
                 birth_date = f"{parts[2]}-{parts[1]}-{parts[0]}"
 
+        # Terms served. Needed so a surname-only match can be rejected when
+        # the speaker and the candidate never sat at the same time.
+        wps = frozenset(
+            int(w.text.strip()) for w in mdb.iter("WP")
+            if w is not None and w.text and w.text.strip().isdigit()
+        )
+
         # Gender
         g_el = mdb.find(".//GESCHLECHT")
         if g_el is None or not g_el.text:
@@ -168,6 +175,7 @@ def parse_stammdaten(xml_path: Path) -> dict:
                 "gender":         gender,
                 "stammdaten_id":  mdb_id,
                 "birth_date":     birth_date,
+                "wps":            wps,
             })
 
     return dict(lookup)
@@ -178,10 +186,17 @@ def resolve_gender(
     name: str,
     stammdaten: dict,
     guesser,
+    wps: set | None = None,
 ) -> tuple[str, str, str | None, str | None]:
     """Return (gender, source, stammdaten_id, birth_date) for a speaker name.
 
-    Order: Frau/Herr honorific → exact Stammdaten surname → Levenshtein-1 surname → gender_guesser → unknown.
+    Order: Frau/Herr honorific → exact Stammdaten surname → Levenshtein-1
+    surname → gender_guesser → unknown.
+
+    `wps` is the set of Wahlperioden this name was actually seen in. It is
+    used only to REJECT a surname-only match whose candidates never served in
+    any of them; it never creates a match. Passing nothing keeps the old
+    behaviour.
     """
     # --- 0. Honorific prefix overrides Stammdaten and guesser ---
     _n = name.strip()
@@ -191,6 +206,7 @@ def resolve_gender(
         return "male", "title_prefix", None, None
 
     firstname_folded, surname_folded = _parse_name(name)
+    forenames = _known_forenames(stammdaten)
 
     if not surname_folded:
         return "unknown", "unknown", None, None
@@ -198,7 +214,7 @@ def resolve_gender(
     # --- 1. Exact match ---
     candidates = stammdaten.get(surname_folded)
     if candidates:
-        rec = _disambiguate(candidates, firstname_folded)
+        rec = _disambiguate(candidates, firstname_folded, wps, forenames)
         if rec:
             return rec["gender"], "stammdaten", rec.get("stammdaten_id"), rec.get("birth_date")
         # Exact match exists but is gender-ambiguous (same surname, both M+F).
@@ -207,15 +223,66 @@ def resolve_gender(
         # Skip straight to gender_guesser.
     else:
         # --- 2. Levenshtein ≤ 1 on surname (only when no exact match) ---
+        # One edit is a wide net on a short surname, and this loop used to
+        # return the FIRST key it happened to reach, so the answer depended on
+        # dict order rather than on evidence:
+        #
+        #   "Dr. Erkel", Staatssekretär im BMJ, sat one edit from BOTH "merkel"
+        #   (Angela and Petra, female) and "erdel" (Rainer, male). "merkel" was
+        #   reached first, so 106 rows of a male state secretary were marked
+        #   female — and a rehash could silently have flipped them.
+        #
+        #   "Marion Caspers Merk" parses to the surname "merk", one edit from
+        #   "merz" (Friedrich) and "mark" (Lothar), and 14 rows of a woman were
+        #   marked male.
+        #
+        # Every candidate key is now collected rather than the first taken, and
+        # a near-miss surname is only trusted when the forename corroborates
+        # it, which is what distinguishes an OCR variant of a real member from
+        # a coincidental neighbour of somebody absent from the Stammdaten.
+        near = []
         for key, cands in stammdaten.items():
             if key == surname_folded:
                 continue          # skip exact key (already handled above)
             if abs(len(key) - len(surname_folded)) > 1:
                 continue          # fast length gate
             if _levenshtein(key, surname_folded) <= 1:
-                rec = _disambiguate(cands, firstname_folded)
-                if rec:
-                    return rec["gender"], "stammdaten", rec.get("stammdaten_id"), rec.get("birth_date")
+                near.append((key, cands))
+        if near:
+            flat = [c for _k, cands in near for c in cands]
+            # an exact forename match across the near misses identifies the
+            # person, and an OCR'd surname is exactly where that happens
+            hits = [c for c in flat
+                    if firstname_folded
+                    and c["vorname_folded"] == firstname_folded]
+            if hits and len({c["gender"] for c in hits}) == 1:
+                rec = hits[0]
+                return (rec["gender"], "stammdaten", rec.get("stammdaten_id"),
+                        rec.get("birth_date"))
+            # otherwise the surname alone decided it, so demand that every
+            # near miss agrees on gender, that a real forename does not
+            # contradict them, and that the terms overlap
+            contradicted = (
+                firstname_folded
+                and _is_known_forename(firstname_folded, forenames)
+                and not any(_forename_compatible(firstname_folded,
+                                                 c["vorname_folded"])
+                            for c in flat)
+            )
+            genders = {c["gender"] for c in flat}
+            overlaps = (not wps) or any(set(c.get("wps") or ()) & wps
+                                        for c in flat)
+            if len(genders) == 1 and not contradicted and overlaps:
+                return (genders.pop(), "stammdaten", None, None)
+
+    # --- 2.5. the forename itself, from the Stammdaten's own name records ---
+    # Reached when the surname match was refused above, which is the normal
+    # case for ministers, state secretaries and state politicians who never
+    # sat in the Bundestag. Labelled `inferred`, not `stammdaten`: it says
+    # what the name implies, not who the person is, and carries no identity.
+    fg = _forename_gender(firstname_folded, stammdaten)
+    if fg:
+        return fg, "inferred", None, None
 
     # --- 3. gender_guesser on first name ---
     if guesser and firstname_folded:
@@ -232,16 +299,144 @@ def resolve_gender(
     return "unknown", "unknown", None, None
 
 
-def _disambiguate(candidates: list, firstname_folded: str) -> dict | None:
-    """Return matched record if gender is unambiguous; None if same surname maps to both genders."""
+_FORENAME_CACHE: dict = {}
+
+
+def _known_forenames(stammdaten: dict) -> frozenset:
+    """Every Vorname the Stammdaten holds, folded. Cached per lookup dict."""
+    key = id(stammdaten)
+    hit = _FORENAME_CACHE.get(key)
+    if hit is None:
+        hit = frozenset(
+            c["vorname_folded"] for cands in stammdaten.values() for c in cands
+            if c.get("vorname_folded")
+        )
+        _FORENAME_CACHE.clear()      # one entry is enough; keeps this bounded
+        _FORENAME_CACHE[key] = hit
+    return hit
+
+
+_FORENAME_GENDER_CACHE: dict = {}
+
+
+def _forename_gender(tok: str, stammdaten: dict) -> str | None:
+    """Gender of a forename, where every Stammdaten holder of it agrees.
+
+    This is not a guess from name endings: it is the observed gender of real
+    politicians who carry the name, 4,900 records of them. It is what rescues
+    the people who are NOT members — "Christian Wulff", "Alexander
+    Schweitzer", "Anke Rehlinger" — whose surname exists in the Stammdaten
+    attached to somebody else entirely. The old matcher answered those from
+    whichever gender that other person happened to be, which was right by luck
+    for 653 rows and wrong for 592. The forename answers them from evidence.
+
+    Only a unanimous forename counts; "kersten" and the like, carried by both
+    men and women, return None.
+    """
+    if not tok:
+        return None
+    key = id(stammdaten)
+    table = _FORENAME_GENDER_CACHE.get(key)
+    if table is None:
+        seen: dict[str, set] = {}
+        for cands in stammdaten.values():
+            for c in cands:
+                vf = c.get("vorname_folded")
+                if vf:
+                    seen.setdefault(vf, set()).add(c["gender"])
+        table = {k: next(iter(v)) for k, v in seen.items() if len(v) == 1}
+        _FORENAME_GENDER_CACHE.clear()
+        _FORENAME_GENDER_CACHE[key] = table
+    if tok in table:
+        return table[tok]
+    for part in re.split(r"[-\s.]+", tok):
+        if len(part) >= 3 and part in table:
+            return table[part]
+    return None
+
+
+def _is_known_forename(tok: str, forenames) -> bool:
+    """Is this token a given name at all, as opposed to debris from the name field?"""
+    if not forenames:
+        return False
+    if tok in forenames:
+        return True
+    # a double name counts if either part is a known given name
+    parts = [p for p in re.split(r"[-\s.]+", tok) if len(p) >= 3]
+    return any(p in forenames for p in parts)
+
+
+def _forename_compatible(a: str, b: str) -> bool:
+    """Could these two folded forenames belong to the same person?
+
+    Deliberately generous, because the transcript abbreviates and the
+    Stammdaten does not: "hans" against "hans-peter" must still match, and so
+    must a middle name dropped in print. What it must NOT accept is two
+    unrelated names — "michael" against "kersten" — because that is the signal
+    that the speaker is somebody the Stammdaten does not contain at all.
+    """
+    if not a or not b:
+        return True                      # no evidence either way
+    if a == b:
+        return True
+    short, long = sorted((a, b), key=len)
+    if len(short) >= 3 and long.startswith(short):
+        return True                      # "hans" vs "hanspeter", "theo" vs "theodor"
+    at = set(re.split(r"[-\s.]+", a)) - {""}
+    bt = set(re.split(r"[-\s.]+", b)) - {""}
+    return bool(at & bt)                 # a shared part of a double name
+
+
+def _disambiguate(candidates: list, firstname_folded: str,
+                  wps: set | None = None,
+                  forenames: frozenset | None = None) -> dict | None:
+    """Return matched record if gender is unambiguous, else None.
+
+    The group-gender fallback below is the delicate part. Its premise is "we
+    cannot tell WHICH person of this surname, but all of them share a gender,
+    so the gender is safe regardless". That premise only holds while we have no
+    evidence pointing away from the group — and twice it did not:
+
+      "Dr. Michael Naumann", Staatsminister beim Bundeskanzler, was marked
+      female across 74 rows because the only Naumann in the Stammdaten is
+      Kersten Naumann. The printed forename said Michael; the fallback ignored
+      it. A forename that matches nobody in the group means the speaker is
+      probably not in the group at all, which is routine for ministers and
+      state secretaries who never sat in the Bundestag.
+
+      "Dr. Jochimsen", Staatssekretär in WP7-8, was marked female across 19
+      rows from Lukrezia Jochimsen, who entered in WP16 — the terms do not
+      overlap by a single year. He is Reimut Jochimsen.
+
+    So both contradictions now veto the fallback, and the speaker is left
+    unknown for the later, better-evidenced passes in f_01 to resolve.
+    """
     if not candidates:
         return None
 
-    # Try first-name exact match — fully identifies the person.
+    # An exact forename match identifies the person outright.
     if firstname_folded:
         for c in candidates:
             if c["vorname_folded"] == firstname_folded:
                 return c
+
+    # Below here the person is NOT identified, only their surname is, so every
+    # contradiction counts against inheriting the group's gender.
+    #
+    # The veto fires only on a token that really is a given name. The name
+    # field carries plenty of debris that lands in the forename slot —
+    # "AfD Markus Koob" parses to forename "afd", "AfD-Fraktion Marc Bernhard"
+    # to "afd-fraktion" — and treating that debris as a contradiction threw
+    # away 1,320 correct matches when this was first written. A token absent
+    # from every Vorname in the Stammdaten carries no evidence either way, so
+    # the group-gender fallback still applies to it.
+    if (firstname_folded and _is_known_forename(firstname_folded, forenames)
+            and not any(_forename_compatible(firstname_folded, c["vorname_folded"])
+                        for c in candidates)):
+        return None
+
+    if wps and not any(set(c.get("wps") or ()) & wps for c in candidates):
+        return None
 
     # All same gender → gender is unambiguous, person identity is not.
     genders = {c["gender"] for c in candidates}
@@ -252,10 +447,15 @@ def _disambiguate(candidates: list, firstname_folded: str) -> dict | None:
 
 
 
-def collect_unique_names(preprocessed_dir: Path) -> set[str]:
+def collect_unique_names(preprocessed_dir: Path) -> dict:
     """
-    Scan all *_speakers.json files and return the set of unique name strings.
+    Scan all *_speakers.json files and return {name: frozenset of Wahlperioden}.
     Names that are None / empty are excluded.
+
+    The terms are collected so a surname-only Stammdaten match can be rejected
+    when the candidate never served while the speaker was speaking. "Dr.
+    Jochimsen" spoke in WP7-8 and was being matched to Lukrezia Jochimsen of
+    WP16-17, who is a different person by about thirty years.
     """
     metadata_dir = preprocessed_dir / "metadata"
     json_files = sorted(
@@ -267,7 +467,8 @@ def collect_unique_names(preprocessed_dir: Path) -> set[str]:
         sys.exit(1)
 
     print(f"Scanning {len(json_files):,} JSON files for unique names ...")
-    names: set[str] = set()
+    names: dict[str, set] = {}
+    no_wp = 0
     for idx, jf in enumerate(json_files, 1):
         if idx % 500 == 0 or idx == len(json_files):
             print(f"  {idx}/{len(json_files)} ...", end="\r", flush=True)
@@ -275,13 +476,26 @@ def collect_unique_names(preprocessed_dir: Path) -> set[str]:
             record = json.loads(jf.read_text(encoding="utf-8"))
         except Exception:
             continue
+        m = re.match(r"WP(\d{1,2})", jf.name)
+        wp = int(m.group(1)) if m else None
+        if wp is None:
+            no_wp += 1
         for sp in record.get("speeches", []):
             n = sp.get("name")
             if n:
-                names.add(n)
+                bucket = names.setdefault(n, set())
+                if wp is not None:
+                    bucket.add(wp)
 
     print(f"\nFound {len(names):,} unique speaker names.")
-    return names
+    if no_wp:
+        # a name with no term attached is never rejected on term grounds, so an
+        # unparsed filename degrades to the old behaviour rather than silently
+        # dropping matches
+        print(f"  NOTE: {no_wp} file(s) had no Wahlperiode in the filename; "
+              f"names seen only there keep an empty term set and are never "
+              f"rejected on term grounds.")
+    return {n: frozenset(w) for n, w in names.items()}
 
 
 
@@ -341,7 +555,7 @@ def run(
     results: list[tuple[str, str, str, str | None, str | None]] = []
     for name in sorted(names):
         gender, source, stammdaten_id, birth_date = resolve_gender(
-            name, stammdaten, _GUESSER
+            name, stammdaten, _GUESSER, names[name]
         )
         results.append((name, gender, source, stammdaten_id, birth_date))
 
