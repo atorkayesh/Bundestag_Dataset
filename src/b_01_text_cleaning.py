@@ -810,6 +810,13 @@ _RE_SPLIT_WORD = re.compile(
     r"(rt|ri|ch|li|ti|rn|tr|ck|te|st|rm|ta|tt|nd|rg|rk|ng|ff|sch)[ \t]+"
     r"([a-zäöüß]+)(?![\w-])")
 
+# Same damage, but the remainder of the word is capitalised or the line ends,
+# so there is no third piece to test — "Norbe rt Lammert", "Baye rn".
+_RE_TRAILING_FRAGMENT = re.compile(
+    r"(?<![\w-])([A-ZÄÖÜa-zäöüß]{2,})[ \t]+"
+    r"(rt|ri|ch|li|ti|rn|tr|ck|te|st|rm|ta|tt|nd|rg|rk|ng|ff)"
+    r"(?![\w-])(?![ \t]+[a-zäöüß])")
+
 _VOCAB: frozenset = frozenset()
 
 
@@ -851,7 +858,20 @@ def rejoin_split_words(text: str) -> str:
             return a + " " + frag + b
         return m.group(0)
 
-    return _RE_SPLIT_WORD.sub(_sub, text)
+    text = _RE_SPLIT_WORD.sub(_sub, text)
+
+    # The rule above needs a lower-case word after the fragment, so it cannot
+    # see a split whose remainder is capitalised or ends the line:
+    # "Dr. Norbe rt Lammert" leaves "Norbe", which is why written authors were
+    # still truncated after the first pass. Here the fragment can only close
+    # the word to its left, so one vocabulary check decides it.
+    def _sub_trailing(m: re.Match) -> str:
+        a, frag = m.group(1), m.group(2)
+        if len(a) + len(frag) >= 4 and (a + frag).lower() in _VOCAB:
+            return a + frag
+        return m.group(0)
+
+    return _RE_TRAILING_FRAGMENT.sub(_sub_trailing, text)
 
 
 # Full cleaning pipeline
