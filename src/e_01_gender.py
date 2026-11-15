@@ -74,6 +74,42 @@ def _strip_title(name: str) -> str:
     return _RE_TITLE.sub("", name).strip()
 
 
+def _surname_suffixes(name: str) -> list[tuple[str, str]]:
+    """(firstname, surname) candidates, longest surname first, folded.
+
+    `_parse_name` takes the LAST token as the surname, which can never find a
+    multi-token one: "Meyer zu Bentrup" is sought under "bentrup", "De Ridder"
+    under "ridder" and "Stokar von Neuforn" under "neuforn" — keys the
+    Stammdaten does not hold, because it spells such surnames out in full. 26
+    names over 1,437 speeches were left with no identity for that reason,
+    among them sitting members: Silke Stokar von Neuforn, Fabio De Masi,
+    Amira Mohamed Ali, Reem Alabali Radovan.
+
+    Every suffix of the token run is offered so the caller can take the
+    longest the register actually knows. That is a MORE specific key than the
+    last token, not a looser one: matching "meyer zu bentrup" in full is
+    stronger evidence than matching "bentrup".
+
+    The nobiliary particle is deliberately NOT stripped here, unlike in
+    _parse_name: in a multi-token surname the particle belongs to the name.
+    """
+    clean = _strip_title(name)
+    if not clean:
+        return []
+    tokens = clean.split()
+    # Beyond five tokens the string is leaked text rather than a name, and
+    # _parse_name's own truncation is the right treatment.
+    if not 1 < len(tokens) <= 5:
+        return []
+    out: list[tuple[str, str]] = []
+    for i in range(len(tokens) - 1):
+        sn = _fold(" ".join(tokens[i:]))
+        fn = _fold(tokens[0]) if i > 0 else ""
+        if " " in sn:                     # only genuinely multi-token keys
+            out.append((fn, sn))
+    return out
+
+
 def _parse_name(name: str) -> tuple[str, str]:
     """
     Split a transcript name into (firstname_token, surname_token).
@@ -207,6 +243,19 @@ def resolve_gender(
 
     firstname_folded, surname_folded = _parse_name(name)
     forenames = _known_forenames(stammdaten)
+
+    # --- 0.5. Multi-token surname, longest first ---
+    # Tried before the single-token lookup because it is the more specific
+    # key. Purely additive: a name whose surname is one token never enters
+    # here, so the established path is untouched.
+    for _fn_c, _sn_c in _surname_suffixes(name):
+        _cands = stammdaten.get(_sn_c)
+        if not _cands:
+            continue
+        _rec = _disambiguate(_cands, _fn_c, wps, forenames)
+        if _rec:
+            return (_rec["gender"], "stammdaten", _rec.get("stammdaten_id"),
+                    _rec.get("birth_date"))
 
     if not surname_folded:
         return "unknown", "unknown", None, None
