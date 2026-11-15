@@ -398,15 +398,24 @@ def _modal_gender(series: pd.Series) -> str:
 
 def _modal_gender_source(series: pd.Series) -> str:
     """Most authoritative gender source across speeches for one speaker.
-    Priority: stammdaten > title_prefix > role_title > inferred > unknown.
+
+    Priority: stammdaten > title_prefix > role_title > anlagen_header >
+    manual > inferred > unknown.
+
+    anlagen_header sits with the other grammatical sources rather than below
+    the curated table: it reads the case marking printed in the document
+    ("Antwort des Parl. Staatssekretärs" is masculine singular), so it is
+    evidence from the source, where `manual` is a researched judgement and
+    `inferred` only a guess from a forename.
     """
     _PRIORITY = {
-        "stammdaten":   0,
-        "title_prefix": 1,
-        "role_title":   2,
-        "manual":       3,
-        "inferred":     4,
-        "unknown":      5,
+        "stammdaten":     0,
+        "title_prefix":   1,
+        "role_title":     2,
+        "anlagen_header": 3,
+        "manual":         4,
+        "inferred":       5,
+        "unknown":        6,
     }
     unique_sources = series.dropna().unique()
     if len(unique_sources) == 0:
@@ -886,7 +895,7 @@ def _make_datapackage(version: str) -> dict:
                         {"name": "location",      "type": "string",  "description": "Speaker's Bundesland. Null if not listed."},
                         {"name": "stammdaten_id", "type": "string",  "description": "Official Bundestag MdB identifier (e.g. '11000001') linking this speech to the speaker's biographical record in the Bundestag Stammdaten. Null for speakers not identified as Bundestag members (non-MdB ministers, Bundesrat representatives, etc.) and for Stammdaten matches where the first name was ambiguous."},
                         {"name": "gender",        "type": "string",  "description": "'male', 'female', or 'unknown'. Derived from official Bundestag Stammdaten XML; with role-title, honorific-prefix, name-inference, and manual-lookup fallbacks."},
-                        {"name": "gender_source", "type": "string",  "description": "'stammdaten' (authoritative MdB biographical data), 'title_prefix' (Frau/Herr honorific in name), 'role_title' (gendered job title in speaker attribution, e.g. Vizepräsidentin), 'manual' (manually researched lookup for surname-only and OCR-variant attributions), 'inferred' (first-name heuristic), or 'unknown'."},
+                        {"name": "gender_source", "type": "string",  "description": "'stammdaten' (authoritative MdB biographical data), 'title_prefix' (Frau/Herr honorific in name), 'role_title' (gendered job title in speaker attribution, e.g. Vizepräsidentin), 'manual' (manually researched lookup for surname-only and OCR-variant attributions), 'anlagen_header' (grammatical case in the appendix header, e.g. \"Antwort des Parl. Staatssekretaers\" is masculine singular), 'inferred' (first-name heuristic), or 'unknown'."},
                         {"name": "text",          "type": "string",  "description": "Full speech text in German."},
                         {"name": "char_offset",   "type": "integer", "description": "Byte offset of the speech start in the cleaned session text file."},
                     ]
@@ -905,7 +914,7 @@ def _make_datapackage(version: str) -> dict:
                         {"name": "stammdaten_id",     "type": "string",  "description": "Official Bundestag MdB identifier linking this speaker to persons.parquet. Null for non-MdBs and ambiguous surname-only matches. Use this to join to persons.parquet for birth date, career span, and cross-session name variant tracking."},
                         {"name": "birth_date",        "type": "date",    "description": "ISO 8601 birth date 'YYYY-MM-DD' from the official Bundestag Stammdaten. Null for non-MdBs and ambiguous surname-only matches."},
                         {"name": "gender",            "type": "string",  "description": "'male', 'female', or 'unknown'."},
-                        {"name": "gender_source",     "type": "string",  "description": "Source of gender annotation: 'stammdaten', 'title_prefix', 'role_title', 'manual', 'inferred', or 'unknown'. The most authoritative source across all speeches is reported."},
+                        {"name": "gender_source",     "type": "string",  "description": "Source of gender annotation: 'stammdaten', 'title_prefix', 'role_title', 'anlagen_header', 'manual', 'inferred', or 'unknown'. The most authoritative source across all speeches is reported."},
                         {"name": "n_speeches",        "type": "integer", "description": "Total speeches attributed to this name across all sessions."},
                         {"name": "most_common_party", "type": "string",  "description": "Modal party across all speeches. Null if party is never listed."},
                         {"name": "most_common_role",  "type": "string",  "description": "Modal role across all speeches. Null if role is never listed."},
@@ -1398,6 +1407,10 @@ def main() -> None:
                     "role": None, "party": None, "location": None,
                     "text": sub["text"], "char_offset": offset,
                     "contribution_type": "written",
+                    # the header's case marking often settles the author's
+                    # gender even when the name resolves to nobody; applied in
+                    # 3b-bis, after every name-based source has had its turn
+                    "_anlagen_gender": sub.get("gender"),
                 })
                 written_rows.append(new)
                 n_written += 1
@@ -1779,6 +1792,32 @@ def main() -> None:
     elif verbose:
         print(f"  NOTE: manual_gender_overrides.csv not found at {manual_gender_csv} "
               f"— skipping manual override step.", flush=True)
+
+    # ── 3b-bis. Gender from the Anlagen header's grammar ───────────────────────
+    # A written contribution's author is often a state secretary who never sat
+    # in the Bundestag, so Stammdaten cannot know them, and in the 1960s the
+    # forename is usually not printed either — leaving the name-based sources
+    # with nothing to work from. The header itself carries the answer:
+    # "Antwort des Parl. Staatssekretärs" is genitive masculine singular,
+    # "der Parl. Staatssekretärin" feminine. See anlagen._header_gender for
+    # what it deliberately refuses to read, notably a bare "der Abgeordneten",
+    # which is also the genitive plural.
+    #
+    # Runs last of the gender sources: it fills only what the name-based passes
+    # left unknown, and never overwrites a resolved value.
+    if "_anlagen_gender" in speeches_df.columns:
+        n_unknown_before_hdr = int((speeches_df["gender"] == "unknown").sum())
+        hdr_hit = ((speeches_df["gender"] == "unknown")
+                   & speeches_df["_anlagen_gender"].isin(["male", "female"]))
+        speeches_df.loc[hdr_hit, "gender"] = speeches_df.loc[hdr_hit, "_anlagen_gender"]
+        speeches_df.loc[hdr_hit, "gender_source"] = "anlagen_header"
+        speeches_df = speeches_df.drop(columns=["_anlagen_gender"])
+        if verbose and n_unknown_before_hdr:
+            n_hdr = int(hdr_hit.sum())
+            pct = n_hdr / n_unknown_before_hdr * 100
+            print(f"  Anlagen-header gender: resolved {n_hdr:,} / "
+                  f"{n_unknown_before_hdr:,} remaining unknown speeches "
+                  f"({pct:.1f}%).", flush=True)
 
     # ── 3c. Contextual stammdaten_id disambiguation (WP + party + role) ─────────
     # For speeches where the initial name-only Stammdaten lookup assigned a gender

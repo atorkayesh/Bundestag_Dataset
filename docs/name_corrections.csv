@@ -412,3 +412,34 @@ Böiling,Bölling,1,adjudicated_with_evidence,"ö read as öi; same Presse- und 
 Grainer,Grüner,1,adjudicated_with_evidence,"the same sitting (WP07 Session011) has Grüner carrying the identical role 'Parl. Staatssekretär beim Bundesminister für Wirtschaft'; the workbook proposed Rainer"
 Maiden,Stücklen,1,adjudicated_with_evidence,"WP08 Session032: the attribution sits inside an unbroken run of 'Vizepräsident Stücklen:' - four before and four after - and the artefact is already in the printed protocol, not introduced by extraction; the workbook proposed Maier"
 Landwirtschaft Marco Bülow,Marco Bülow,1,adjudicated_with_evidence,committee word leaked ahead of the name; speaker_raw is 'Landwirtschaft Marco Bülow (SPD):' and Marco Bülow (SPD) has 115 further speeches
+Peter Altmeier,Peter Altmaier,2,unresolved_speaker_triage,"OCR ei/ai; Parl. Staatssekretär WP16; target has 1,316 resolved rows incl. WP16"
+Gruner,Grüner,2,unresolved_speaker_triage,"umlaut lost at extraction; target has 4,556 resolved rows across WP6-12 incl. WP8"
+Buschforst,Hermann Buschfort,1,unresolved_speaker_triage,OCR t/st; Stammdaten Buschfort sat WP5-11 incl. WP8
+Börmer,Holger Börner,1,unresolved_speaker_triage,OCR rn/rm; Stammdaten Börner sat WP3-7 incl. WP6
+Dr. Schmitt-Vocken,Dr. Schmitt-Vockenhausen,2,unresolved_speaker_triage,source reads 'Schmitt-Vocken hausen'; Stammdaten sat WP2-8 incl. WP7-8
+Sabine Leutheusser,Sabine Leutheusser-Schnarrenberger,4,unresolved_speaker_triage,source reads 'LeutheusserSchnarrenberger'; hyphen lost at extraction
+van Schoeler,Andreas von Schoeler,1,unresolved_speaker_triage,van/von; Parl. Staatssekretär BMI WP8
+von Scholer,Andreas von Schoeler,1,unresolved_speaker_triage,OCR oe/o; Parl. Staatssekretär BMI WP9
+Hans-Martin Bury,Hans Martin Bury,2,unresolved_speaker_triage,Stammdaten spells it unhyphenated; sat WP12-15 incl. WP14-15
+Dr. Eckhard Pick,Dr. Eckhart Pick,1,unresolved_speaker_triage,OCR d/t in the forename; Stammdaten Eckhart Pick sat WP11-14
+Ottmar Schreier,Ottmar Schreiner,1,unresolved_speaker_triage,OCR; Stammdaten Schreiner sat WP9-18 incl. WP14
+Wolfgang Börsen,Wolfgang Börnsen,1,unresolved_speaker_triage,OCR dropped the n; Stammdaten Börnsen incl. WP14
+Norbert Gels,Norbert Geis,1,unresolved_speaker_triage,OCR l/i; Stammdaten Geis incl. WP13
+Deltef Kleinert,Detlef Kleinert,1,unresolved_speaker_triage,OCR transposed lt/tl; Stammdaten Kleinert incl. WP12
+Dr. Kurt Falthauser,Dr. Kurt Faltlhauser,1,unresolved_speaker_triage,OCR dropped the l; Stammdaten Faltlhauser incl. WP13
+Güther Friedrich Nolting,Günther Friedrich Nolting,1,unresolved_speaker_triage,OCR dropped the n; Stammdaten Nolting incl. WP14
+Kattenstroht,Kattenstroth,1,unresolved_speaker_triage,"OCR transposed th; target has 526 rows incl. WP5, gender from role title"
+Rosentahl,Rosenthal,1,unresolved_speaker_triage,OCR transposed ah/ha; target attested in WP6
+Dr. von Manger-König,Dr. von Manger-Koenig,1,unresolved_speaker_triage,umlaut vs oe; the Koenig spelling already carries 35 rows
+Dr.Haack,Dr. Haack,1,unresolved_speaker_triage,missing space after the title
+Hans Georg Hauser,Hans-Georg Hauser,1,unresolved_speaker_triage,hyphen lost; Stammdaten Hansgeorg Hauser sat WP12-14
+Bitte Hans Ulrich Klose,Hans-Ulrich Klose,1,unresolved_speaker_triage,"chair's 'Bitte' absorbed; target 5,078 resolved rows incl. WP12"
+Eine Hans Ulrich Klose,Hans-Ulrich Klose,1,unresolved_speaker_triage,"chair's 'Eine' absorbed; target 5,078 resolved rows incl. WP12"
+Bitte Robert Antretter,Robert Antretter,1,unresolved_speaker_triage,chair's 'Bitte' absorbed; target 26 resolved rows incl. WP12
+Eine Norbert Eimer,Norbert Eimer,1,unresolved_speaker_triage,chair's 'Eine' absorbed; target 42 resolved rows incl. WP12
+Letzte Albert Pfuhl,Albert Pfuhl,1,unresolved_speaker_triage,chair's 'Letzte' absorbed; target 29 resolved rows incl. WP12
+Herr Dr. Ilja Seifert,Dr. Ilja Seifert,2,unresolved_speaker_triage,'Herr' absorbed; target 731 resolved rows incl. WP12
+Herr Kollege Hubert Hüppe,Hubert Hüppe,1,unresolved_speaker_triage,'Herr Kollege' absorbed; target 232 resolved rows incl. WP12
+Herr Hubert Hubert Hüppe,Hubert Hüppe,1,unresolved_speaker_triage,'Herr' plus a duplicated forename; target incl. WP13
+Herr Kollege Matthias Berninger,Matthias Berninger,1,unresolved_speaker_triage,'Herr Kollege' absorbed; target 283 resolved rows incl. WP13
+Herr Kollege Gerhart Rudolf Baum,Gerhart Rudolf Baum,1,unresolved_speaker_triage,'Herr Kollege' absorbed; target 58 resolved rows incl. WP12

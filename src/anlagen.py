@@ -56,8 +56,11 @@ _NAME = (r"(?:Dr\.(?:\s*-\s*Ing\.)?\s*|Prof\.\s*|h\.\s*c\.\s*|Frau\s+|von\s+|van
 # instead, where it is obvious and directly testable.
 _RE_TRAILING_PREPOSITION = re.compile(
     r"\s+(?:von|van|de|zu)\s+"
-    r"(?:Protokoll|Punkt|Tagesordnung|Drucksache|Nummer|Ziffer|Artikel|"
-    r"Abstimmung|Beratung|Beginn)\s*$")
+    # Zusatzpunkt and Tagesordnungspunkt are spelt out rather than left to
+    # "Punkt": the alternation matches a whole word, so "zu Zusatzpunkt 3"
+    # was not caught by "Punkt" and published "Dr. Stecker zu Zusatzpunkt".
+    r"(?:Protokoll|Punkt|Zusatzpunkt|Tagesordnungspunkt|Tagesordnung|"
+    r"Drucksache|Nummer|Ziffer|Artikel|Abstimmung|Beratung|Beginn)\s*$")
 
 # The name may also run on into the first word of the sentence that follows,
 # when that word is capitalised and so indistinguishable from a further name
@@ -160,15 +163,16 @@ def _mend_split_first_name(header: str) -> str:
 # Feminine forms are explicit: an earlier version matched only the masculine
 # and silently dropped every answer given by a woman.
 RE_ANSWER = re.compile(
-    r"Antwort(?:en)?\s+(?:des|der)\s+"
+    r"Antwort(?:en)?\s+(?P<art>des|der)\s+"
     r"(?:Parl\.?\s*|Parlamentarischen?\s+)?"
-    r"(?:Staatssekret[äa]rs?|Staatssekret[äa]rin|Staatsministers?|Staatsministerin|"
-    r"Bundesministers?|Bundesministerin|Bundeskanzlers?|Bundeskanzlerin)\s+"
+    r"(?P<office>Staatssekret[äa]rs?|Staatssekret[äa]rin|Staatsministers?"
+    r"|Staatsministerin|Bundesministers?|Bundesministerin|Bundeskanzlers?"
+    r"|Bundeskanzlerin)\s+"
     rf"(?-i:(?P<author>{_NAME}))", re.I)
 # "Erklärung nach § 31 GO des Abgeordneten Wolfgang Tiefensee"
 RE_DECLARATION = re.compile(
     r"Erkl[äa]rung(?:en)?\s+(?:nach\s+§\s*3[01]\s*(?:GO)?\s*)?"
-    r"(?:des|der)\s+Abgeordneten\s+"
+    r"(?P<art>des|der)\s+(?P<office>Abgeordneten)\s+"
     rf"(?-i:(?P<author>{_NAME}))", re.I)
 RE_ZU_PROTOKOLL = re.compile(r"[Zz]u\s+Protokoll\s+gegebene[nr]?\s+Rede")
 
@@ -211,7 +215,11 @@ def split_anlagen(text: str):
             if inner:
                 for j, im in enumerate(inner):
                     end = inner[j + 1].start() if j + 1 < len(inner) else len(sub)
-                    subs.append({"kind": "written", "author": _clean(im.group("who")),
+                    who = _clean(im.group("who"))
+                    # no article to read here: a speech given to the record
+                    # carries an ordinary attribution, so only "Frau" informs
+                    subs.append({"kind": "written", "author": who,
+                                 "gender": _header_gender(who, None, None),
                                  "header": header,
                                  "text": sub[im.end():end]})
                 continue
@@ -220,12 +228,46 @@ def split_anlagen(text: str):
             continue
         a = RE_ANSWER.search(header) or RE_DECLARATION.search(header)
         if a:
-            subs.append({"kind": "written", "author": _clean(a.group("author")),
+            author = _clean(a.group("author"))
+            subs.append({"kind": "written", "author": author,
+                         "gender": _header_gender(author, a.group("art"),
+                                                  a.group("office")),
                          "header": header, "text": sub})
             continue
         subs.append({"kind": "unauthored", "author": None,
                          "header": header, "text": sub})
     return head, subs
+
+
+def _header_gender(author: str, art: str, office: str):
+    """Gender of the author, from the grammar of the header. None if unclear.
+
+    German case marking settles this where a name list cannot. "Antwort des
+    Parl. Staatssekretärs" is genitive masculine singular and can only be a
+    man; "der Parl. Staatssekretärin" can only be a woman. That is evidence,
+    not a guess from the forename, and it reaches the 1960s state secretaries
+    whose forename is never printed.
+
+    Two refusals matter more than the two rules:
+
+    - "der Abgeordneten" is both genitive singular feminine AND genitive
+      plural, so "Erklärung der Abgeordneten Müller, Schmidt und Weber" says
+      nothing about any one of them. Only an explicitly feminine office form
+      makes "der" decisive, so a bare "der Abgeordneten" returns None.
+    - the office is sometimes inflected masculine for a woman: "Antwort des
+      Staatsministers Frau Dr. Hamm-Brücher". "Frau" in the name is the
+      stronger signal and is checked first, or the grammar would make her a
+      man.
+    """
+    if re.match(r"\s*Frau\b", author or ""):
+        return "female"
+    art = (art or "").strip().lower()
+    feminine_office = (office or "").strip().lower().endswith("in")
+    if art == "der" and feminine_office:
+        return "female"
+    if art == "des" and not feminine_office:
+        return "male"
+    return None
 
 
 def _clean(s: str) -> str:
