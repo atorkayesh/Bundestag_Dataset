@@ -554,6 +554,19 @@ def _role_matches_ctx(corpus_role: str, stammdaten_roles: list) -> bool:
     return False
 
 
+# An office that explains addressing the chamber without holding a seat. Both
+# grammatical genders are listed: masculine-only office patterns have caused
+# four separate defects in this project.
+# "Präsident des Bundestages" is deliberately absent: the chair IS a member and
+# needs a seat, and a loose `präsident des Bundes…` alternative matched it.
+# "Bundespräsident" is listed, because Heuss addressed WP1-2 as a non-member.
+_RE_GOV_OFFICE = re.compile(
+    r"minister(?:in)?|staatssekret[äa]r(?:in)?|kanzler(?:in)?|senator(?:in)?"
+    r"|ministerpr[äa]sident(?:in)?|bundespr[äa]sident(?:in)?"
+    r"|b[üu]rgermeister(?:in)?|staatsrat|beauftragte",
+    re.IGNORECASE)
+
+
 def _contextual_disambiguate(
     surname_folded: str,
     firstname_folded: str,
@@ -582,10 +595,28 @@ def _contextual_disambiguate(
     working = list(candidates)
 
     # Step 2 — WP filter
+    #
+    # Dropping the filter when it empties the set is NOT simply a bug: a
+    # minister speaks in the chamber without holding a seat, and the
+    # Stammdaten WP list records membership only. Olaf Scholz addressing WP19
+    # as Finance Minister empties it (he sat in WP14-17 and WP20), and so does
+    # Nancy Faeser in WP20. Those matches are right.
+    #
+    # Unqualified, though, it let any lone namesake from any era through to
+    # step 5 and be called a "unique survivor": "Leye" speaking in WP7 was
+    # matched to Christian Leye of WP20, 45 years later, and "Feiler" in WP2 to
+    # Uwe Feiler of WP18-21. 1,818 rows across 144 names carried an identity
+    # from the wrong generation that way.
+    #
+    # So the bypass now needs a reason. A government office in the role is one,
+    # because that is precisely why somebody speaks without a seat. Nothing
+    # else is.
     if wp is not None:
         wp_filtered = [c for c in working if wp in c.get("wp_set", set())]
-        if wp_filtered:          # only apply if at least one candidate remains
+        if wp_filtered:
             working = wp_filtered
+        elif not _RE_GOV_OFFICE.search(role or ""):
+            return None
 
     # Step 3a — party filter
     if party:
@@ -1904,6 +1935,89 @@ def main() -> None:
                     print(f"  Contextual disambiguation: resolved {int(hit.sum()):,} speeches "
                           f"({n_resolved_names:,} unique names) → stammdaten_id assigned.",
                           flush=True)
+
+    # ── 3d. Validate every stammdaten_id, then read gender from the survivors ──
+    # Identity is a stronger claim than gender and is checked last, over ids
+    # from BOTH sources: e_01's name lookup and the contextual pass above. A
+    # single check here beats patching each matcher, and e_01 cannot do it
+    # anyway — it never sees the `role` that excuses a non-member.
+    #
+    # An id is refused when the speech's Wahlperiode lies outside that person's
+    # terms AND no government office explains it. That is the cross-generation
+    # collision: "Dr. Karl A. Lamers" (WP15-18) carried the identity of Karl
+    # Lamers (WP9-14), two different members; "Ingrid Matthäus Maier" carried
+    # Friedrich Maier of WP1-3; "Alois Rainer" (WP18-21) carried his WP5-9
+    # namesake. Gender is left exactly as it was: the surname and often the
+    # forename did match, so the gender is likely right even though the person
+    # is not, and an earlier pass had already set it.
+    if context_lookup:
+        _id_wps: dict[str, set] = {}
+        _id_gender: dict[str, str] = {}
+        for _cands in context_lookup.values():
+            for _c in _cands:
+                _sid = _c.get("stammdaten_id")
+                if _sid:
+                    _id_wps.setdefault(_sid, set()).update(_c.get("wp_set") or ())
+                    if _c.get("gender"):
+                        _id_gender[_sid] = _c["gender"]
+
+        # Terms served by ANYONE of a surname. An office excuses a speaker who
+        # held no seat, but only when nobody of that surname held one either:
+        # if somebody did, the matcher had a candidate who fits and picked the
+        # wrong one, and the office must not rescue that. Without this,
+        # "Christian Schmidt" (WP13-19, and a Bundesminister) kept the identity
+        # of the WP10 Christian Schmidt across 593 of 985 rows, because his own
+        # office excused the mismatch.
+        _surname_wps: dict[str, set] = {}
+        for _sn, _cands in context_lookup.items():
+            _u: set = set()
+            for _c in _cands:
+                _u.update(_c.get("wp_set") or ())
+            _surname_wps[_sn] = _u
+
+        _has_id = speeches_df["stammdaten_id"].notna()
+        _wp_i = speeches_df["wp"].fillna(-1).astype(int)
+        _role_s = speeches_df["role"].fillna("")
+        _in_term = [
+            (not h) or (w in _id_wps.get(s, ()))
+            for h, w, s in zip(_has_id, _wp_i, speeches_df["stammdaten_id"])
+        ]
+        # surname parsed once per distinct name, not once per row
+        _sn_of = {n: _name_to_parts_ctx(n)[1]
+                  for n in speeches_df["name"].dropna().unique()}
+        _nobody_served = [
+            w not in _surname_wps.get(_sn_of.get(n, ""), ())
+            for n, w in zip(speeches_df["name"], _wp_i)
+        ]
+        _excused = (_role_s.str.contains(_RE_GOV_OFFICE)
+                    & pd.Series(_nobody_served, index=speeches_df.index))
+        _bad_id = _has_id & ~pd.Series(_in_term, index=speeches_df.index) & ~_excused
+        n_bad = int(_bad_id.sum())
+        if n_bad:
+            n_names = int(speeches_df.loc[_bad_id, "name"].nunique())
+            speeches_df.loc[_bad_id, "stammdaten_id"] = None
+            speeches_df.loc[_bad_id, "birth_date"] = None
+            if verbose:
+                print(f"  Identity check: cleared {n_bad:,} stammdaten_id(s) across "
+                      f"{n_names:,} name(s) whose Wahlperiode falls outside that "
+                      f"person's terms with no office to explain it.", flush=True)
+        elif verbose:
+            print("  Identity check: every stammdaten_id is consistent with the "
+                  "speaker's Wahlperiode.", flush=True)
+
+        # A surviving id names a person whose gender the Stammdaten records, so
+        # an `unknown` beside one is simply unread. Only corroborated ids reach
+        # here, which is the whole point: before the check above, 82 of the 83
+        # such rows pointed at somebody who was not in the Bundestag at all.
+        _fill = (speeches_df["gender"] == "unknown") & speeches_df["stammdaten_id"].notna()
+        if int(_fill.sum()):
+            _g = speeches_df.loc[_fill, "stammdaten_id"].map(_id_gender)
+            _ok = _fill & _g.notna().reindex(speeches_df.index, fill_value=False)
+            speeches_df.loc[_ok, "gender"] = _g[_g.notna()]
+            speeches_df.loc[_ok, "gender_source"] = "stammdaten"
+            if verbose and int(_ok.sum()):
+                print(f"  Gender from a verified stammdaten_id: "
+                      f"{int(_ok.sum()):,} speech(es).", flush=True)
             elif verbose and n_ctx_cands:
                 print("  Contextual disambiguation: 0 additional matches found.",
                       flush=True)
