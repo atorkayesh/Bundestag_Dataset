@@ -2009,18 +2009,22 @@ def main() -> None:
         # an `unknown` beside one is simply unread. Only corroborated ids reach
         # here, which is the whole point: before the check above, 82 of the 83
         # such rows pointed at somebody who was not in the Bundestag at all.
-        _fill = (speeches_df["gender"] == "unknown") & speeches_df["stammdaten_id"].notna()
-        if int(_fill.sum()):
-            _g = speeches_df.loc[_fill, "stammdaten_id"].map(_id_gender)
-            _ok = _fill & _g.notna().reindex(speeches_df.index, fill_value=False)
-            speeches_df.loc[_ok, "gender"] = _g[_g.notna()]
+        # Mapped over the whole frame rather than over a masked slice: an
+        # earlier version mapped the slice and widened it back with
+        # .reindex(), which made the reported count 199 when exactly 1 row was
+        # assigned. The data was right and the log was wrong, which is the
+        # worse way round — it is the number that gets written up.
+        _n_unknown_before = int((speeches_df["gender"] == "unknown").sum())
+        _id_g = speeches_df["stammdaten_id"].map(_id_gender)
+        _ok = (speeches_df["gender"] == "unknown") & _id_g.notna()
+        if bool(_ok.any()):
+            speeches_df.loc[_ok, "gender"] = _id_g[_ok]
             speeches_df.loc[_ok, "gender_source"] = "stammdaten"
-            if verbose and int(_ok.sum()):
-                print(f"  Gender from a verified stammdaten_id: "
-                      f"{int(_ok.sum()):,} speech(es).", flush=True)
-            elif verbose and n_ctx_cands:
-                print("  Contextual disambiguation: 0 additional matches found.",
-                      flush=True)
+        # counted from the change itself, so the figure cannot drift from it
+        _n_filled = _n_unknown_before - int((speeches_df["gender"] == "unknown").sum())
+        if verbose and _n_filled:
+            print(f"  Gender from a verified stammdaten_id: "
+                  f"{_n_filled:,} speech(es).", flush=True)
 
     # ── 4. Build speakers table ────────────────────────────────────────────────
     if verbose:
